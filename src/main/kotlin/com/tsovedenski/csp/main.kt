@@ -12,13 +12,13 @@ fun main(args: Array<String>) {
     val variables = "MSENDMOREMONEY".toList().distinct()
     val domain = (0..9).toList()
 
-    val `all values are distinct`: Constraint = { map ->
-        val selecteds = map.filter { it.value is Selected }.values as Collection<Selected>
-        val vals = selecteds.map(Selected::value)
+    val `all values are distinct`: Constraint<Char, Int> = { map ->
+        val selecteds = map.filter { it.value is Selected }.values as Collection<Selected<Int>>
+        val vals = selecteds.map(Selected<Int>::value)
         vals.distinct().size == vals.size
     }
 
-    val `m is non-zero`: Constraint = fn@{ map ->
+    val `m is non-zero`: Constraint<Char, Int> = fn@{ map ->
         val M = map.valueOf('M') ?: return@fn false
         M > 0
     }
@@ -31,7 +31,7 @@ fun main(args: Array<String>) {
 //        D + E == Y
 //    }
 
-    val `whole sum holds`: Constraint = fn@{ map ->
+    val `whole sum holds`: Constraint<Char, Int> = fn@{ map ->
         val S = map.valueOf('S') ?: return@fn false
         val E = map.valueOf('E') ?: return@fn false
         val N = map.valueOf('N') ?: return@fn false
@@ -61,44 +61,44 @@ fun main(args: Array<String>) {
 
     solution?.print()
 }
-typealias Constraint = (Solution) -> Boolean
+typealias Constraint <V, D> = (Solution<V, D>) -> Boolean
 
-typealias Solution = MutableMap<Char, Variable>
-fun Solution.isSolved(): Boolean = all { it.value is Selected }
-fun Solution.print() = forEach { c, variable -> println("$c -> $variable") }.also { println("-----") }
-fun emptySolution(): Solution = mutableMapOf()
-fun Solution.valueOf(key: Char): Int? = (get(key) as? Selected)?.value
+typealias Solution <V, D> = MutableMap<V, Variable<D>>
+fun <V, D> Solution<V, D>.isSolved(): Boolean = all { it.value is Selected }
+fun <V, D> Solution<V, D>.print() = forEach { c, variable -> println("$c -> $variable") }.also { println("-----") }
+fun <V, D> emptySolution(): Solution<V, D> = mutableMapOf()
+fun <V, D> Solution<V, D>.valueOf(key: V): D? = (get(key) as? Selected<D>)?.value
 
-data class Task (val variables: List<Char>, val domain: List<Int>, val constraints: List<Constraint>)
-fun Task.toSolution(): Solution = variables.associate { it to Choice(domain) }.toMutableMap()
+data class Task <V, D> (val variables: List<V>, val domain: List<D>, val constraints: List<Constraint<V, D>>)
+fun <V, D> Task<V, D>.toSolution(): Solution<V, D> = variables.associate { it to Choice(domain) }.toMutableMap()
 
 @Suppress("UNCHECKED_CAST")
-data class Job (val solution: Solution, val task: Task, var counter: Long = 0) {
+data class Job <V, D> (val solution: Solution<V, D>, val task: Task<V, D>, var counter: Long = 0) {
     fun isValid(): Boolean
             = task.constraints.all { it(solution) }
 
     fun isComplete(): Boolean
             = solution.size == task.variables.size
 
-    fun assignVariable(char: Char, variable: Variable)
-            = apply { solution.apply { set(char, variable) } }
+    fun assignVariable(key: V, value: Variable<D>)
+            = apply { solution[key] = value }
 
-    fun selectUnassignedVariable(): Map.Entry<Char, Choice>?
-            = solution.filterValues { it is Choice }.entries.firstOrNull() as Map.Entry<Char, Choice>?
+    fun selectUnassignedVariable(): Map.Entry<V, Choice<D>>?
+            = solution.filterValues { it is Choice }.entries.firstOrNull() as Map.Entry<V, Choice<D>>?
 }
 
-sealed class Variable
-data class Selected(val value: Int) : Variable()
-data class Choice(val values: List<Int>) : Variable()
+sealed class Variable <A>
+data class Selected <A> (val value: A) : Variable<A>()
+data class Choice <A> (val values: List<A>) : Variable<A>()
 
-fun solve(task: Task): Solution? {
+fun <V, D> solve(task: Task<V, D>): Solution<V, D>? {
     val job = Job(task.toSolution(), task)
     val solved = backtrack(job)
     solved?.counter?.let { println("Counter = $it") }
     return solved?.solution
 }
 
-fun backtrack(job: Job): Job? {
+fun <V, D> backtrack(job: Job<V, D>): Job<V, D>? {
     if (job.isValid()) return job
     job.counter += 1
     var currentJob = job
