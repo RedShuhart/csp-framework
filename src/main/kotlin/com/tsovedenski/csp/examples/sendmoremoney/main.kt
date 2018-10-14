@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.tsovedenski.csp.examples.sendmoremoney
 
 import com.tsovedenski.csp.*
@@ -50,16 +52,16 @@ fun main(args: Array<String>) {
         SEND + MORE == MONEY
     }
 
-    val task = Task(variables, domain, listOf(
-            `m is non-zero`,
-            `all values are distinct`,
-            `whole sum holds`))
+    val task = Task(
+            variables   = variables,
+            domain      = domain,
+            constraints = listOf(
+                `m is non-zero`,
+                `all values are distinct`,
+                `whole sum holds`
+            )
+    )
 
     val solution = solve(task)
-    println(when (solution?.isComplete()) {
-        true -> "SUCCESS"
-        else -> "FAIL"
-    })
-
-    solution?.print()
+    solution.print()
 }
