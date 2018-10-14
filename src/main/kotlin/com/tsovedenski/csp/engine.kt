@@ -1,15 +1,19 @@
 package com.tsovedenski.csp
 
+import kotlin.system.measureTimeMillis
+
 /**
  * Created by Tsvetan Ovedenski on 14/10/2018.
  */
 fun <V, D> solve(task: Task<V, D>): Solution<V, D> {
     val job = Job(task.toAssignment(), task)
-    val solved = backtrack(job)
-
+    var solved: Job<V, D>? = null
+    val time = measureTimeMillis {
+        solved = backtrack(job)
+    }
     return when (solved) {
         null -> NoSolution
-        else -> Solved(solved.assignment, Statistics(solved.counter))
+        else -> Solved(solved!!.assignment, Statistics(solved!!.counter, time))
     }
 }
 
