@@ -16,12 +16,12 @@ fun main(args: Array<String>) {
     val variables = "MSENDMOREMONEY".toList().distinct()
     val domain = (0..9).toList()
 
-    val `all values are distinct`: Constraint<Char, Int> = { map ->
-        val selecteds = map.filter { it.value is Selected }.values as Collection<Selected<Int>>
-        val vals = selecteds.map(Selected<Int>::value)
-        vals.distinct().size == vals.size
-    }
-//    val `all values are distinct` = AllDiffConstraint<Char, Int>(variables)
+//    val `all values are distinct`: Constraint<Char, Int> = { map ->
+//        val selecteds = map.filter { it.value is Selected }.values as Collection<Selected<Int>>
+//        val vals = selecteds.map(Selected<Int>::value)
+//        vals.distinct().size == vals.size
+//    }
+    val `all values are distinct` = AllDiffConstraint<Char, Int>(variables)
 
     val `m is non-zero` = UnaryConstraint<Char, Int>('M') { it > 0 }
 

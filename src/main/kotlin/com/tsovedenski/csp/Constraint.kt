@@ -25,14 +25,20 @@ data class BinaryConstraint <V, D> (val a: V, val b: V, val f: (D, D) -> Boolean
 class AllDiffConstraint <V, D> (val vars: List<V>) : Constraint<V, D> {
     constructor(vararg vars: V): this(vars.toList())
 
+    private val list = vars.pairs().map { (a, b) ->
+        BinaryConstraint(a, b, ::neq)
+    }
+
     override fun invoke(map: Assignment<V, D>): Boolean {
-        val list = vars.zip(vars.drop(1)) { a, b ->
-            BinaryConstraint(a, b, ::neq)
-        }
         return list.all { it(map) }
     }
 
     private fun neq(x: D, y: D) = x != y
+
+    companion object {
+        private fun <T> List<T>.pairs(): List<Pair<T, T>>
+                = zip(1 .. size).flatMap { (a, i) -> drop(i).map { b -> a to b } }
+    }
 }
 
 // TODO: Can we do this with coroutines?
