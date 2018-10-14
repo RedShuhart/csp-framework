@@ -21,29 +21,19 @@ fun main(args: Array<String>) {
         val vals = selecteds.map(Selected<Int>::value)
         vals.distinct().size == vals.size
     }
+//    val `all values are distinct` = AllDiffConstraint<Char, Int>(variables)
 
-    val `m is non-zero`: Constraint<Char, Int> = fn@{ map ->
-        val M = map.valueOf('M') ?: return@fn false
-        M > 0
-    }
+    val `m is non-zero` = UnaryConstraint<Char, Int>('M') { it > 0 }
 
-//    example of bad constraint
-//    val `right-most holds`: Constraint = fn@{ map ->
-//        val D = map.valueOf('D') ?: return@fn false
-//        val E = map.valueOf('E') ?: return@fn false
-//        val Y = map.valueOf('Y') ?: return@fn false
-//        D + E == Y
-//    }
-
-    val `whole sum holds`: Constraint<Char, Int> = fn@{ map ->
-        val S = map.valueOf('S') ?: return@fn false
-        val E = map.valueOf('E') ?: return@fn false
-        val N = map.valueOf('N') ?: return@fn false
-        val D = map.valueOf('D') ?: return@fn false
-        val M = map.valueOf('M') ?: return@fn false
-        val O = map.valueOf('O') ?: return@fn false
-        val R = map.valueOf('R') ?: return@fn false
-        val Y = map.valueOf('Y') ?: return@fn false
+    val `whole sum holds` = GeneralConstraint<Char, Int> {
+        val S = getValue('S')
+        val E = getValue('E')
+        val N = getValue('N')
+        val D = getValue('D')
+        val M = getValue('M')
+        val O = getValue('O')
+        val R = getValue('R')
+        val Y = getValue('Y')
 
         val SEND  =            1000*S + 100*E + 10*N + 1*D
         val MORE  =            1000*M + 100*O + 10*R + 1*E
