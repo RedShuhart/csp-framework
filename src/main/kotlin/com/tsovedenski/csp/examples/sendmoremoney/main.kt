@@ -13,6 +13,12 @@ import com.tsovedenski.csp.*
  *   = M O N E Y
  */
 fun main(args: Array<String>) {
+    val task = createTask()
+    val solution = solve(task)
+    solution.print()
+}
+
+fun createTask(): Task<Char, Int> {
     val variables = "MSENDMOREMONEY".toList().distinct()
     val domain = (0..9).toList()
 
@@ -46,12 +52,11 @@ fun main(args: Array<String>) {
             variables   = variables,
             domain      = domain,
             constraints = listOf(
-                `m is non-zero`,
-                `all values are distinct`,
-                `whole sum holds`
+                    `m is non-zero`,
+                    `all values are distinct`,
+                    `whole sum holds`
             )
     )
 
-    val solution = solve(task)
-    solution.print()
+    return task
 }
