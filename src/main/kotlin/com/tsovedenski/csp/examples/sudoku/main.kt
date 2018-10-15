@@ -1,5 +1,6 @@
 package com.tsovedenski.csp.examples.sudoku
 
+import com.tsovedenski.csp.strategies.Backtracking
 import com.tsovedenski.csp.Selected
 import com.tsovedenski.csp.Solved
 import com.tsovedenski.csp.solve
@@ -21,7 +22,7 @@ fun main(args: Array<String>) {
             "7x3x18xxx"
     )
     val task = Sudoku(grid)
-    val solution = solve(task)
+    val solution = task.solve(strategy = Backtracking)
     solution.print()
 
     (solution as? Solved)?.let { solved ->

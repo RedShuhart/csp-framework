@@ -1,5 +1,7 @@
 package com.tsovedenski.csp
 
+import kotlin.system.measureTimeMillis
+
 /**
  * Created by Tsvetan Ovedenski on 14/10/2018.
  */
@@ -14,6 +16,20 @@ fun <V, D> Task<V, D>.toAssignment(): Assignment<V, D> {
     val empty: Assignment<V, D> = variables.associate { it to Choice(domain) }.toMutableMap()
     initialAssignment.forEach { c, v -> empty[c] = Selected(v) }
     return empty.toList().sortedBy { it.second !is Selected }.toMap() as Assignment<V, D>
+}
+
+fun <V, D> Task<V, D>.solve(strategy: Strategy): Solution<V, D> {
+    val job = Job(toAssignment(), constraints)
+
+    var solved: Job<V, D>? = null // TODO: Change to `val` with Kotlin 1.3
+    val time = measureTimeMillis {
+        solved = strategy.run(job)
+    }
+
+    return when (solved) {
+        null -> NoSolution
+        else -> Solved(solved!!.assignment, Statistics(solved!!.counter, time))
+    }
 }
 
 data class GeneralTask <V, D> (

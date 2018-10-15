@@ -1,8 +1,6 @@
-import com.tsovedenski.csp.Selected
-import com.tsovedenski.csp.Solved
-import com.tsovedenski.csp.emptyAssignment
+import com.tsovedenski.csp.*
 import com.tsovedenski.csp.examples.sendmoremoney.WordSum
-import com.tsovedenski.csp.solve
+import com.tsovedenski.csp.strategies.Backtracking
 import org.junit.Assert
 import org.junit.Test
 
@@ -14,7 +12,7 @@ class SendMoreMoneyTest {
     @Test
     fun `send + more = money`() {
         val task = WordSum("SEND", "MORE", "MONEY")
-        val solution = solve(task)
+        val solution = task.solve(strategy = Backtracking)
 
         Assert.assertNotNull(solution)
         solution as Solved

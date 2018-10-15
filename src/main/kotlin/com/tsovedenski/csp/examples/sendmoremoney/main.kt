@@ -1,6 +1,7 @@
 package com.tsovedenski.csp.examples.sendmoremoney
 
 import com.tsovedenski.csp.*
+import com.tsovedenski.csp.strategies.Backtracking
 
 /**
  * Created by Tsvetan Ovedenski on 13/10/18.
@@ -12,6 +13,6 @@ import com.tsovedenski.csp.*
  */
 fun main(args: Array<String>) {
     val task = WordSum("SEND", "MORE", "MONEY")
-    val solution = solve(task)
+    val solution = task.solve(strategy = Backtracking)
     solution.print()
 }
