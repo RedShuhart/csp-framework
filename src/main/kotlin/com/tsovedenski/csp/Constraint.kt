@@ -34,11 +34,6 @@ class AllDiffConstraint <V, D> (val vars: List<V>) : Constraint<V, D> {
     }
 
     private fun neq(x: D, y: D) = x != y
-
-    companion object {
-        private fun <T> List<T>.pairs(): List<Pair<T, T>>
-                = zip(1 .. size).flatMap { (a, i) -> drop(i).map { b -> a to b } }
-    }
 }
 
 // TODO: Can we do this with coroutines?

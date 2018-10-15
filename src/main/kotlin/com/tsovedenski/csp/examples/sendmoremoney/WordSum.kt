@@ -5,7 +5,7 @@ import com.tsovedenski.csp.*
 /**
  * Created by Tsvetan Ovedenski on 15/10/2018.
  */
-data class WordSum (val a: String, val b: String, val result: String) : Task<Char, Int> {
+data class WordSum (val a: String, val b: String, val result: String) : Task<Char, Int>() {
 
     override val variables: List<Char> = (result + b + a).toList().distinct()
 

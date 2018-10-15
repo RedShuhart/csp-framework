@@ -4,7 +4,10 @@ package com.tsovedenski.csp
  * Created by Tsvetan Ovedenski on 14/10/2018.
  */
 @Suppress("UNCHECKED_CAST")
-internal data class Job <V, D> (val assignment: Assignment<V, D>, val task: Task<V, D>, var counter: Long = 0) {
+internal data class Job <V, D> (val assignment: Assignment<V, D>, val task: Task<V, D>) {
+    var counter: Long = 0
+        private set
+
     fun isValid(): Boolean
             = task.constraints.all { it(assignment) }
 
@@ -15,6 +18,7 @@ internal data class Job <V, D> (val assignment: Assignment<V, D>, val task: Task
             = apply { assignment[key] = value }
 
     fun selectUnassignedVariable(): Map.Entry<V, Choice<D>>?
-//            = assignment.entries.firstOrNull { it.value is Choice<D> } as Map.Entry<V, Choice<D>>?
             = assignment.filterValues { it is Choice }.entries.firstOrNull() as Map.Entry<V, Choice<D>>?
+
+    fun step() = counter ++
 }

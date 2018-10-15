@@ -7,6 +7,8 @@ import kotlin.system.measureTimeMillis
  */
 fun <V, D> solve(task: Task<V, D>): Solution<V, D> {
     val job = Job(task.toAssignment(), task)
+    job.assignment.print()
+//    (job.assignment.toList().sortedBy { it.second !is Selected }.toMap() as Assignment<V, D>).print()
     var solved: Job<V, D>? = null
     val time = measureTimeMillis {
         solved = backtrack(job)
@@ -19,7 +21,7 @@ fun <V, D> solve(task: Task<V, D>): Solution<V, D> {
 
 internal fun <V, D> backtrack(job: Job<V, D>): Job<V, D>? {
     if (job.isValid()) return job
-    job.counter += 1
+    job.step()
     var currentJob = job
     val variable = job.selectUnassignedVariable() ?: return null
     variable.value.values.forEach {
