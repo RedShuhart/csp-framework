@@ -28,8 +28,7 @@ fun main(args: Array<String>) {
     (solution as? Solved)?.let { solved ->
         val solvedGrid = grid.toMutableList().map { it.toMutableList() }
         solved.assignment.forEach { p, n ->
-            val r = p.first().toInt()
-            val c = p.drop(1).first().toInt()
+            val (r, c) = p.toList().map { it.toInt() - 48 }
             solvedGrid[r][c] = ((n as Selected).value + 48).toChar()
         }
         solvedGrid.forEach {

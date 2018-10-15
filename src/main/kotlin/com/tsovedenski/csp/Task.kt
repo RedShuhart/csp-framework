@@ -9,13 +9,13 @@ abstract class Task <V, D> {
     abstract val variables: List<V>
     abstract val domain: List<D>
     abstract val constraints: List<Constraint<V, D>>
-    open val initialAssignment: Map<V, D> = mapOf()
+    open val initialAssignment: Map<V, Variable<D>> = mapOf()
 }
 
 fun <V, D> Task<V, D>.toAssignment(): Assignment<V, D> {
     val empty: Assignment<V, D> = variables.associate { it to Choice(domain) }.toMutableMap()
-    initialAssignment.forEach { c, v -> empty[c] = Selected(v) }
-    return empty.toList().sortedBy { it.second !is Selected }.toMap() as Assignment<V, D>
+    initialAssignment.forEach { c, v -> empty[c] = v }
+    return (empty.toList().sortedBy { it.second is Selected }.toMap() as Assignment<V, D>).also(::println)
 }
 
 fun <V, D> Task<V, D>.solve(strategy: Strategy): Solution<V, D> {
