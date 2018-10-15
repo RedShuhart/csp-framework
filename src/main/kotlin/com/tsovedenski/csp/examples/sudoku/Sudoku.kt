@@ -18,7 +18,7 @@ data class Sudoku (val grid: List<String>, val placeholder: Char = 'x') : Task<S
     override val domain: List<Int> = (1..9).toList()
 
     override val constraints: List<Constraint<String, Int>> =
-            rows.map<List<String>, Constraint<String, Int>>(::AllDiffConstraint) + cols.map(::AllDiffConstraint)
+            rows.map<List<String>, Constraint<String, Int>>(::AllDiffConstraint)
 
     private val known: Map<String, Selected<Int>> = grid
             .asSequence()
