@@ -18,7 +18,11 @@ data class Sudoku (val grid: List<String>, val placeholder: Char = 'x') : Task<S
     override val domain: List<Int> = (1..9).toList()
 
     override val constraints: List<Constraint<String, Int>> =
-            rows.map<List<String>, Constraint<String, Int>>(::AllDiffConstraint)
+            cols.map<List<String>, Constraint<String, Int>>(::AllDiffConstraint)
+//            listOf(
+//                    AllDiffConstraint("00", "01", "02", "03", "05", "06", "07", "08"),
+//                    UnaryConstraint("04") { it != 3 }
+//            ) // adding 04 halts the csp
 
     private val known: Map<String, Selected<Int>> = grid
             .asSequence()
@@ -27,31 +31,33 @@ data class Sudoku (val grid: List<String>, val placeholder: Char = 'x') : Task<S
             .filter { (c, _, _) -> c != placeholder }
             .associate { (c, ir, ic) -> "$ir$ic" to Selected(c.toInt() - 48) }
 
-    override val initialAssignment: Map<String, Variable<Int>> =
-            variables.associate { it to Choice(domain) }
-                    .toMutableMap<String, Variable<Int>>()
-                    .apply {
-                        known.forEach { cell, selected ->
-                            this[cell] = selected
-                            val (r, c) = cell.toList().map { it.toInt() - 48 }
-                            (0..8).forEach { i ->
-                                val pr = "$r$i"
-                                val pc = "$i$c"
-                                val vr = this[pr] as? Choice
-                                if (vr != null) {
-                                    val filtered = vr.values.filter { it != selected.value }
-                                    this[pr] = if (filtered.size == 1) Selected(filtered.first())
-                                                else Choice(filtered)
-                                }
-                                val vc = this[pc] as? Choice
-                                if (vc != null) {
-                                    val filtered = vc.values.filter { it != selected.value }
-                                    this[pc] = if (filtered.size == 1) Selected(filtered.first())
-                                                else Choice(filtered)
-                                }
-                            }
-                        }
-                    }
+    override val initialAssignment: Map<String, Variable<Int>> = known
+//            variables.associate { it to Choice(domain) }
+//                    .toMutableMap<String, Variable<Int>>()
+//                    .apply {
+//                        known.forEach { cell, selected ->
+//                            this[cell] = selected
+//                            val (r, c) = cell.toList().map { it.toInt() - 48 }
+//                            (0..8).forEach { i ->
+//                                val pr = "$r$i"
+//                                val pc = "$i$c"
+//                                val vr = this[pr] as? Choice
+//                                if (vr != null) {
+//                                    val filtered = vr.values.filter { it != selected.value }
+//                                    this[pr] = if (filtered.size == 1) Selected(filtered.first())
+//                                                else Choice(filtered)
+//                                }
+//                                val vc = this[pc] as? Choice
+//                                if (vc != null) {
+//                                    val filtered = vc.values.filter { it != selected.value }
+//                                    this[pc] = if (filtered.size == 1) Selected(filtered.first())
+//                                                else Choice(filtered)
+//                                }
+//                            }
+//                        }
+//                    }.apply {
+////                        put("04", Choice((1..9).toList()))
+//                    }
 
     companion object {
         // [[00, 01,.., 08], [10, 11,.., 18], ...]

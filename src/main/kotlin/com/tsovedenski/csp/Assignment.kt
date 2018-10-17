@@ -10,10 +10,10 @@ fun <V, D> Assignment<V, D>.isComplete(): Boolean
 
 fun <V, D> Assignment<V, D>.print()
         = forEach { c, variable -> println("$c -> $variable") }
-            .also { println("-----") }
+            .also { println("----------------------------") }
 
 fun <V, D> emptyAssignment(): Assignment<V, D>
         = mutableMapOf()
 
-fun <V, D> Assignment<V, D>.valueOf(key: V): D?
-        = (get(key) as? Selected<D>)?.value
+fun <V, D> Assignment<V, D>.valueOf(key: V): D
+        = (get(key) as Selected<D>).value

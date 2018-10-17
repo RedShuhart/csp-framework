@@ -9,15 +9,15 @@ typealias Constraint <V, D> = (Assignment<V, D>) -> Boolean
 
 data class UnaryConstraint <V, D> (val variable: V, val f: (D) -> Boolean) : Constraint<V, D> {
     override fun invoke(map: Assignment<V, D>): Boolean {
-        val value = map.valueOf(variable) ?: return false
+        val value = map.valueOf(variable)
         return f(value)
     }
 }
 
 data class BinaryConstraint <V, D> (val a: V, val b: V, val f: (D, D) -> Boolean) : Constraint<V, D> {
     override fun invoke(map: Assignment<V, D>): Boolean {
-        val valueA = map.valueOf(a) ?: return false
-        val valueB = map.valueOf(b) ?: return false
+        val valueA = map.valueOf(a)
+        val valueB = map.valueOf(b)
         return f(valueA, valueB)
     }
 }
@@ -33,6 +33,11 @@ class AllDiffConstraint <V, D> (val vars: List<V>) : Constraint<V, D> {
         return list.all { it(map) }
     }
 
+//    override fun invoke(map: Assignment<V, D>): Boolean {
+//        val values = vars.map(map::getValue)
+//        return values.distinct().size == values.size
+//    }
+
     private fun neq(x: D, y: D) = x != y
 }
 
@@ -42,25 +47,9 @@ class GeneralConstraint <V, D> (
     val body: GeneralConstraint<V, D>.ConstraintContext.() -> Boolean
 ) : Constraint<V, D> {
     inner class ConstraintContext (private val assignment: Assignment<V, D>) {
-
-        fun getValue(key: V): D {
-            val value = assignment.valueOf(key) ?: throw NotSelectedException
-            return value
-        }
-
+        fun getValue(key: V): D = assignment.valueOf(key)
     }
 
-    override fun invoke(map: Assignment<V, D>): Boolean {
-        return try {
-            val context = ConstraintContext(map)
-            context.body()
-        } catch (e: Exception) {
-            when (e) {
-                NotSelectedException -> false
-                else -> throw e
-            }
-        }
-    }
+    override fun invoke(map: Assignment<V, D>): Boolean
+            = ConstraintContext(map).body()
 }
-
-internal object NotSelectedException : Exception()

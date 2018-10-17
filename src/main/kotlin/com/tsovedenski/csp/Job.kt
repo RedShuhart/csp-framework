@@ -10,6 +10,8 @@ data class Job <V, D> (val assignment: Assignment<V, D>, val constraints: List<C
     fun isValid(): Boolean
             = constraints.all { it(assignment) }
 
+    fun isComplete() = assignment.isComplete()
+
     fun assignVariable(key: V, value: Variable<D>)
             = apply { assignment[key] = value }
 

@@ -15,7 +15,8 @@ abstract class Task <V, D> {
 fun <V, D> Task<V, D>.toAssignment(): Assignment<V, D> {
     val empty: Assignment<V, D> = variables.associate { it to Choice(domain) }.toMutableMap()
     initialAssignment.forEach { c, v -> empty[c] = v }
-    return (empty.toList().sortedBy { it.second is Selected }.toMap() as Assignment<V, D>).also(::println)
+    return (empty.toList().sortedBy { it.second !is Selected }.toMap() as Assignment<V, D>).also(::print)
+//    return empty
 }
 
 fun <V, D> Task<V, D>.solve(strategy: Strategy): Solution<V, D> {
