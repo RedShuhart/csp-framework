@@ -20,4 +20,6 @@ data class Job <V, D> (val assignment: Assignment<V, D>, val constraints: List<C
             = assignment.filterValues { it is Choice }.entries.firstOrNull() as Map.Entry<V, Choice<D>>?
 
     fun step() = counter ++
+
+    fun duplicate() = copy(assignment = assignment.toMutableMap())
 }

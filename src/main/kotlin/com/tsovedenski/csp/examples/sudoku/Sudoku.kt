@@ -13,12 +13,14 @@ import com.tsovedenski.csp.*
  */
 data class Sudoku (val grid: List<String>, val placeholder: Char = 'x') : Task<String, Int>() {
 
-    override val variables: List<String> = (0..8).flatMap { x -> (0..8).map { y -> "$x$y" } }
+    val size = grid.size
+
+    override val variables: List<String> = (0 until size).flatMap { x -> (0 until size).map { y -> "$x$y" } }
 
     override val domain: List<Int> = (1..9).toList()
 
     override val constraints: List<Constraint<String, Int>> =
-            cols.map<List<String>, Constraint<String, Int>>(::AllDiffConstraint)
+            rows(size).map<List<String>, Constraint<String, Int>>(::AllDiffConstraint) + cols(size).map(::AllDiffConstraint)
 //            listOf(
 //                    AllDiffConstraint("00", "01", "02", "03", "05", "06", "07", "08"),
 //                    UnaryConstraint("04") { it != 3 }
@@ -31,7 +33,7 @@ data class Sudoku (val grid: List<String>, val placeholder: Char = 'x') : Task<S
             .filter { (c, _, _) -> c != placeholder }
             .associate { (c, ir, ic) -> "$ir$ic" to Selected(c.toInt() - 48) }
 
-    override val initialAssignment: Map<String, Variable<Int>> = known
+//    override val initialAssignment: Map<String, Variable<Int>> = known
 //            variables.associate { it to Choice(domain) }
 //                    .toMutableMap<String, Variable<Int>>()
 //                    .apply {
@@ -61,9 +63,9 @@ data class Sudoku (val grid: List<String>, val placeholder: Char = 'x') : Task<S
 
     companion object {
         // [[00, 01,.., 08], [10, 11,.., 18], ...]
-        private val rows: List<List<String>> = (0..8).map { r -> (0..8).map { c -> "$r$c" } }
+        private val rows: (Int) -> List<List<String>> = { size -> (0 until size).map { r -> (0 until size).map { c -> "$r$c" } } }
 
         // [[00, 10,.., 80], [01, 11,.., 81], ...]
-        private val cols: List<List<String>> = (0..8).map { r -> (0..8).map { c -> "$c$r" } }
+        private val cols: (Int) -> List<List<String>> = { size -> (0 until size).map { r -> (0 until size).map { c -> "$c$r" } } }
     }
 }
