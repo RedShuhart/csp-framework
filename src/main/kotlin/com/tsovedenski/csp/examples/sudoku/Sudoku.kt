@@ -33,7 +33,7 @@ data class Sudoku (val grid: List<String>, val placeholder: Char = 'x') : Task<S
             .filter { (c, _, _) -> c != placeholder }
             .associate { (c, ir, ic) -> "$ir$ic" to Selected(c.toInt() - 48) }
 
-//    override val initialAssignment: Map<String, Variable<Int>> = known
+    override val initialAssignment: Map<String, Variable<Int>> = known
 //            variables.associate { it to Choice(domain) }
 //                    .toMutableMap<String, Variable<Int>>()
 //                    .apply {

@@ -4,6 +4,7 @@ import com.tsovedenski.csp.strategies.Backtracking
 import com.tsovedenski.csp.Selected
 import com.tsovedenski.csp.Solved
 import com.tsovedenski.csp.solve
+import com.tsovedenski.csp.strategies.ForwardChecking
 
 /**
  * Created by Tsvetan Ovedenski on 15/10/2018.
@@ -33,12 +34,13 @@ fun main(args: Array<String>) {
 //            "2x8174xxx"
 //    )
     val grid = listOf(
-            "xxx",
-            "xxx",
-            "xxx"
+            "1234",
+            "2xxx",
+            "3xxx",
+            "4xxx"
     )
     val task = Sudoku(grid)
-    val solution = task.solve(strategy = Backtracking)
+    val solution = task.solve(strategy = ForwardChecking)
     solution.print()
 
     (solution as? Solved)?.let { solved ->

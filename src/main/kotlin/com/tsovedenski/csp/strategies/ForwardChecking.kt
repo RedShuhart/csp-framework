@@ -10,29 +10,21 @@ import com.tsovedenski.csp.Strategy
  */
 object ForwardChecking : Strategy {
     override fun <V, D> run(job: Job<V, D>): Job<V, D>? {
-        job.step()
         if (job.isComplete() && job.isValid()) return job
 
-        var dup = job
+        job.step()
+
         val variable = job.selectUnassignedVariable() ?: return null
         variable.value.values.forEach {
             val attempt = Selected(it)
-            dup = dup.duplicate()
-            dup.assignVariable(variable.key, attempt)
-            val tempAssignment = dup.assignment.toMutableMap()
-            dup.assignment.mapValues { m ->
-                if (m.value is Choice) {
-                    Choice((m.value as Choice).values.filter { v -> v != attempt.value })
-                } else {
-                    m.value
-                }
-            }
-            val result = run(dup)
+            job.assignVariable(variable.key, attempt)
+            val changed = job.removeChoice(it)
+            val result = run(job)
             if (result != null) {
                 return result
             }
-            dup.assignVariable(variable.key, variable.value)
-            dup = dup.copy(assignment = tempAssignment)
+            job.assignVariable(variable.key, variable.value)
+            job.addChoice(it, changed)
         }
         return null
     }
