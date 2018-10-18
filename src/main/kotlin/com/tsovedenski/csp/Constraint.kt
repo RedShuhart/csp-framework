@@ -5,7 +5,6 @@ import kotlin.coroutines.experimental.*
 /**
  * Created by Tsvetan Ovedenski on 14/10/2018.
  */
-//typealias Constraint <V, D> = (Assignment<V, D>) -> Boolean
 interface Constraint <V, D> : (Assignment<V, D>) -> Boolean {
     val variables: List<V>
 }
@@ -36,7 +35,7 @@ class AllDiffConstraint <V, D> (override val variables: List<V>) : Constraint<V,
     constructor(vararg variables: V): this(variables.toList())
 
     private val list = variables.pairs().map { (a, b) ->
-        BinaryConstraint(a, b, ::neq)
+        BinaryConstraint<V, D>(a, b, ::neq)
     }
 
     override fun invoke(map: Assignment<V, D>): Boolean {
@@ -45,12 +44,9 @@ class AllDiffConstraint <V, D> (override val variables: List<V>) : Constraint<V,
 
     fun asBinaryConstraints() = list.toList()
 
-//    override fun invoke(map: Assignment<V, D>): Boolean {
-//        val values = vars.map(map::getValue)
-//        return values.distinct().size == values.size
-//    }
-
-    private fun neq(x: D, y: D) = x != y
+    companion object {
+        private fun <T> neq(x: T, y: T) = x != y
+    }
 }
 
 // TODO: Can we do this with coroutines?
