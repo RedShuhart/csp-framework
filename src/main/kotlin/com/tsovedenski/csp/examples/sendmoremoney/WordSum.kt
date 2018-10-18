@@ -12,15 +12,19 @@ data class WordSum (val a: String, val b: String, val result: String) : Task<Cha
     override val domain: List<Int> = (0..9).toList()
 
     override val constraints: List<Constraint<Char, Int>> = listOf(
-        AllDiffConstraint(variables),
-
         UnaryConstraint(result.first()) { it > 0 },
+
+        UnaryConstraint(a.first()) { it > 0 },
+
+        UnaryConstraint(b.first()) { it > 0 },
+
+        AllDiffConstraint(variables),
 
         GeneralConstraint(variables) {
             val map = variables.associate { it to getValue(it) }
-            val aWord = aReversed.map(map::getValue).zip(tens, ::mult).fold(0, ::sum)
-            val bWord = bReversed.map(map::getValue).zip(tens, ::mult).fold(0, ::sum)
-            val resultWord = resultReversed.map(::getValue).zip(tens, ::mult).fold(0, ::sum)
+            val aWord = aReversed.map(map::getValue).zip(tens, ::mult).sum()
+            val bWord = bReversed.map(map::getValue).zip(tens, ::mult).sum()
+            val resultWord = resultReversed.map(::getValue).zip(tens, ::mult).sum()
 
             aWord + bWord == resultWord
         }
