@@ -10,34 +10,16 @@ import com.tsovedenski.csp.strategies.ForwardChecking
  * Created by Tsvetan Ovedenski on 15/10/2018.
  */
 fun main(args: Array<String>) {
-    // something is wrong, doesn't solve quickly enough
-//    val grid = listOf(
-//            "xxx26x7x1",
-//            "68xx7xx9x",
-//            "19xxx45xx",
-//            "82x1xxx4x",
-//            "xx46x29xx",
-//            "x5xxx3x28",
-//            "xx93xxx74",
-//            "x4xx5xx36",
-//            "7x3x18xxx"
-//    )
-//    val grid = listOf(
-//            "18xxx57x6",
-//            "x2x7xx348",
-//            "x63428xxx",
-//            "xx52479xx",
-//            "x92x8x41x",
-//            "3x791xxx5",
-//            "9xxxx2174",
-//            "47xxx9x52",
-//            "2x8174xxx"
-//    )
     val grid = listOf(
-            "xxxx",
-            "xxxx",
-            "xxxx",
-            "xxxx"
+            "18xxx57x6",
+            "x2x7xx348",
+            "x63428xxx",
+            "xx52479xx",
+            "x92x8x41x",
+            "3x791xxx5",
+            "9xxxx2174",
+            "47xxx9x52",
+            "2x8174xxx"
     )
     val task = Sudoku(grid)
     val solution = task.solve(strategy = Backtracking)

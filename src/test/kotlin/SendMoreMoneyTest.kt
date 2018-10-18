@@ -10,25 +10,22 @@ import org.junit.Test
 class SendMoreMoneyTest {
 
     @Test
-    fun `send + more = money`() {
+    fun `SEND + MORE = MONEY`() {
         val task = WordSum("SEND", "MORE", "MONEY")
         val solution = task.solve(strategy = Backtracking)
 
         Assert.assertNotNull(solution)
         solution as Solved
 
-//        Assert.assertEquals(21_741_206, solution.statistics.counter)
-//        Assert.assertEquals(11_836_646, solution.statistics.counter)
-
         val expectedAssignment = emptyAssignment<Char, Int>().apply {
-            put('M', Selected(1))
-            put('O', Selected(0))
-            put('N', Selected(6))
-            put('E', Selected(5))
-            put('Y', Selected(2))
-            put('S', Selected(9))
-            put('D', Selected(7))
-            put('R', Selected(8))
+            this['M'] = Selected(1)
+            this['O'] = Selected(0)
+            this['N'] = Selected(6)
+            this['E'] = Selected(5)
+            this['Y'] = Selected(2)
+            this['S'] = Selected(9)
+            this['D'] = Selected(7)
+            this['R'] = Selected(8)
         }
         Assert.assertEquals(expectedAssignment, solution.assignment)
     }
