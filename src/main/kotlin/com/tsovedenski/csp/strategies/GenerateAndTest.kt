@@ -7,7 +7,7 @@ import com.tsovedenski.csp.*
  *
  * (Slow) Generate-and-Test algorithm
  */
-object Backtracking : Strategy {
+object GenerateAndTest : Strategy {
     override fun <V, D> run(job: Job<V, D>): Job<V, D>? {
         if (job.isComplete() && job.isValid()) return job
 
@@ -18,17 +18,13 @@ object Backtracking : Strategy {
         variable.value.values.forEach {
             val attempt = Selected(it)
             currentJob = currentJob.assignVariable(variable.key, attempt)
-            if (currentJob.isPartiallyValid()) {
-                val result = run(currentJob)
-                if (result != null) {
-                    return result
-                }
+            val result = run(currentJob)
+            if (result != null) {
+                return result
             }
             currentJob = currentJob.assignVariable(variable.key, variable.value)
         }
 
         return null
     }
-
-    private fun <V, D> Job<V, D>.isPartiallyValid() = constraints.filter { it.canCheck(assignment) }.all { it(assignment) }
 }

@@ -16,7 +16,7 @@ data class WordSum (val a: String, val b: String, val result: String) : Task<Cha
 
         UnaryConstraint(result.first()) { it > 0 },
 
-        GeneralConstraint {
+        GeneralConstraint(variables) {
             val map = variables.associate { it to getValue(it) }
             val aWord = aReversed.map(map::getValue).zip(tens, ::mult).fold(0, ::sum)
             val bWord = bReversed.map(map::getValue).zip(tens, ::mult).fold(0, ::sum)
