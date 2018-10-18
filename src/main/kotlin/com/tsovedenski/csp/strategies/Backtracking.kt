@@ -13,18 +13,17 @@ object Backtracking : Strategy {
 
         job.step()
 
-        var currentJob = job
         val variable = job.selectUnassignedVariable() ?: return null
         variable.value.values.forEach {
             val attempt = Selected(it)
-            currentJob = currentJob.assignVariable(variable.key, attempt)
-            if (currentJob.isPartiallyValid()) {
-                val result = run(currentJob)
+            job.assignVariable(variable.key, attempt)
+            if (job.isPartiallyValid()) {
+                val result = run(job)
                 if (result != null) {
                     return result
                 }
             }
-            currentJob = currentJob.assignVariable(variable.key, variable.value)
+            job.assignVariable(variable.key, variable.value)
         }
 
         return null
