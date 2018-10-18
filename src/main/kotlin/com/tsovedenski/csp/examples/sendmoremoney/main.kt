@@ -2,6 +2,8 @@ package com.tsovedenski.csp.examples.sendmoremoney
 
 import com.tsovedenski.csp.*
 import com.tsovedenski.csp.strategies.Backtracking
+import kotlin.math.roundToInt
+import kotlin.math.sqrt
 
 /**
  * Created by Tsvetan Ovedenski on 13/10/18.

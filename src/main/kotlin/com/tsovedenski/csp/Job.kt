@@ -10,6 +10,11 @@ data class Job <V, D> (val assignment: Assignment<V, D>, val constraints: List<C
     fun isValid(): Boolean
             = constraints.all { it(assignment) }
 
+    fun isPartiallyValid(): Boolean
+            = constraints.asSequence().filter { it.canCheck(assignment) }.all { it(assignment) }
+
+    fun isComplete() = assignment.isComplete()
+
     fun assignVariable(key: V, value: Variable<D>)
             = apply { assignment[key] = value }
 
@@ -18,4 +23,6 @@ data class Job <V, D> (val assignment: Assignment<V, D>, val constraints: List<C
             = assignment.filterValues { it is Choice }.entries.firstOrNull() as Map.Entry<V, Choice<D>>?
 
     fun step() = counter ++
+
+    fun duplicate() = copy(assignment = assignment.toMutableMap())
 }
