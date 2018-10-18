@@ -29,6 +29,4 @@ object Backtracking : Strategy {
 
         return null
     }
-
-    private fun <V, D> Job<V, D>.isPartiallyValid() = constraints.filter { it.canCheck(assignment) }.all { it(assignment) }
 }
