@@ -33,33 +33,30 @@ data class Sudoku (val grid: List<String>, val placeholder: Char = 'x') : Task<S
             .filter { (c, _, _) -> c != placeholder }
             .associate { (c, ir, ic) -> "$ir$ic" to Selected(c.toInt() - 48) }
 
-    override val initialAssignment: Map<String, Variable<Int>> = //known
-            variables.associate { it to Choice(domain) }
-                    .toMutableMap<String, Variable<Int>>()
-                    .apply {
-                        known.forEach { cell, selected ->
-                            this[cell] = selected
-                            val (r, c) = cell.toList().map { it.toInt() - 48 }
-                            (0..8).forEach { i ->
-                                val pr = "$r$i"
-                                val pc = "$i$c"
-                                val vr = this[pr] as? Choice
-                                if (vr != null) {
-                                    val filtered = vr.values.filter { it != selected.value }
-                                    this[pr] = if (filtered.size == 1) Selected(filtered.first())
-                                                else Choice(filtered)
-                                }
-                                val vc = this[pc] as? Choice
-                                if (vc != null) {
-                                    val filtered = vc.values.filter { it != selected.value }
-                                    this[pc] = if (filtered.size == 1) Selected(filtered.first())
-                                                else Choice(filtered)
-                                }
-                            }
-                        }
-                    }
-// .apply {
-////                        put("04", Choice((1..9).toList()))
+    override val initialAssignment: Map<String, Variable<Int>> = known
+//            variables.associate { it to Choice(domain) }
+//                    .toMutableMap<String, Variable<Int>>()
+//                    .apply {
+//                        known.forEach { cell, selected ->
+//                            this[cell] = selected
+//                            val (r, c) = cell.toList().map { it.toInt() - 48 }
+//                            (0..8).forEach { i ->
+//                                val pr = "$r$i"
+//                                val pc = "$i$c"
+//                                val vr = this[pr] as? Choice
+//                                if (vr != null) {
+//                                    val filtered = vr.values.filter { it != selected.value }
+//                                    this[pr] = if (filtered.size == 1) Selected(filtered.first())
+//                                                else Choice(filtered)
+//                                }
+//                                val vc = this[pc] as? Choice
+//                                if (vc != null) {
+//                                    val filtered = vc.values.filter { it != selected.value }
+//                                    this[pc] = if (filtered.size == 1) Selected(filtered.first())
+//                                                else Choice(filtered)
+//                                }
+//                            }
+//                        }
 //                    }
 
     companion object {

@@ -16,13 +16,18 @@ fun <V, D> Task<V, D>.toAssignment(): Assignment<V, D> {
     val empty: Assignment<V, D> = variables.associate { it to Choice(domain) }.toMutableMap()
 //    initialAssignment.forEach { c, v -> empty[c] = v }
     initialAssignment.forEach { c, v -> empty.merge(c, v) { _, x -> x} }
-//    return empty.toList().sortedBy { it.second !is Selected }.toMap() as Assignment<V, D>
-    return (empty.toList().sortedBy { it.second !is Selected }.toMap() as Assignment<V, D>).also { it.forEach(::println) }
+    return empty.toList().sortedBy { it.second !is Selected }.toMap() as Assignment<V, D>
+//    return (empty.toList().sortedBy { it.second !is Selected }.toMap() as Assignment<V, D>).also { it.forEach(::println) }
 //    return empty
 }
 
 fun <V, D> Task<V, D>.solve(strategy: Strategy): Solution<V, D> {
-    val job = Job(toAssignment(), constraints)
+
+    val assignment = toAssignment().consistentWith(constraints)
+    val job = Job(assignment, constraints)
+
+    job.assignment.forEach(::println)
+    println()
 
     var solved: Job<V, D>? = null // TODO: Change to `val` with Kotlin 1.3
     val time = measureTimeMillis {

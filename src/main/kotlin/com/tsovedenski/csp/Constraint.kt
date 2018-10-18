@@ -11,7 +11,7 @@ interface Constraint <V, D> : (Assignment<V, D>) -> Boolean {
 }
 
 fun <V, D> Constraint<V, D>.canCheck(assignment: Assignment<V, D>)
-        = variables.map(assignment::getValue).filterIsInstance<Selected<D>>().size == variables.size
+        = variables.asSequence().map(assignment::getValue).all { it is Selected }
 
 data class UnaryConstraint <V, D> (val variable: V, val f: (D) -> Boolean) : Constraint<V, D> {
     override val variables = listOf(variable)
@@ -42,6 +42,8 @@ class AllDiffConstraint <V, D> (override val variables: List<V>) : Constraint<V,
     override fun invoke(map: Assignment<V, D>): Boolean {
         return list.all { it(map) }
     }
+
+    fun asBinaryConstraints() = list.toList()
 
 //    override fun invoke(map: Assignment<V, D>): Boolean {
 //        val values = vars.map(map::getValue)
