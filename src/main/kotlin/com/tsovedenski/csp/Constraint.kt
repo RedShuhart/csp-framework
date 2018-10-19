@@ -5,14 +5,19 @@ import kotlin.coroutines.experimental.*
 /**
  * Created by Tsvetan Ovedenski on 14/10/2018.
  */
-interface Constraint <V, D> : (Assignment<V, D>) -> Boolean {
+typealias Predicate <A> = (A) -> Boolean
+typealias BiPredicate <A> = (A, A) -> Boolean
+
+typealias Indexed <T> = Pair<T, Int>
+
+interface Constraint <V, D> : Predicate<Assignment<V, D>> {
     val variables: List<V>
 }
 
 fun <V, D> Constraint<V, D>.canCheck(assignment: Assignment<V, D>)
         = variables.asSequence().map(assignment::getValue).all { it is Selected }
 
-data class UnaryConstraint <V, D> (val variable: V, val f: (D) -> Boolean) : Constraint<V, D> {
+data class UnaryConstraint <V, D> (val variable: V, val f: Predicate<D>) : Constraint<V, D> {
     override val variables = listOf(variable)
 
     override fun invoke(map: Assignment<V, D>): Boolean {
@@ -21,7 +26,7 @@ data class UnaryConstraint <V, D> (val variable: V, val f: (D) -> Boolean) : Con
     }
 }
 
-data class BinaryConstraint <V, D> (val a: V, val b: V, val f: (D, D) -> Boolean) : Constraint<V, D> {
+data class BinaryConstraint <V, D> (val a: V, val b: V, val f: BiPredicate<D>) : Constraint<V, D> {
     override val variables = listOf(a, b)
 
     override fun invoke(map: Assignment<V, D>): Boolean {
@@ -46,6 +51,22 @@ class AllDiffConstraint <V, D> (override val variables: List<V>) : Constraint<V,
 
     companion object {
         private fun <T> neq(x: T, y: T) = x != y
+    }
+}
+
+class AllIndexedConstraint <V, D> (override val variables: List<V>, f: BiPredicate<Indexed<D>>) : Constraint<V, D> {
+    constructor(vararg variables: V, f: BiPredicate<Indexed<D>>): this(variables.toList(), f)
+
+    private val list = variables.asSequence().zip(indexes).pairs().map { (a, b) ->
+        BinaryConstraint<V, D>(a.first, b.first) { x, y -> f(a.mapLeft { x }, b.mapLeft { y }) }
+    }
+
+    override fun invoke(map: Assignment<V, D>): Boolean {
+        return list.all { it(map) }
+    }
+
+    companion object {
+        private val indexes = generateSequence(0) { it + 1 }
     }
 }
 
