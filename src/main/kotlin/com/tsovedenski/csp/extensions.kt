@@ -19,9 +19,14 @@ internal fun <A, B> Sequence<A>.pairs(other: Sequence<B>): Sequence<Pair<A, B>>
         = flatMap { a -> other.map { b -> a to b } }
 
 // Pair map
-fun <A, B, T> Pair<A, B>.mapLeft(f: (A) -> T): Pair<T, B> = Pair(f(first), second)
-fun <A, B, T> Pair<A, B>.mapRight(f: (B) -> T): Pair<A, T> = Pair(first, f(second))
-fun <A, B, X, Y> Pair<A, B>.map(left: (A) -> X, right: (B) -> Y): Pair<X, Y> = Pair(left(first), right(second))
+inline fun <A, B, T> Pair<A, B>.mapLeft(crossinline f: (A) -> T): Pair<T, B>
+        = Pair(f(first), second)
+
+inline fun <A, B, T> Pair<A, B>.mapRight(crossinline f: (B) -> T): Pair<A, T>
+        = Pair(first, f(second))
+
+inline fun <A, B, X, Y> Pair<A, B>.map(crossinline left: (A) -> X, crossinline right: (B) -> Y): Pair<X, Y>
+        = Pair(left(first), right(second))
 
 // fix
 tailrec fun <T> fix(value: T, f: (T) -> T): T {
