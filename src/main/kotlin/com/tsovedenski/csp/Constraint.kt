@@ -10,7 +10,7 @@ typealias BiPredicate <A> = (A, A) -> Boolean
 
 typealias Indexed <T> = Pair<T, Int>
 
-interface Constraint <V, D> : Predicate<Assignment<V, D>> {
+interface Constraint <V, D> : (Assignment<V, D>) -> Boolean {
     val variables: List<V>
 }
 

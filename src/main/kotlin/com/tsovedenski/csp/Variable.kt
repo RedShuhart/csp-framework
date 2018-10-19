@@ -8,8 +8,9 @@ sealed class Variable <A> {
     abstract fun removeAll(values: List<A>): Variable<A>
 
     companion object {
+        fun <T> of(value: T) = Selected(value)
         fun <T> of(values: List<T>) = when (values.size) {
-            1 -> Selected(values.first())
+            1 -> of(values.first())
             else -> Choice(values)
         }
     }

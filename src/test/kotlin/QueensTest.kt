@@ -9,6 +9,25 @@ import org.junit.Test
  */
 class QueensTest {
     @Test
+    fun `1 queens`() {
+        val expected = emptyAssignment<Int, Int>().apply {
+            this[0] = Selected(value=0)
+        }
+
+        executeTest(1, expected)
+    }
+
+    @Test
+    fun `2 queens no solution`() {
+        executeTestNegative(2)
+    }
+
+    @Test
+    fun `3 queens no solution`() {
+        executeTestNegative(3)
+    }
+
+    @Test
     fun `4 queens`() {
         val expected = emptyAssignment<Int, Int>().apply {
             this[0] = Selected(value=1)
@@ -57,5 +76,12 @@ class QueensTest {
         solution as Solved
 
         Assert.assertEquals(expected, solution.assignment)
+    }
+
+    private fun executeTestNegative(n: Int) {
+        val task = Queens(n)
+        val solution = task.solve(strategy = Backtracking)
+
+        Assert.assertTrue(solution is NoSolution)
     }
 }
