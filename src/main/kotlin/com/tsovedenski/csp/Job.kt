@@ -16,7 +16,7 @@ data class Job <V, D> (val assignment: Assignment<V, D>, val constraints: List<C
     fun isComplete() = assignment.isComplete()
 
     fun assignVariable(key: V, value: Variable<D>)
-            = apply { assignment[key] = value }
+            = duplicate().apply { assignment[key] = value }
 
     @Suppress("UNCHECKED_CAST")
     fun selectUnassignedVariable(): Map.Entry<V, Choice<D>>?
@@ -24,5 +24,7 @@ data class Job <V, D> (val assignment: Assignment<V, D>, val constraints: List<C
 
     fun step() = counter ++
 
-    fun duplicate() = copy(assignment = assignment.toMutableMap())
+    fun duplicate() = copy(assignment = assignment.toMutableMap()).apply {
+        counter = this@Job.counter
+    }
 }

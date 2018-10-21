@@ -11,19 +11,21 @@ object Backtracking : Strategy {
     override fun <V, D> run(job: Job<V, D>): Job<V, D>? {
         if (job.isComplete() && job.isValid()) return job
 
-        job.step()
+//        job.step()
 
-        val variable = job.selectUnassignedVariable() ?: return null
+        var currentJob = job.duplicate()
+
+        val variable = currentJob.selectUnassignedVariable() ?: return null
         variable.value.values.forEach {
             val attempt = Selected(it)
-            job.assignVariable(variable.key, attempt)
-            if (job.isPartiallyValid()) {
-                val result = run(job)
+            currentJob = currentJob.assignVariable(variable.key, attempt)
+            if (currentJob.isPartiallyValid()) {
+                val result = run(currentJob)
                 if (result != null) {
                     return result
                 }
             }
-            job.assignVariable(variable.key, variable.value)
+            currentJob = currentJob.assignVariable(variable.key, variable.value)
         }
 
         return null
