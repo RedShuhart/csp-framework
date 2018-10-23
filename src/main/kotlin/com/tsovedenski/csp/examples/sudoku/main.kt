@@ -11,16 +11,27 @@ import com.tsovedenski.csp.strategies.ForwardChecking
  */
 fun main(args: Array<String>) {
     val grid = listOf(
-        "18xxx57x6",
-        "x2x7xx348",
-        "x63428xxx",
-        "xx52479xx",
-        "x92x8x41x",
-        "3x791xxx5",
-        "9xxxx2174",
-        "47xxx9x52",
-        "2x8174xxx"
+            "x2x8x14xx",
+            "7xx9xx3xx",
+            "x19x64xxx",
+            "xx6x4xxxx",
+            "x7x6x2x4x",
+            "xxxx9x2xx",
+            "xxx23x15x",
+            "xx2xx6xx3",
+            "xx51x7x2x"
     )
+//    val grid = listOf(
+//        "18xxx57x6",
+//        "x2x7xx348",
+//        "x63428xxx",
+//        "xx52479xx",
+//        "x92x8x41x",
+//        "3x791xxx5",
+//        "9xxxx2174",
+//        "47xxx9x52",
+//        "2x8174xxx"
+//    )
 //    val grid = listOf(
 //        "xxx2xxx63",
 //        "3xxxx54x1",

@@ -24,6 +24,10 @@ fun <V, D> Assignment<V, D>.consistentWith(constraints: List<Constraint<V, D>>):
     next = constraints.filterIsInstance<BinaryConstraint<V, D>>().fold(next) { m, c -> m.arcConsistent(c) }
     next = constraints.filterIsInstance<AllDiffConstraint<V, D>>().fold(next) { m, c -> m.arcConsistent(c) }
     next
+}.apply {
+    if (entries.map { it.value }.any { ((it as? Choice)?.values?.size ?: 1) < 1 }) {
+        throw RuntimeException("Empty domain")
+    }
 }
 
 fun <V, D> Assignment<V, D>.nodeConsistent(constraint: UnaryConstraint<V, D>): Assignment<V, D> {

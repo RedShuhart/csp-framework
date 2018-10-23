@@ -19,6 +19,7 @@ object Backtracking : Strategy {
         variable.value.values.forEach {
             val attempt = Selected(it)
             currentJob = currentJob.assignVariable(variable.key, attempt)
+            currentJob.assignment.consistentWith(currentJob.constraints)
             if (currentJob.isPartiallyValid()) {
                 val result = run(currentJob)
                 if (result != null) {
