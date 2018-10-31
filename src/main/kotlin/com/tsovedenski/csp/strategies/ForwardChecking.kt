@@ -8,8 +8,8 @@ import com.tsovedenski.csp.Strategy
 /**
  * Created by Tsvetan Ovedenski on 17/10/18.
  */
-object ForwardChecking : Strategy {
-    override fun <V, D> run(job: Job<V, D>): Job<V, D>? {
+//object ForwardChecking : Strategy {
+//    override fun <V, D> run(job: Job<V, D>): Job<V, D>? {
 //        if (job.isComplete() && job.isValid()) return job
 //
 //        job.step()
@@ -26,6 +26,6 @@ object ForwardChecking : Strategy {
 //            }
 //            job.assignVariable(variable.key, variable.value)
 //        }
-        return null
-    }
-}
+//        return null
+//    }
+//}

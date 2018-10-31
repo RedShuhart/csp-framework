@@ -7,8 +7,8 @@ import com.tsovedenski.csp.*
  *
  * (Slow) Generate-and-Test algorithm
  */
-object GenerateAndTest : Strategy {
-    override fun <V, D> run(job: Job<V, D>): Job<V, D>? {
+class GenerateAndTest <V, D> : Strategy<V, D> {
+    override fun run(job: Job<V, D>): Job<V, D>? {
         if (job.isComplete() && job.isValid()) return job
 
         job.step()

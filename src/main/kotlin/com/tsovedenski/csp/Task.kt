@@ -21,7 +21,7 @@ fun <V, D> Task<V, D>.toAssignment(): Assignment<V, D> {
 //    return empty
 }
 
-fun <V, D> Task<V, D>.solve(strategy: Strategy): Solution<V, D> {
+fun <V, D> Task<V, D>.solve(strategy: Strategy<V, D>): Solution<V, D> {
     val assignment = toAssignment().consistentWith(constraints)
     val job = Job(assignment, constraints)
 

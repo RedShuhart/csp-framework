@@ -346,7 +346,7 @@ class SudokuTest {
 
     private fun execute(grid: List<String>, expected: Assignment<String, Int>) {
         val task = Sudoku(grid)
-        val solution = task.solve(strategy = Backtracking)
+        val solution = task.solve(strategy = Backtracking())
 
         Assert.assertTrue(solution is Solved)
         solution as Solved

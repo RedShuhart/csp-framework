@@ -70,7 +70,7 @@ class QueensTest {
 
     private fun executeTest(n: Int, expected: Assignment<Int, Int>) {
         val task = Queens(n)
-        val solution = task.solve(strategy = Backtracking)
+        val solution = task.solve(strategy = Backtracking())
 
         Assert.assertTrue(solution is Solved)
         solution as Solved
@@ -80,7 +80,7 @@ class QueensTest {
 
     private fun executeTestNegative(n: Int) {
         val task = Queens(n)
-        val solution = task.solve(strategy = Backtracking)
+        val solution = task.solve(strategy = Backtracking())
 
         Assert.assertTrue(solution is NoSolution)
     }

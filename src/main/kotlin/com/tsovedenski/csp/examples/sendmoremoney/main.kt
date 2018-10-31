@@ -2,6 +2,8 @@ package com.tsovedenski.csp.examples.sendmoremoney
 
 import com.tsovedenski.csp.*
 import com.tsovedenski.csp.strategies.Backtracking
+import com.tsovedenski.csp.strategies.MostFamousVariable
+import com.tsovedenski.csp.strategies.SmallestDomainVariable
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
@@ -15,6 +17,6 @@ import kotlin.math.sqrt
  */
 fun main(args: Array<String>) {
     val task = WordSum("SEND", "MORE", "MONEY")
-    val solution = task.solve(strategy = Backtracking)
+    val solution = task.solve(strategy = Backtracking(variableOrdering = SmallestDomainVariable()))
     solution.print()
 }

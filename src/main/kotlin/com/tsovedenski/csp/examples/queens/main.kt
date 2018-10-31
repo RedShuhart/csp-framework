@@ -9,7 +9,7 @@ import com.tsovedenski.csp.strategies.Backtracking
  */
 fun main(args: Array<String>) {
     val task = Queens(1)
-    val solution = task.solve(strategy = Backtracking)
+    val solution = task.solve(strategy = Backtracking())
     solution.print()
     (solution as? Solved)?.let(::printQueens)
 }

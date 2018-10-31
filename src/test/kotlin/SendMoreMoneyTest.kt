@@ -12,7 +12,7 @@ class SendMoreMoneyTest {
     @Test
     fun `SEND + MORE = MONEY`() {
         val task = WordSum("SEND", "MORE", "MONEY")
-        val solution = task.solve(strategy = Backtracking)
+        val solution = task.solve(strategy = Backtracking())
 
         Assert.assertNotNull(solution)
         solution as Solved

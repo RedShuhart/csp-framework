@@ -4,7 +4,7 @@ import com.tsovedenski.csp.strategies.Backtracking
 import com.tsovedenski.csp.Selected
 import com.tsovedenski.csp.Solved
 import com.tsovedenski.csp.solve
-import com.tsovedenski.csp.strategies.ForwardChecking
+import com.tsovedenski.csp.strategies.SmallestDomainVariable
 
 /**
  * Created by Tsvetan Ovedenski on 15/10/2018.
@@ -33,7 +33,7 @@ fun main(args: Array<String>) {
 //        "47xxx1xxx"
 //    )
     val task = Sudoku(grid)
-    val solution = task.solve(strategy = Backtracking)
+    val solution = task.solve(strategy = Backtracking(variableOrdering = SmallestDomainVariable()))
     solution.print()
 
     grid.forEach {

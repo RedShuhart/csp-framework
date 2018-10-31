@@ -42,8 +42,13 @@ fun <V, D> Assignment<V, D>.arcConsistent(constraint: BinaryConstraint<V, D>): A
     val b = getValue(constraint.b)
 
     val filtered = when (b) {
-        is Selected -> a.filter { it != b.value }
-        is Choice   -> a.pairs(b.values).asSequence().filter { (a, b) -> constraint.f(a, b) }.map(Pair<D, D>::first).distinct().toList()
+        is Selected -> a.filter { constraint.f(it, b.value) }
+        is Choice   -> a.pairs(b.values)
+                .asSequence()
+                .filter { (a, b) -> constraint.f(a, b) }
+                .map(Pair<D, D>::first)
+                .distinct()
+                .toList()
     }
 
     val copy = toMutableMap()
