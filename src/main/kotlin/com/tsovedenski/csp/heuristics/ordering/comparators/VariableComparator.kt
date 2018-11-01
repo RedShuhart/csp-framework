@@ -3,7 +3,6 @@ package com.tsovedenski.csp.heuristics.ordering.comparators
 import com.tsovedenski.csp.Choice
 import com.tsovedenski.csp.Constraint
 import com.tsovedenski.csp.heuristics.ordering.Comparison
-import com.tsovedenski.csp.heuristics.ordering.Order
 
 /**
  * Created by Ivan Yushchuk on 01/10/2018.

@@ -1,6 +1,5 @@
 package com.tsovedenski.csp
 
-import com.tsovedenski.csp.heuristics.ordering.comparators.OrderingComparator
 import com.tsovedenski.csp.heuristics.ordering.comparators.VariableComparator
 
 /**
@@ -25,12 +24,16 @@ data class Job <V, D> (val assignment: Assignment<V, D>, val constraints: List<C
     fun selectUnassignedVariable(): Map.Entry<V, Choice<D>>?
             = assignment.filterValues { it is Choice }.entries.firstOrNull() as Map.Entry<V, Choice<D>>?
 
-    fun selectUnassignedVariable(ordering: VariableComparator<V, D>): Map.Entry<V, Choice<D>>?
-        = (assignment.filterValues { it is Choice }.entries as Set<Map.Entry<V, Choice<D>>>)
-            .sortedWith(OrderingComparator(ordering, constraints))
+
+    fun selectUnassignedVariable(ordering: VariableComparator<V, D>): Map.Entry<V, Choice<D>>? =
+            (assignment.filterValues { it is Choice }.entries as Set<Map.Entry<V, Choice<D>>>)
+            .sortedWith(Comparator { o1, o2 ->
+                ordering(o1.key to o1.value, o2.key to o2.value, constraints).asInt
+            })
             .firstOrNull()
 
     fun step() = counter ++
 
     fun duplicate() = copy(assignment = assignment.toMutableMap())
+
 }
