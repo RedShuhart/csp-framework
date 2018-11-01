@@ -3,8 +3,8 @@ package com.tsovedenski.csp.examples.sudoku
 import com.tsovedenski.csp.strategies.Backtracking
 import com.tsovedenski.csp.Selected
 import com.tsovedenski.csp.Solved
+import com.tsovedenski.csp.heuristics.ordering.comparators.SmallestDomainVariable
 import com.tsovedenski.csp.solve
-import com.tsovedenski.csp.strategies.SmallestDomainVariable
 
 /**
  * Created by Tsvetan Ovedenski on 15/10/2018.

@@ -1,6 +1,7 @@
 package com.tsovedenski.csp
 
-import com.tsovedenski.csp.strategies.VariableComparator
+import com.tsovedenski.csp.heuristics.ordering.comparators.OrderingComparator
+import com.tsovedenski.csp.heuristics.ordering.comparators.VariableComparator
 
 /**
  * Created by Tsvetan Ovedenski on 14/10/2018.
@@ -25,10 +26,9 @@ data class Job <V, D> (val assignment: Assignment<V, D>, val constraints: List<C
             = assignment.filterValues { it is Choice }.entries.firstOrNull() as Map.Entry<V, Choice<D>>?
 
     fun selectUnassignedVariable(ordering: VariableComparator<V, D>): Map.Entry<V, Choice<D>>?
-        = (assignment.filterValues { it is Choice }.entries as Set<Map.Entry<V, Choice<D>>>).sortedWith(object : Comparator<Map.Entry<V, Choice<D>>> {
-        override fun compare(o1: Map.Entry<V, Choice<D>>, o2: Map.Entry<V, Choice<D>>)
-                = ordering(o1.key to o1.value, o2.key to o2.value, constraints).asInt
-    }).firstOrNull()
+        = (assignment.filterValues { it is Choice }.entries as Set<Map.Entry<V, Choice<D>>>)
+            .sortedWith(OrderingComparator(ordering, constraints))
+            .firstOrNull()
 
     fun step() = counter ++
 
