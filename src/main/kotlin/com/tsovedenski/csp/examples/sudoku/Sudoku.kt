@@ -17,9 +17,10 @@ data class Sudoku (val grid: List<String>, val placeholder: Char = 'x') : Task<S
 
     val size = grid.size
 
-    override val variables: List<String> = (0 until size).flatMap { x -> (0 until size).map { y -> "$x$y" } }
+    override val variables: Map<String, List<Int>> = (0 until size)
+            .flatMap { x -> (0 until size).map { y -> "$x$y" } }
+            .toDomain((1..9).toList())
 
-    override val domain: List<Int> = (1..9).toList()
 
     override val constraints: List<Constraint<String, Int>> = listOf(
             rows(size).map<List<String>, Constraint<String, Int>>(::AllDiffConstraint),

@@ -1,9 +1,6 @@
 package com.tsovedenski.csp.examples.queens
 
-import com.tsovedenski.csp.AllDiffConstraint
-import com.tsovedenski.csp.AllIndexedConstraint
-import com.tsovedenski.csp.Constraint
-import com.tsovedenski.csp.Task
+import com.tsovedenski.csp.*
 import kotlin.math.abs
 
 
@@ -12,14 +9,13 @@ import kotlin.math.abs
  */
 class Queens(val size: Int) : Task<Int, Int>() {
 
-    override val variables = (0 until size).toList()
-
-    override val domain = (0 until size).toList()
+    override val variables: Map<Int, List<Int>> = (0 until size).toList()
+            .toDomain((0 until size).toList())
 
     override val constraints: List<Constraint<Int, Int>> = listOf(
-        AllDiffConstraint(variables),
+        AllDiffConstraint(variables.keys.toList()),
 
-        AllIndexedConstraint(variables) { (a, i), (b, j) ->
+        AllIndexedConstraint(variables.keys.toList()) { (a, i), (b, j) ->
             abs(a - b) != abs(i - j)
         }
     )

@@ -28,6 +28,9 @@ inline fun <A, B, T> Pair<A, B>.mapRight(crossinline f: (B) -> T): Pair<A, T>
 inline fun <A, B, X, Y> Pair<A, B>.map(crossinline left: (A) -> X, crossinline right: (B) -> Y): Pair<X, Y>
         = Pair(left(first), right(second))
 
+// Variables to domain map
+fun <V, D> List<V>.toDomain(domain: List<D>): Map<V, List<D>> = associate { it to domain }
+
 // fix
 tailrec fun <T> fix(value: T, f: (T) -> T): T {
     val next = f(value)

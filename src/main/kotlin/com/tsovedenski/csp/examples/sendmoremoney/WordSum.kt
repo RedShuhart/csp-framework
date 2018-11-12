@@ -7,9 +7,8 @@ import com.tsovedenski.csp.*
  */
 data class WordSum (val a: String, val b: String, val result: String) : Task<Char, Int>() {
 
-    override val variables: List<Char> = (result + b + a).toList().distinct()
+    override val variables: Map<Char, List<Int>> =  (result + b + a).toList().distinct().toDomain((0..9).toList())
 
-    override val domain: List<Int> = (0..9).toList()
 
     override val constraints: List<Constraint<Char, Int>> = listOf(
         UnaryConstraint(result.first()) { it > 0 },
@@ -18,10 +17,10 @@ data class WordSum (val a: String, val b: String, val result: String) : Task<Cha
 
         UnaryConstraint(b.first()) { it > 0 },
 
-        AllDiffConstraint(variables),
+        AllDiffConstraint(variables.keys.toList()),
 
-        GeneralConstraint(variables) {
-            val map = variables.associate { it to getValue(it) }
+        GeneralConstraint(variables.keys.toList()) {
+            val map = variables.keys.toList().associate { it to getValue(it) }
             val aWord = aReversed.map(map::getValue).zip(tens, ::mult).sum()
             val bWord = bReversed.map(map::getValue).zip(tens, ::mult).sum()
             val resultWord = resultReversed.map(::getValue).zip(tens, ::mult).sum()
