@@ -5,22 +5,25 @@ import com.tsovedenski.csp.*
 /**
  * Created by Tsvetan Ovedenski on 15/10/2018.
  */
-data class WordSum (val a: String, val b: String, val result: String) : Task<Char, Int>() {
+data class WordSum (val a: String, val b: String, val result: String) : Solvable<Char, Int> {
 
-    override val variables: Map<Char, List<Int>> =  (result + b + a).toList().distinct().toDomain((0..9).toList())
+    override fun toTask(): Task<Char, Int> = Task(variables, domain, constraints)
 
+    private val variables =  (result + b + a).toList().distinct()
 
-    override val constraints: List<Constraint<Char, Int>> = listOf(
+    private val domain = (0..9).toList()
+
+    private val constraints: List<Constraint<Char, Int>> = listOf(
         UnaryConstraint(result.first()) { it > 0 },
 
         UnaryConstraint(a.first()) { it > 0 },
 
         UnaryConstraint(b.first()) { it > 0 },
 
-        AllDiffConstraint(variables.keys.toList()),
+        AllDiffConstraint(variables.toList()),
 
-        GeneralConstraint(variables.keys.toList()) {
-            val map = variables.keys.toList().associate { it to getValue(it) }
+        GeneralConstraint(variables.toList()) {
+            val map = variables.toList().associate { it to getValue(it) }
             val aWord = aReversed.map(map::getValue).zip(tens, ::mult).sum()
             val bWord = bReversed.map(map::getValue).zip(tens, ::mult).sum()
             val resultWord = resultReversed.map(::getValue).zip(tens, ::mult).sum()

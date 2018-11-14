@@ -19,20 +19,20 @@ internal fun <A, B> Sequence<A>.pairs(other: Sequence<B>): Sequence<Pair<A, B>>
         = flatMap { a -> other.map { b -> a to b } }
 
 // Pair map
-inline fun <A, B, T> Pair<A, B>.mapLeft(crossinline f: (A) -> T): Pair<T, B>
+internal inline fun <A, B, T> Pair<A, B>.mapLeft(crossinline f: (A) -> T): Pair<T, B>
         = Pair(f(first), second)
 
-inline fun <A, B, T> Pair<A, B>.mapRight(crossinline f: (B) -> T): Pair<A, T>
+internal inline fun <A, B, T> Pair<A, B>.mapRight(crossinline f: (B) -> T): Pair<A, T>
         = Pair(first, f(second))
 
-inline fun <A, B, X, Y> Pair<A, B>.map(crossinline left: (A) -> X, crossinline right: (B) -> Y): Pair<X, Y>
+internal inline fun <A, B, X, Y> Pair<A, B>.map(crossinline left: (A) -> X, crossinline right: (B) -> Y): Pair<X, Y>
         = Pair(left(first), right(second))
 
 // Variables to domain map
-fun <V, D> List<V>.toDomain(domain: List<D>): Map<V, List<D>> = associate { it to domain }
+fun <V, D> List<V>.withDomain(domain: List<D>): Map<V, List<D>> = associate { it to domain }
 
 // fix
-tailrec fun <T> fix(value: T, f: (T) -> T): T {
+internal tailrec fun <T> fix(value: T, f: (T) -> T): T {
     val next = f(value)
     return when (next) {
         value -> next
