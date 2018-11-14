@@ -9,7 +9,7 @@ data class Task <V, D> (
     val domains: Map<V, List<D>>,
     val constraints: List<Constraint<V, D>>,
     open val initialAssignment: Map<V, Domain<D>> = mapOf() // TODO: Best if removed
-) {
+): Solvable<V, D> {
     constructor(variables: List<V>, domain: List<D>, constraints: List<Constraint<V, D>>)
         : this(variables.withDomain(domain), constraints)
 
@@ -17,6 +17,8 @@ data class Task <V, D> (
         : this(variables.associate { it to domainMapper(it) }, constraints)
 
     val variables = domains.keys.toList() // TODO: Or leave it as set?
+
+    override fun toTask(): Task<V, D> = this
 }
 
 fun <V, D> Task<V, D>.toAssignment(): Assignment<V, D> {
