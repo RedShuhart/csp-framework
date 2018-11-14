@@ -9,8 +9,6 @@ import kotlin.math.abs
  */
 class Queens(size: Int) : Solvable<Int, Int> {
 
-    override fun toTask(): Task<Int, Int> = Task(variables, domain, constraints)
-
     private val variables = (0 until size).toList()
 
     private val domain = (0 until size).toList()
@@ -22,4 +20,6 @@ class Queens(size: Int) : Solvable<Int, Int> {
             abs(a - b) != abs(i - j)
         }
     )
+
+    override fun toTask(): Task<Int, Int> = Task(variables, domain, constraints)
 }

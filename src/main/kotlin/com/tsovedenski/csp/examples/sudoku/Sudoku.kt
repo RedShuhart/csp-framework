@@ -15,12 +15,6 @@ import kotlin.math.sqrt
  */
 data class Sudoku (val grid: List<String>, val placeholder: Char = 'x') : Solvable<String, Int> {
 
-    override fun toTask(): Task<String, Int> {
-        val domains = variables.withDomain(domain).toMutableMap()
-        known.forEach { c, v -> domains.merge(c, v) { _, x -> x} }
-        return Task(domains, constraints)
-    }
-
     private val size = grid.size
 
     private val variables = (0 until size)
@@ -40,6 +34,12 @@ data class Sudoku (val grid: List<String>, val placeholder: Char = 'x') : Solvab
             .flatMap { (row, ir) -> row.asSequence().mapIndexed { ic, c -> Triple(c, ir, ic) } }
             .filter { (c, _, _) -> c != placeholder }
             .associate { (c, ir, ic) -> "$ir$ic" to listOf(c.toInt() - 48) }
+
+    override fun toTask(): Task<String, Int> {
+        val domains = variables.withDomain(domain).toMutableMap()
+        known.forEach { c, v -> domains.merge(c, v) { _, x -> x} }
+        return Task(domains, constraints)
+    }
 
     companion object {
         // [[00, 01,.., 08], [10, 11,.., 18], ...]

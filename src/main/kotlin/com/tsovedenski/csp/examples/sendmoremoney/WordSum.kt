@@ -7,8 +7,6 @@ import com.tsovedenski.csp.*
  */
 data class WordSum (val a: String, val b: String, val result: String) : Solvable<Char, Int> {
 
-    override fun toTask(): Task<Char, Int> = Task(variables, domain, constraints)
-
     private val variables =  (result + b + a).toList().distinct()
 
     private val domain = (0..9).toList()
@@ -35,6 +33,8 @@ data class WordSum (val a: String, val b: String, val result: String) : Solvable
     private val aReversed = a.reversed().asSequence()
     private val bReversed = b.reversed().asSequence()
     private val resultReversed = result.reversed().asSequence()
+
+    override fun toTask(): Task<Char, Int> = Task(variables, domain, constraints)
 
     companion object {
         private val tens = generateSequence(1) { it * 10 }
