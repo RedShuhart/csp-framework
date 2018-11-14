@@ -8,7 +8,7 @@ import kotlin.system.measureTimeMillis
 data class Task <V, D> (
     val domains: Map<V, List<D>>,
     val constraints: List<Constraint<V, D>>,
-    open val initialAssignment: Map<V, Variable<D>> = mapOf() // TODO: Best if removed
+    open val initialAssignment: Map<V, Domain<D>> = mapOf() // TODO: Best if removed
 ) {
     constructor(variables: List<V>, domain: List<D>, constraints: List<Constraint<V, D>>)
         : this(variables.withDomain(domain), constraints)
@@ -20,7 +20,7 @@ data class Task <V, D> (
 }
 
 fun <V, D> Task<V, D>.toAssignment(): Assignment<V, D> {
-    val empty: Assignment<V, D> = domains.mapValues { Variable.of(it.value) }.toMutableMap()
+    val empty: Assignment<V, D> = domains.mapValues { Domain.of(it.value) }.toMutableMap()
 //    initialAssignment.forEach { c, v -> empty[c] = v }
     initialAssignment.forEach { c, v -> empty.merge(c, v) { _, x -> x} }
     return empty.toList().sortedBy { it.second !is Selected }.toMap() as Assignment<V, D>
