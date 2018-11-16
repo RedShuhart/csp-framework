@@ -1,10 +1,13 @@
-package com.tsovedenski.csp
+@file:Suppress("UNCHECKED_CAST")
 
-import kotlin.math.min
+package com.tsovedenski.csp
 
 /**
  * Created by Tsvetan Ovedenski on 15/10/2018.
  */
+internal inline fun <K, reified R> Map<K, *>.filterIsInstance(): Map<K, R>
+    = filterValues { it is R } as Map<K, R>
+
 // pairs
 internal fun <T> List<T>.pairs(): List<Pair<T, T>>
         = zip(1 .. size).flatMap { (a, i) -> drop(i).map { b -> a to b } }
