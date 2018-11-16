@@ -21,5 +21,5 @@ class Queens(size: Int) : Solvable<Int, Int> {
         }
     )
 
-    override fun toTask(): Task<Int, Int> = Task(variables, domain, constraints)
+    override fun toProblem(): Problem<Int, Int> = Problem(variables, domain, constraints)
 }

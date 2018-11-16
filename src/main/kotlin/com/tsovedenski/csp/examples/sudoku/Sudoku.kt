@@ -35,10 +35,10 @@ data class Sudoku (val grid: List<String>, val placeholder: Char = 'x') : Solvab
             .filter { (c, _, _) -> c != placeholder }
             .associate { (c, ir, ic) -> "$ir$ic" to listOf(c.toInt() - 48) }
 
-    override fun toTask(): Task<String, Int> {
+    override fun toProblem(): Problem<String, Int> {
         val domains = variables.withDomain(domain).toMutableMap()
         known.forEach { c, v -> domains.merge(c, v) { _, x -> x} }
-        return Task(domains, constraints)
+        return Problem(domains, constraints)
     }
 
     companion object {

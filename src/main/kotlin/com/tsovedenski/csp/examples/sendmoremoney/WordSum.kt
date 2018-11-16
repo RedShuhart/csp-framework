@@ -34,7 +34,7 @@ data class WordSum (val a: String, val b: String, val result: String) : Solvable
     private val bReversed = b.reversed().asSequence()
     private val resultReversed = result.reversed().asSequence()
 
-    override fun toTask(): Task<Char, Int> = Task(variables, domain, constraints)
+    override fun toProblem(): Problem<Char, Int> = Problem(variables, domain, constraints)
 
     companion object {
         private val tens = generateSequence(1) { it * 10 }

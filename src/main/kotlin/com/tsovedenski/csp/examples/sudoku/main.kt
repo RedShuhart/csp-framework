@@ -32,8 +32,8 @@ fun main(args: Array<String>) {
 //        "5x37xxxx8",
 //        "47xxx1xxx"
 //    )
-    val task = Sudoku(grid)
-    val solution = task.solve(strategy = Backtracking(variableOrdering = SmallestDomainVariable()))
+    val problem = Sudoku(grid)
+    val solution = problem.solve(strategy = Backtracking(variableOrdering = SmallestDomainVariable()))
     solution.print()
 
     grid.forEach {

@@ -15,7 +15,7 @@ import kotlin.math.sqrt
  *   = M O N E Y
  */
 fun main(args: Array<String>) {
-    val task = WordSum("SEND", "MORE", "MONEY")
-    val solution = task.solve(strategy = Backtracking(variableOrdering = SmallestDomainVariable()))
+    val problem = WordSum("SEND", "MORE", "MONEY")
+    val solution = problem.solve(strategy = Backtracking(variableOrdering = SmallestDomainVariable()))
     solution.print()
 }

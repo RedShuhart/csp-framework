@@ -7,15 +7,15 @@ import kotlin.system.measureTimeMillis
  * Created by Tsvetan Ovedenski on 14/11/2018.
  */
 interface Solvable <V, D> {
-    fun toTask(): Task<V, D>
+    fun toProblem(): Problem<V, D>
 }
 
 fun <V, D> Solvable<V, D>.solve(strategy: Strategy<V, D> = Backtracking<V, D>()): Solution<V, D>  {
-    val task = toTask()
-    val assignment = task.toAssignment().consistentWith(task.constraints)
-    val job = Job(assignment, task.constraints)
+    val problem = toProblem()
+    val assignment = problem.toAssignment().consistentWith(problem.constraints)
+    val job = Job(assignment, problem.constraints)
 
-    var solved: Job<V, D>? = null // TODO: Change to `val` with Kotlin 1.3
+    var solved: Job<V, D>? = null // TODO: Change to `val` once KT-27856 is done
     val time = measureTimeMillis {
         solved = strategy.run(job)
     }
