@@ -1,7 +1,5 @@
 package com.tsovedenski.csp
 
-import kotlin.coroutines.experimental.*
-
 /**
  * Created by Tsvetan Ovedenski on 14/10/2018.
  */
