@@ -3,7 +3,7 @@ package com.tsovedenski.csp
 /**
  * Created by Tsvetan Ovedenski on 14/10/2018.
  */
-typealias Assignment <V, D> = MutableMap<V, Variable<D>>
+typealias Assignment <V, D> = MutableMap<V, Domain<D>>
 
 fun <V, D> Assignment<V, D>.isComplete(): Boolean
         = all { it.value is Selected }
@@ -31,7 +31,7 @@ fun <V, D> Assignment<V, D>.nodeConsistent(constraint: UnaryConstraint<V, D>): A
     val filtered = values.filter { constraint.f(it) }
 
     val copy = toMutableMap()
-    copy[constraint.variable] = Variable.of(filtered)
+    copy[constraint.variable] = Domain.of(filtered)
 
     return copy
 }
@@ -42,6 +42,7 @@ fun <V, D> Assignment<V, D>.arcConsistent(constraint: BinaryConstraint<V, D>): A
     val b = getValue(constraint.b)
 
     val filtered = when (b) {
+        is Empty    -> a
         is Selected -> a.filter { constraint.f(it, b.value) }
         is Choice   -> a.pairs(b.values)
                 .asSequence()
@@ -52,7 +53,7 @@ fun <V, D> Assignment<V, D>.arcConsistent(constraint: BinaryConstraint<V, D>): A
     }
 
     val copy = toMutableMap()
-    copy[constraint.a] = Variable.of(filtered)
+    copy[constraint.a] = Domain.of(filtered)
 
     return copy
 }

@@ -18,7 +18,7 @@ data class Job <V, D> (val assignment: Assignment<V, D>, val constraints: List<C
 
     fun isComplete() = assignment.isComplete()
 
-    fun assignVariable(key: V, value: Variable<D>)
+    fun assignVariable(key: V, value: Domain<D>)
             = apply { assignment[key] = value }
 
     fun selectUnassignedVariable(): Map.Entry<V, Choice<D>>?

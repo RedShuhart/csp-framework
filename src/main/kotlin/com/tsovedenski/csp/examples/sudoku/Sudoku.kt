@@ -13,28 +13,33 @@ import kotlin.math.sqrt
  *      ...
  * )
  */
-data class Sudoku (val grid: List<String>, val placeholder: Char = 'x') : Task<String, Int>() {
+data class Sudoku (val grid: List<String>, val placeholder: Char = 'x') : Solvable<String, Int> {
 
-    val size = grid.size
+    private val size = grid.size
 
-    override val variables: List<String> = (0 until size).flatMap { x -> (0 until size).map { y -> "$x$y" } }
+    private val variables = (0 until size)
+            .flatMap { x -> (0 until size).map { y -> "$x$y" } }
 
-    override val domain: List<Int> = (1..9).toList()
+    private val domain = (1..9).toList()
 
-    override val constraints: List<Constraint<String, Int>> = listOf(
+    private val constraints: List<Constraint<String, Int>> = listOf(
             rows(size).map<List<String>, Constraint<String, Int>>(::AllDiffConstraint),
             cols(size).map<List<String>, Constraint<String, Int>>(::AllDiffConstraint),
             blocks(size).map<List<String>, Constraint<String, Int>>(::AllDiffConstraint)
     ).flatten()
 
-    private val known: Map<String, Selected<Int>> = grid
+    private val known: Map<String, List<Int>> = grid
             .asSequence()
             .zip(generateSequence(0) { it + 1 })
             .flatMap { (row, ir) -> row.asSequence().mapIndexed { ic, c -> Triple(c, ir, ic) } }
             .filter { (c, _, _) -> c != placeholder }
-            .associate { (c, ir, ic) -> "$ir$ic" to Selected(c.toInt() - 48) }
+            .associate { (c, ir, ic) -> "$ir$ic" to listOf(c.toInt() - 48) }
 
-    override val initialAssignment: Map<String, Variable<Int>> = known
+    override fun toTask(): Task<String, Int> {
+        val domains = variables.withDomain(domain).toMutableMap()
+        known.forEach { c, v -> domains.merge(c, v) { _, x -> x} }
+        return Task(domains, constraints)
+    }
 
     companion object {
         // [[00, 01,.., 08], [10, 11,.., 18], ...]

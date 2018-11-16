@@ -8,6 +8,9 @@ sealed class Solution <out V, out D> {
 }
 
 data class Solved <V, D> (val assignment: Assignment<V, D>, val statistics: Statistics) : Solution<V, D>() {
+    init {
+        assert(assignment.all { it.value is Selected<D> })
+    }
     override fun print() {
         assignment.print()
         statistics.print()
