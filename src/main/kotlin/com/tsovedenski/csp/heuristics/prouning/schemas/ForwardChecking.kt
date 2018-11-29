@@ -8,5 +8,8 @@ import com.tsovedenski.csp.heuristics.prouning.PruneSchema
  */
 
 class ForwardChecking<V>: PruneSchema<V> {
-    override fun invoke(current: V, previuos: Set<V>, next: Set<V>): Set<V> = setOf(current)
+    override fun invoke(current: V, previuos: Set<V>, next: Set<V>): Set<V>  {
+        next.firstOrNull()?.let { return setOf(current, it) }
+        return setOf(current)
+    }
 }
