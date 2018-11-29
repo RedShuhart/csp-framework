@@ -37,8 +37,8 @@ class Backtracking <V, D> (
                 if (result != null) {
                     return result
                 }
-                job.mergeAssignments(originalAssignments)
             }
+            job.mergeAssignments(originalAssignments)
         }
 
         return null
