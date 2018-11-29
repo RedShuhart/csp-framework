@@ -4,6 +4,9 @@ import com.tsovedenski.csp.strategies.Backtracking
 import com.tsovedenski.csp.Selected
 import com.tsovedenski.csp.Solved
 import com.tsovedenski.csp.heuristics.ordering.comparators.SmallestDomainVariable
+import com.tsovedenski.csp.heuristics.prouning.schemas.ForwardChecking
+import com.tsovedenski.csp.heuristics.prouning.schemas.FullLookAhead
+import com.tsovedenski.csp.heuristics.prouning.schemas.PartialLookAhead
 import com.tsovedenski.csp.solve
 
 /**
@@ -33,7 +36,7 @@ fun main(args: Array<String>) {
 //        "47xxx1xxx"
 //    )
     val problem = Sudoku(grid)
-    val solution = problem.solve(strategy = Backtracking(variableOrdering = SmallestDomainVariable()))
+    val solution = problem.solve(strategy = Backtracking(variableOrdering = SmallestDomainVariable(), pruneSchema = PartialLookAhead()))
     solution.print()
 
     grid.forEach {

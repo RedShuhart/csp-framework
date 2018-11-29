@@ -14,8 +14,8 @@ data class Job <V, D> (val assignment: Assignment<V, D>, val constraints: List<C
     fun isValid(): Boolean
             = constraints.all { it(assignment) }
 
-    fun isPartiallyValid(): Boolean
-            = constraints.asSequence().filter { it.canCheck(assignment) }.all { it(assignment) }
+    fun isPartiallyValid(): Boolean = assignment.all { it.value !is Empty } &&
+            constraints.asSequence().filter { it.canCheck(assignment) }.all { it(assignment) }
 
     fun isComplete() = assignment.isComplete()
 
@@ -39,6 +39,8 @@ data class Job <V, D> (val assignment: Assignment<V, D>, val constraints: List<C
         val variablesToPrune =  pruningSchema(slice.current, slice.previous, slice.next)
         return (assignment.filter { variablesToPrune.contains(it.key) } as Assignment<V, D>).consistentWith(constraints)
     }
+
+    fun mergeAssignments(prunedAssignment: Assignment<V, D>) = assignment.putAll(prunedAssignment)
 
     fun step() = counter ++
 

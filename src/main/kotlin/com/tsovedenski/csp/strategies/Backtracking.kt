@@ -21,27 +21,24 @@ class Backtracking <V, D> (
         if (job.isComplete() && job.isValid()) return job
         job.step()
 
-        // TODO currentVariable pass it as current variable ??
-        // is it current ??
-        // for FC shouldn't it be the next one?
-
         val slice = job.sliceAtCurrent(variableOrdering)
         val currentVariable = slice.current ?: return null
         val currentAssignment = job.assignment[currentVariable] as Choice<D>
 
+        val originalAssignments = HashMap(job.assignment)
+
         currentAssignment.values.forEach {
             val attempt = Selected(it)
             job.assignVariable(currentVariable, attempt)
-            // job.prune(pruningSchema = )
-            // TODO decide how to merge pruned assignments with initial assignments
+            val pruned = job.prune(slice, pruneSchema)
+            job.mergeAssignments(pruned)
             if (job.isPartiallyValid()) {
                 val result = run(job)
                 if (result != null) {
                     return result
                 }
+                job.mergeAssignments(originalAssignments)
             }
-
-            job.assignVariable(currentVariable, currentAssignment)
         }
 
         return null
