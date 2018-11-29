@@ -27,7 +27,8 @@ fun <V, D> Assignment<V, D>.consistentWith(constraints: List<Constraint<V, D>>):
 }
 
 fun <V, D> Assignment<V, D>.nodeConsistent(constraint: UnaryConstraint<V, D>): Assignment<V, D> {
-    val values = (getValue(constraint.variable) as? Choice)?.values ?: return this
+
+    val values = (get(constraint.variable) as? Choice)?.values ?: return this
     val filtered = values.filter { constraint.f(it) }
 
     val copy = toMutableMap()
@@ -37,9 +38,9 @@ fun <V, D> Assignment<V, D>.nodeConsistent(constraint: UnaryConstraint<V, D>): A
 }
 
 fun <V, D> Assignment<V, D>.arcConsistent(constraint: BinaryConstraint<V, D>): Assignment<V, D> {
-    val a = (getValue(constraint.a) as? Choice)?.values ?: return this
+    val a = (get(constraint.a) as? Choice)?.values ?: return this
 
-    val b = getValue(constraint.b)
+    val b = get(constraint.b) ?: return this
 
     val filtered = when (b) {
         is Empty    -> a
