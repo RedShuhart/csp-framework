@@ -8,5 +8,5 @@ import com.tsovedenski.csp.heuristics.prouning.PruneSchema
  */
 
 class FullLookAhead<V>: PruneSchema<V> {
-    override fun invoke(current: V, previuos: Set<V>, next: Set<V>): Set<V> = previuos.union(next).plus(current)
+    override fun invoke(current: V, previuos: Set<V>, next: Set<V>): Set<V> = previuos + next + current
 }
