@@ -8,5 +8,5 @@ import com.tsovedenski.csp.heuristics.prouning.PruneSchema
  */
 
 class PartialLookAhead<V>: PruneSchema<V> {
-    override fun invoke(current: V, previuos: Set<V>, next: Set<V>): Set<V> = next.plus(current)
+    override fun invoke(current: V, previuos: Set<V>, next: Set<V>): Set<V> = next + current
 }
