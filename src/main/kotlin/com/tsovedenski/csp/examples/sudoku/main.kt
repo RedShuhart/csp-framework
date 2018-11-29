@@ -36,7 +36,7 @@ fun main(args: Array<String>) {
 //        "47xxx1xxx"
 //    )
     val problem = Sudoku(grid)
-    val solution = problem.solve(strategy = Backtracking(pruneSchema = ForwardChecking()))
+    val solution = problem.solve(strategy = Backtracking())
     solution.print()
 
     grid.forEach {
