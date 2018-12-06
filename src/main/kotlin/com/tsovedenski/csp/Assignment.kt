@@ -1,5 +1,7 @@
 package com.tsovedenski.csp
 
+import com.tsovedenski.csp.heuristics.prouning.Direction
+
 /**
  * Created by Tsvetan Ovedenski on 14/10/2018.
  */
@@ -18,11 +20,11 @@ fun <V, D> emptyAssignment(): Assignment<V, D>
 fun <V, D> Assignment<V, D>.valueOf(key: V): D
         = (get(key) as Selected<D>).value
 
-fun <V, D> Assignment<V, D>.consistentWith(constraints: List<Constraint<V, D>>): Assignment<V, D> = fix(this) { a ->
+fun <V, D> Assignment<V, D>.consistentWith(constraints: List<Constraint<V, D>>, direction: Direction = Direction.SINGLE): Assignment<V, D> = fix(this) { a ->
     var next = a
     next = constraints.filterIsInstance<UnaryConstraint<V, D>>().fold(next) { m, c -> m.nodeConsistent(c) }
-    next = constraints.filterIsInstance<BinaryConstraint<V, D>>().fold(next) { m, c -> m.arcConsistent(c) }
-    next = constraints.filterIsInstance<AllDiffConstraint<V, D>>().fold(next) { m, c -> m.arcConsistent(c) }
+    next = constraints.filterIsInstance<BinaryConstraint<V, D>>().fold(next) { m, c -> m.arcConsistent(c, direction) }
+    next = constraints.filterIsInstance<AllDiffConstraint<V, D>>().fold(next) { m, c -> m.arcConsistent(c, direction) }
     next
 }
 
@@ -37,27 +39,41 @@ fun <V, D> Assignment<V, D>.nodeConsistent(constraint: UnaryConstraint<V, D>): A
     return copy
 }
 
-fun <V, D> Assignment<V, D>.arcConsistent(constraint: BinaryConstraint<V, D>): Assignment<V, D> {
-    val a = (get(constraint.a) as? Choice)?.values ?: return this
+fun <V, D> Assignment<V, D>.arcConsistent(constraint: BinaryConstraint<V, D>, direction: Direction): Assignment<V, D> {
 
-    val b = get(constraint.b) ?: return this
+    fun go(varA: V, varB: V): Assignment<V, D> {
 
-    val filtered = when (b) {
-        is Empty    -> a
-        is Selected -> a.filter { constraint.f(it, b.value) }
-        is Choice   -> a.pairs(b.values)
-                .asSequence()
-                .filter { (a, b) -> constraint.f(a, b) }
-                .map(Pair<D, D>::first)
-                .distinct()
-                .toList()
+        val a = (get(varA) as? Choice)?.values ?: return this
+
+        val b = get(varB) ?: return this
+
+        val filtered = when (b) {
+            is Empty    -> a
+            is Selected -> a.filter { constraint.f(it, b.value) }
+            is Choice   -> a.pairs(b.values)
+                    .asSequence()
+                    .filter { (a, b) -> constraint.f(a, b) }
+                    .map(Pair<D, D>::first)
+                    .distinct()
+                    .toList()
+        }
+
+        val copy = toMutableMap()
+        copy[varA] = Domain.of(filtered)
+
+        return copy
     }
 
-    val copy = toMutableMap()
-    copy[constraint.a] = Domain.of(filtered)
-
-    return copy
+    return when(direction) {
+        Direction.SINGLE -> {
+            go(constraint.a, constraint.b)
+        }
+        Direction.BOTH -> {
+            go(constraint.a, constraint.b)
+            go(constraint.b, constraint.a)
+        }
+    }
 }
 
-fun <V, D> Assignment<V, D>.arcConsistent(constraint: AllDiffConstraint<V, D>): Assignment<V, D>
-        = constraint.asBinaryConstraints().fold(this) { m, c -> m.arcConsistent(c) }
+fun <V, D> Assignment<V, D>.arcConsistent(constraint: AllDiffConstraint<V, D>, direction: Direction): Assignment<V, D>
+        = constraint.asBinaryConstraints().fold(this) { m, c -> m.arcConsistent(c, direction) }

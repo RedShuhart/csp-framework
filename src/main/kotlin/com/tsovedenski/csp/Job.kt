@@ -42,7 +42,7 @@ data class Job <V, D> (val assignment: Assignment<V, D>, val constraints: List<C
 
         val sortedConstraints = pruningSchema(slice, mergedConstraints)
 
-        return assignment.consistentWith(sortedConstraints)
+        return assignment.consistentWith(sortedConstraints, pruningSchema.direction)
     }
 
     fun mergeAssignments(prunedAssignment: Assignment<V, D>) = assignment.putAll(prunedAssignment)

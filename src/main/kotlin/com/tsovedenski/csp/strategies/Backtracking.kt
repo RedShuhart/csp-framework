@@ -14,7 +14,7 @@ import com.tsovedenski.csp.heuristics.prouning.PruneSchema
 
 class Backtracking <V, D> (
     private val variableOrdering: VariableComparator<V, D> = DefaultComparator(),
-    private val pruneSchema: PruneSchema<V> = DefaultPruneSchema()
+    private val pruneSchema: PruneSchema<V, D> = DefaultPruneSchema()
 ) : Strategy<V, D> {
 
     override fun run(job: Job<V, D>): Job<V, D>? {
