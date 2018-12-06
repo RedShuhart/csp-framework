@@ -8,9 +8,18 @@ import com.tsovedenski.csp.BinaryConstraint
  *
  */
 
-typealias PruneSchema <V, D> = (Slice<V>, List<BinaryConstraint<V, D>>) -> List<BinaryConstraint<V, D>>
+enum class Direction {
+    SINGLE, BOTH
+}
 
-class DefaultPruneSchema<V, D> : PruneSchema<V, D> {
+
+//typealias PruneSchema <V, D> = (Slice<V>, List<BinaryConstraint<V, D>>) -> List<BinaryConstraint<V, D>>
+
+abstract class PruneSchema<V, D>(val direction: Direction) {
+    abstract operator fun invoke(slice: Slice<V>,  constraints: List<BinaryConstraint<V, D>>): List<BinaryConstraint<V, D>>
+}
+
+class DefaultPruneSchema<V, D> : PruneSchema<V, D>(direction = Direction.SINGLE) {
     override fun invoke(slice: Slice<V>,  constraints: List<BinaryConstraint<V, D>>)= emptyList<BinaryConstraint<V, D>>()
 }
 

@@ -32,6 +32,10 @@ data class BinaryConstraint <V, D> (val a: V, val b: V, val f: BiPredicate<D>) :
         val valueB = map.valueOf(b)
         return f(valueA, valueB)
     }
+
+//    fun reverse(): BinaryConstraint<V, D> {
+//        return BinaryConstraint(b, a, f)
+//    }
 }
 
 class AllDiffConstraint <V, D> (override val variables: List<V>) : Constraint<V, D> {
