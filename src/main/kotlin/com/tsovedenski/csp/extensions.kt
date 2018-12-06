@@ -34,6 +34,8 @@ internal inline fun <A, B, X, Y> Pair<A, B>.map(crossinline left: (A) -> X, cros
 // Variables to domain map
 fun <V, D> List<V>.withDomain(domain: List<D>): Map<V, List<D>> = associate { it to domain }
 
+fun <V> V?.toSet(): Set<V> = if(this == null) emptySet() else setOf(this)
+
 // fix
 internal tailrec fun <T> fix(value: T, f: (T) -> T): T {
     val next = f(value)
