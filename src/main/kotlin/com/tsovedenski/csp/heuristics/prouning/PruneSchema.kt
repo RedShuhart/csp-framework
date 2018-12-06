@@ -5,8 +5,8 @@ package com.tsovedenski.csp.heuristics.prouning
  *
  */
 
-typealias PruneSchema <V> = (V, Set<V>, Set<V>) -> Set<V>
+typealias PruneSchema <V> = (Slice<V>) -> Set<V>
 
 class DefaultPruneSchema<V> : PruneSchema<V> {
-    override fun invoke(current: V, previous: Set<V>, next: Set<V>) = emptySet<V>()
+    override fun invoke(slice: Slice<V>) = emptySet<V>()
 }

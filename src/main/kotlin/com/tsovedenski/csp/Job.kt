@@ -29,15 +29,22 @@ data class Job <V, D> (val assignment: Assignment<V, D>, val constraints: List<C
         val nextVariables = selectUnassignedVariables(ordering)
         return Slice (
                 current = nextVariables.firstOrNull(),
-                next = nextVariables.drop(1).toSet(),
-                previous = assignment.filterIsInstance<V, Selected<D>>().keys
+                next = nextVariables.drop(1).toMutableSet()
         )
     }
 
     fun prune(slice: Slice<V>, pruningSchema: PruneSchema<V>): Assignment<V, D> {
         slice.current ?: return mutableMapOf()
-        val variablesToPrune =  pruningSchema(slice.current, slice.previous, slice.next)
-        return (assignment.filter { variablesToPrune.contains(it.key) } as Assignment<V, D>).consistentWith(constraints)
+        val variablesToPrune = pruningSchema(slice)
+
+
+        val binaryConstraints = constraints.filterIsInstance<BinaryConstraint<V, D>>()
+        val allDiffConstraints = constraints.filterIsInstance<AllDiffConstraint<V, D>>()
+        val mergedConstraints = binaryConstraints + allDiffConstraints.map { it.asBinaryConstraints() }.flatten()
+        val prunedConstraints = mergedConstraints.filter { it.variables[0] in variablesToPrune }.groupBy { it.variables[0] }
+        val sortedConstraints = variablesToPrune.flatMap { prunedConstraints.getValue(it) }
+
+        return assignment.consistentWith(sortedConstraints)
     }
 
     fun mergeAssignments(prunedAssignment: Assignment<V, D>) = assignment.putAll(prunedAssignment)
