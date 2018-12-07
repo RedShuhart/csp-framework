@@ -16,9 +16,5 @@ data class Problem <V, D> (
     override fun toProblem(): Problem<V, D> = this
 }
 
-fun <V, D> Problem<V, D>.toAssignment(): Assignment<V, D> {
-    val empty: Assignment<V, D> = domains.mapValues { Domain.of(it.value) }.toMutableMap()
-    return empty.toList().sortedBy { it.second !is Selected }.toMap() as Assignment<V, D>
-//    return (empty.toList().sortedBy { it.second !is Selected }.toMap() as Assignment<V, D>).also { it.forEach(::println) }
-//    return empty
-}
+fun <V, D> Problem<V, D>.toAssignment(): Assignment<V, D>
+        = domains.mapValues { Domain.of(it.value) }.toMutableMap()
