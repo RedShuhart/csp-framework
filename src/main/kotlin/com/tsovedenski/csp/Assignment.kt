@@ -29,7 +29,6 @@ fun <V, D> Assignment<V, D>.consistentWith(constraints: List<Constraint<V, D>>, 
 }
 
 fun <V, D> Assignment<V, D>.nodeConsistent(constraint: UnaryConstraint<V, D>): Assignment<V, D> {
-
     val values = (get(constraint.variable) as? Choice)?.values ?: return this
     val filtered = values.filter { constraint.f(it) }
 
@@ -40,12 +39,11 @@ fun <V, D> Assignment<V, D>.nodeConsistent(constraint: UnaryConstraint<V, D>): A
 }
 
 fun <V, D> Assignment<V, D>.arcConsistent(constraint: BinaryConstraint<V, D>, direction: Direction): Assignment<V, D> {
+    val copy = toMutableMap()
 
-    fun go(varA: V, varB: V): Assignment<V, D> {
-
-        val a = (get(varA) as? Choice)?.values ?: return this
-
-        val b = get(varB) ?: return this
+    fun go(varA: V, varB: V) {
+        val a = (get(varA) as? Choice)?.values ?: return
+        val b = get(varB) ?: return
 
         val filtered = when (b) {
             is Empty    -> a
@@ -58,13 +56,10 @@ fun <V, D> Assignment<V, D>.arcConsistent(constraint: BinaryConstraint<V, D>, di
                     .toList()
         }
 
-        val copy = toMutableMap()
         copy[varA] = Domain.of(filtered)
-
-        return copy
     }
 
-    return when(direction) {
+    when(direction) {
         Direction.SINGLE -> {
             go(constraint.a, constraint.b)
         }
@@ -73,6 +68,8 @@ fun <V, D> Assignment<V, D>.arcConsistent(constraint: BinaryConstraint<V, D>, di
             go(constraint.b, constraint.a)
         }
     }
+
+    return copy
 }
 
 fun <V, D> Assignment<V, D>.arcConsistent(constraint: AllDiffConstraint<V, D>, direction: Direction): Assignment<V, D>

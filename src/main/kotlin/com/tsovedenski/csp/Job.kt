@@ -36,10 +36,9 @@ data class Job <V, D> (val assignment: Assignment<V, D>, val constraints: List<C
     fun prune(slice: Slice<V>, pruningSchema: PruneSchema<V, D>): Assignment<V, D> {
         slice.current ?: return mutableMapOf()
 
-        val binaryConstraints = constraints.filterIsInstance<BinaryConstraint<V, D>>()
-        val allDiffConstraints = constraints.filterIsInstance<AllDiffConstraint<V, D>>()
-        val mergedConstraints = binaryConstraints + allDiffConstraints.map { it.asBinaryConstraints() }.flatten()
-
+        val mergedConstraints = constraints
+                .filterIsInstance<AsBinaryConstraints<V, D>>()
+                .flatMap(AsBinaryConstraints<V, D>::asBinaryConstraints)
         val sortedConstraints = pruningSchema(slice, mergedConstraints)
 
         return assignment.consistentWith(sortedConstraints, pruningSchema.direction)

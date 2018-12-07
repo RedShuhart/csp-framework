@@ -15,7 +15,10 @@ interface Constraint <V, D> : (Assignment<V, D>) -> Boolean {
 fun <V, D> Constraint<V, D>.canCheck(assignment: Assignment<V, D>)
         = variables.asSequence().map(assignment::getValue).all { it is Selected }
 
-data class UnaryConstraint <V, D> (val variable: V, val f: Predicate<D>) : Constraint<V, D> {
+data class UnaryConstraint <V, D> (
+    val variable: V,
+    val f: Predicate<D>
+) : Constraint<V, D> {
     override val variables = listOf(variable)
 
     override fun invoke(map: Assignment<V, D>): Boolean {
@@ -24,7 +27,15 @@ data class UnaryConstraint <V, D> (val variable: V, val f: Predicate<D>) : Const
     }
 }
 
-data class BinaryConstraint <V, D> (val a: V, val b: V, val f: BiPredicate<D>) : Constraint<V, D> {
+interface AsBinaryConstraints <V, D> {
+    fun asBinaryConstraints(): List<BinaryConstraint<V, D>>
+}
+
+data class BinaryConstraint <V, D> (
+    val a: V,
+    val b: V,
+    val f: BiPredicate<D>
+) : Constraint<V, D>, AsBinaryConstraints<V, D> {
     override val variables = listOf(a, b)
 
     override fun invoke(map: Assignment<V, D>): Boolean {
@@ -33,12 +44,12 @@ data class BinaryConstraint <V, D> (val a: V, val b: V, val f: BiPredicate<D>) :
         return f(valueA, valueB)
     }
 
-//    fun reverse(): BinaryConstraint<V, D> {
-//        return BinaryConstraint(b, a, f)
-//    }
+    override fun asBinaryConstraints() = listOf(this)
 }
 
-class AllDiffConstraint <V, D> (override val variables: List<V>) : Constraint<V, D> {
+class AllDiffConstraint <V, D> (
+    override val variables: List<V>
+) : Constraint<V, D>, AsBinaryConstraints<V, D> {
     constructor(vararg variables: V): this(variables.toList())
 
     private val list = variables.pairs().map { (a, b) ->
@@ -49,14 +60,17 @@ class AllDiffConstraint <V, D> (override val variables: List<V>) : Constraint<V,
         return list.all { it(map) }
     }
 
-    fun asBinaryConstraints() = list.toList()
+    override fun asBinaryConstraints() = list.toList()
 
     companion object {
         private fun <T> neq(x: T, y: T) = x != y
     }
 }
 
-class AllIndexedConstraint <V, D> (override val variables: List<V>, f: BiPredicate<Indexed<D>>) : Constraint<V, D> {
+class AllIndexedConstraint <V, D> (
+    override val variables: List<V>,
+    f: BiPredicate<Indexed<D>>
+) : Constraint<V, D>, AsBinaryConstraints<V, D> {
     constructor(vararg variables: V, f: BiPredicate<Indexed<D>>): this(variables.toList(), f)
 
     private val list = variables.asSequence().zip(indexes).pairs().map { (a, b) ->
@@ -66,6 +80,8 @@ class AllIndexedConstraint <V, D> (override val variables: List<V>, f: BiPredica
     override fun invoke(map: Assignment<V, D>): Boolean {
         return list.all { it(map) }
     }
+
+    override fun asBinaryConstraints() = list.toList()
 
     companion object {
         private val indexes = generateSequence(0) { it + 1 }
