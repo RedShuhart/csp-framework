@@ -47,18 +47,18 @@ fun main(args: Array<String>) {
     )
     solution.print()
 
-    grid.forEach {
-        println(it)
-    }
-    println()
-    (solution as? Solved)?.let { solved ->
-        val solvedGrid = grid.toMutableList().map { it.toMutableList() }
-        solved.assignment.forEach { p, n ->
-            val (r, c) = p.toList().map { it.toInt() - 48 }
-            solvedGrid[r][c] = ((n as Selected).value + 48).toChar()
-        }
-        solvedGrid.forEach {
-            it.joinToString("").let(::println)
-        }
-    }
+//    grid.forEach {
+//        println(it)
+//    }
+//    println()
+//    (solution as? Solved)?.let { solved ->
+//        val solvedGrid = grid.toMutableList().map { it.toMutableList() }
+//        solved.assignment.forEach { p, n ->
+//            val (r, c) = p.toList().map { it.toInt() - 48 }
+//            solvedGrid[r][c] = ((n as Selected).value + 48).toChar()
+//        }
+//        solvedGrid.forEach {
+//            it.joinToString("").let(::println)
+//        }
+//    }
 }
