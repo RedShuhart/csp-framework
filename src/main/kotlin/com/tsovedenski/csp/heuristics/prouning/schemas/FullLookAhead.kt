@@ -13,7 +13,6 @@ import com.tsovedenski.csp.toSet
  */
 
 class FullLookAhead<V, D>: PruneSchema<V, D>(direction = Direction.BOTH) {
-    override fun invoke(slice: Slice<V>, constraints: List<BinaryConstraint<V, D>>): List<BinaryConstraint<V, D>> {
-        return selectConstraints(slice.current.toSet() + slice.next, constraints)
-    }
+    override fun invoke(slice: Slice<V>, constraints: List<BinaryConstraint<V, D>>)
+            = selectConstraints(slice.current.toSet() + slice.next, constraints)
 }

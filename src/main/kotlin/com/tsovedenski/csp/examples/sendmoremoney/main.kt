@@ -24,8 +24,8 @@ fun main(args: Array<String>) {
     val problem = WordSum("SEND", "MORE", "MONEY")
     val solution = problem.solve(
         strategy = Backtracking(
-            variableOrdering = MostFamousVariable(),
-            pruneSchema = FullLookAhead()
+//            variableOrdering = MostFamousVariable(),
+            pruneSchema = ForwardChecking()
         )
     )
     solution.print()
