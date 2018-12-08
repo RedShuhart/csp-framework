@@ -17,5 +17,6 @@ class ForwardChecking<V, D>: PruneSchema<V, D>(direction = Direction.SINGLE) {
         slice.current ?: return emptyList()
         val nextVariable = slice.next.firstOrNull() ?: return emptyList()
         val constraintsWithNext = constraints.filter { it.variables.contains(nextVariable) }
-        return selectConstraints(setOf(slice.current, nextVariable), constraintsWithNext) }
+        return selectConstraints(setOf(slice.current, nextVariable), constraintsWithNext)
     }
+}

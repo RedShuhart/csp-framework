@@ -6,6 +6,7 @@ import com.tsovedenski.csp.Job
 import com.tsovedenski.csp.Selected
 import com.tsovedenski.csp.heuristics.prouning.Slice
 import com.tsovedenski.csp.heuristics.prouning.schemas.ForwardChecking
+import com.tsovedenski.csp.heuristics.prouning.schemas.FullLookAhead
 import com.tsovedenski.csp.heuristics.prouning.schemas.PartialLookAhead
 import org.junit.Assert
 import org.junit.Before
@@ -14,7 +15,7 @@ import org.junit.Test
 /**
  * Created by Tsvetan Ovedenski on 08/12/18.
  */
-class `PartialLookAhead prunes domains` {
+class `FullLookAhead prunes domains` {
     private val constraints = listOf(
             BinaryConstraint<Char, Int>('A', 'B') { a, b -> a > b },
             BinaryConstraint<Char, Int>('B', 'C') { b, c -> b > c },
@@ -34,13 +35,13 @@ class `PartialLookAhead prunes domains` {
         job = Job(assignment.toMutableMap(), constraints)
     }
 
-    @Test fun `when A is 1, B and C should be empty`()       = test(1, emptyList(),  emptyList())
-    @Test fun `when A is 2, B should have 1 and C empty`()   = test(2, listOf(1),    emptyList())
-    @Test fun `when A is 3, B should have 1-2 and C empty`() = test(3, listOf(1, 2), emptyList())
+    @Test fun `when A is 1, B and C should be empty`() = test(1, emptyList(), emptyList())
+    @Test fun `when A is 2, B and C should be empty`() = test(2, emptyList(), emptyList())
+    @Test fun `when A is 3, B and C should be empty`() = test(3, emptyList(), emptyList())
 
     private fun test(selected: Int, expectedB: List<Int>, expectedC: List<Int>) {
         job.assignVariable('A', Selected(selected))
-        val pruned = job.prune(slice, PartialLookAhead())
+        val pruned = job.prune(slice, FullLookAhead())
         Assert.assertEquals("B", Domain.of(expectedB), pruned['B'])
         Assert.assertEquals("C", Domain.of(expectedC), pruned['C'])
     }
