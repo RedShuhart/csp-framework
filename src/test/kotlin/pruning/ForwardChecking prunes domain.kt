@@ -13,7 +13,7 @@ import org.junit.Test
 /**
  * Created by Tsvetan Ovedenski on 08/12/18.
  */
-class ForwardCheckingTest {
+class `ForwardChecking prunes domain` {
     private val constraint = BinaryConstraint<Char, Int>('A', 'B') { a, b -> a > b }
     private val assignment = mutableMapOf(
             'A' to Domain.of(1, 2, 3),
@@ -25,7 +25,7 @@ class ForwardCheckingTest {
 
     @Before
     fun setup() {
-        job = Job(assignment, listOf(constraint))
+        job = Job(assignment.toMutableMap(), listOf(constraint))
     }
 
     @Test fun `when A is 1, B should be empty`()     = test(1, emptyList())
