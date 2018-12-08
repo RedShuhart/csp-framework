@@ -1,5 +1,6 @@
 import com.tsovedenski.csp.*
 import com.tsovedenski.csp.examples.sendmoremoney.WordSum
+import com.tsovedenski.csp.heuristics.prouning.schemas.PartialLookAhead
 import com.tsovedenski.csp.strategies.Backtracking
 import org.junit.Assert
 import org.junit.Test
@@ -12,7 +13,9 @@ class SendMoreMoneyTest {
     @Test
     fun `SEND + MORE = MONEY`() {
         val task = WordSum("SEND", "MORE", "MONEY")
-        val solution = task.solve(strategy = Backtracking())
+        val solution = task.solve(strategy = Backtracking(
+            pruneSchema = PartialLookAhead()
+        ))
 
         Assert.assertNotNull(solution)
         solution as Solved
