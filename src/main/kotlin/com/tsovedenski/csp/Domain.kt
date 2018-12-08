@@ -11,6 +11,7 @@ sealed class Domain <out A> {
             1 -> of(values.first())
             else -> Choice(values)
         }
+        fun <T> of(vararg values: T) = of(values.toList())
     }
 }
 
