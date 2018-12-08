@@ -1,5 +1,6 @@
 import com.tsovedenski.csp.*
 import com.tsovedenski.csp.examples.queens.Queens
+import com.tsovedenski.csp.heuristics.prouning.schemas.PartialLookAhead
 import com.tsovedenski.csp.strategies.Backtracking
 import org.junit.Assert
 import org.junit.Test
@@ -70,7 +71,9 @@ class QueensTest {
 
     private fun executeTest(n: Int, expected: Assignment<Int, Int>) {
         val task = Queens(n)
-        val solution = task.solve(strategy = Backtracking())
+        val solution = task.solve(strategy = Backtracking(
+            pruneSchema = PartialLookAhead()
+        ))
 
         Assert.assertTrue(solution is Solved)
         solution as Solved

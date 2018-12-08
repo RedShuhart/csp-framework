@@ -1,5 +1,6 @@
 import com.tsovedenski.csp.*
 import com.tsovedenski.csp.examples.sudoku.Sudoku
+import com.tsovedenski.csp.heuristics.prouning.schemas.PartialLookAhead
 import com.tsovedenski.csp.strategies.Backtracking
 import org.junit.Assert
 import org.junit.Test
@@ -346,7 +347,9 @@ class SudokuTest {
 
     private fun execute(grid: List<String>, expected: Assignment<String, Int>) {
         val task = Sudoku(grid)
-        val solution = task.solve(strategy = Backtracking())
+        val solution = task.solve(strategy = Backtracking(
+            pruneSchema = PartialLookAhead()
+        ))
 
         Assert.assertTrue(solution is Solved)
         solution as Solved
