@@ -25,7 +25,7 @@ fun main(args: Array<String>) {
     val solution = problem.solve(
         strategy = Backtracking(
 //            variableOrdering = MostFamousVariable(),
-            pruneSchema = ForwardChecking()
+            pruneSchema = FullLookAhead()
         )
     )
     solution.print()

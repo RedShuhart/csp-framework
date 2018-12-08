@@ -41,31 +41,31 @@ fun <V, D> Assignment<V, D>.nodeConsistent(constraint: UnaryConstraint<V, D>): A
 fun <V, D> Assignment<V, D>.arcConsistent(constraint: BinaryConstraint<V, D>, direction: Direction): Assignment<V, D> {
     val copy = toMutableMap()
 
-    fun go(varA: V, varB: V) {
-        val a = (get(varA) as? Choice)?.values ?: return
-        val b = get(varB) ?: return
+    fun go(varA: V, varB: V, reversed: Boolean) {
+        val a = get(varA) ?: return
+        val b = get(varB)?.toList() ?: return
 
-        val filtered = when (b) {
-            is Empty    -> a
-            is Selected -> a.filter { constraint.f(it, b.value) }
-            is Choice   -> a.pairs(b.values)
+        val filtered = when (a) {
+            is Empty    -> emptyList()
+            is Selected -> b.filter { if (reversed) constraint.f(it, a.value) else constraint.f(a.value, it) }
+            is Choice   -> b.pairs(a.values)
                     .asSequence()
-                    .filter { (a, b) -> constraint.f(a, b) }
+                    .filter { (b, a) -> if (reversed) constraint.f(b, a) else constraint.f(a, b) }
                     .map(Pair<D, D>::first)
                     .distinct()
                     .toList()
         }
 
-        copy[varA] = Domain.of(filtered)
+        copy[varB] = Domain.of(filtered)
     }
 
     when(direction) {
         Direction.SINGLE -> {
-            go(constraint.a, constraint.b)
+            go(constraint.a, constraint.b, reversed = false)
         }
         Direction.BOTH -> {
-            go(constraint.a, constraint.b)
-            go(constraint.b, constraint.a)
+            go(constraint.a, constraint.b, reversed = false)
+            go(constraint.b, constraint.a, reversed = true)
         }
     }
 
