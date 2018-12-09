@@ -53,6 +53,6 @@ data class Job <V, D> (val assignment: Assignment<V, D>, val constraints: List<C
     private fun selectUnassignedVariables(ordering: VariableComparator<V, D>) =
             assignment.filterIsInstance<V, Choice<D>>().entries.asSequence().toSortedSet(Comparator { o1, o2 ->
                 ordering(o1.key to o1.value, o2.key to o2.value, constraints).asInt
-            }).map{ it.key }
+            }).map { it.key }
 
 }
