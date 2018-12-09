@@ -29,8 +29,8 @@ class MostFrequentTest {
 
         Slice('A', setOf('C', 'B')),
 
-        'B' to Domain.of(1, 2, 3, 4),
-        'A' to Domain.of(1, 2),
+        'B' to Domain.of(1, 2, 3),
+        'A' to Domain.of(1, 2, 3),
         'C' to Domain.of(1, 2, 3)
     )
 
