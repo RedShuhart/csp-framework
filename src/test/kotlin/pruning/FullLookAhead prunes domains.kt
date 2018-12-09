@@ -5,9 +5,7 @@ import com.tsovedenski.csp.Domain
 import com.tsovedenski.csp.Job
 import com.tsovedenski.csp.Selected
 import com.tsovedenski.csp.heuristics.prouning.Slice
-import com.tsovedenski.csp.heuristics.prouning.schemas.ForwardChecking
 import com.tsovedenski.csp.heuristics.prouning.schemas.FullLookAhead
-import com.tsovedenski.csp.heuristics.prouning.schemas.PartialLookAhead
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test

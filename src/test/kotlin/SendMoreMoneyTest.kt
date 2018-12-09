@@ -1,6 +1,9 @@
-import com.tsovedenski.csp.*
+import com.tsovedenski.csp.Selected
+import com.tsovedenski.csp.Solved
+import com.tsovedenski.csp.emptyAssignment
 import com.tsovedenski.csp.examples.sendmoremoney.WordSum
 import com.tsovedenski.csp.heuristics.prouning.schemas.PartialLookAhead
+import com.tsovedenski.csp.solve
 import com.tsovedenski.csp.strategies.Backtracking
 import org.junit.Assert
 import org.junit.Test
