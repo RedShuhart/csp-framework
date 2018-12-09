@@ -18,7 +18,7 @@ class LeastFrequentTest {
     private val comparator = LeastFamousVariable<Char, Int>()
 
     @Test
-    fun `variable used in most constraints is chosen`() = sliceTest(comparator,
+    fun `variable used in least constraints is chosen`() = sliceTest(comparator,
         // A is used 4 times, B - 1 time, C - 2 times
         listOf(
             UnaryConstraint('A', const(true)),
@@ -30,8 +30,8 @@ class LeastFrequentTest {
         Slice('B', setOf('C', 'A')),
 
         'C' to Domain.of(1, 2, 3),
-        'B' to Domain.of(1, 2, 3, 4),
-        'A' to Domain.of(1, 2)
+        'B' to Domain.of(1, 2, 3),
+        'A' to Domain.of(1, 2, 3)
     )
 
     @Test
