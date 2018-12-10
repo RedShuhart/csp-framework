@@ -14,9 +14,9 @@ class Queens(size: Int) : Solvable<Int, Int> {
     private val domain = (0 until size).toList()
 
     private  val constraints: List<Constraint<Int, Int>> = listOf(
-        AllDiffConstraint(variables.toList()),
+        AllDiffConstraint(variables),
 
-        AllIndexedConstraint(variables.toList()) { (a, i), (b, j) ->
+        AllIndexedConstraint(variables) { (i, a), (j, b) ->
             abs(a - b) != abs(i - j)
         }
     )

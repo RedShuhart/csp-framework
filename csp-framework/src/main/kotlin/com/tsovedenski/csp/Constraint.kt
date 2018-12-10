@@ -6,7 +6,7 @@ package com.tsovedenski.csp
 typealias Predicate <A> = (A) -> Boolean
 typealias BiPredicate <A> = (A, A) -> Boolean
 
-typealias Indexed <T> = Pair<T, Int>
+typealias Indexed <T> = Pair<Int, T>
 
 interface Constraint <V, D> : (Assignment<V, D>) -> Boolean {
     val variables: List<V>
@@ -73,8 +73,8 @@ class AllIndexedConstraint <V, D> (
 ) : Constraint<V, D>, AsBinaryConstraints<V, D> {
     constructor(vararg variables: V, f: BiPredicate<Indexed<D>>): this(variables.toList(), f)
 
-    private val list = variables.asSequence().zip(indexes).pairs().map { (a, b) ->
-        BinaryConstraint<V, D>(a.first, b.first) { x, y -> f(a.mapLeft { x }, b.mapLeft { y }) }
+    private val list = indexes.zip(variables.asSequence()).pairs().map { (a, b) ->
+        BinaryConstraint<V, D>(a.second, b.second) { x, y -> f(a.mapRight { x }, b.mapRight { y }) }
     }
 
     override fun invoke(map: Assignment<V, D>): Boolean {
