@@ -21,7 +21,7 @@ fun <V, D> sliceTest(
     expected: Slice<V>,
     vararg assignment: Pair<V, Domain<D>>
 ) {
-    val job = Job(assignment.toMap().toMutableMap(), emptyList())
+    val job = Job(assignment.toMap().toMutableMap(), constraints)
     val slice = job.sliceAtCurrent(comparator)
     assertEquals(expected, slice)
 }

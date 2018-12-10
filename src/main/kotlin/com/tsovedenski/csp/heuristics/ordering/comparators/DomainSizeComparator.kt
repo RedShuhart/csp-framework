@@ -20,5 +20,11 @@ class BiggestDomainVariable<V, D> : VariableComparator<V, D> {
             compareByDomainSize(a, b, Order.DESC)
 }
 
-internal fun <V, D> compareByDomainSize(a: Pair<V, Choice<D>>, b: Pair<V, Choice<D>>, order: Order) =
-        Comparison.compare(a.second.values.size, b.second.values.size, order)
+internal fun <V, D> compareByDomainSize(a: Pair<V, Choice<D>>, b: Pair<V, Choice<D>>, order: Order): Comparison {
+    val cmp = Comparison.compare(a.second.values.size, b.second.values.size, order)
+    return when (cmp) {
+        Comparison.EQ -> Comparison.GT
+        else          -> cmp
+    }
+}
+

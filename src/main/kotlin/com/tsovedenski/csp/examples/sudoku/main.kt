@@ -1,15 +1,8 @@
 package com.tsovedenski.csp.examples.sudoku
 
 import com.tsovedenski.csp.strategies.Backtracking
-import com.tsovedenski.csp.Selected
-import com.tsovedenski.csp.Solved
-import com.tsovedenski.csp.heuristics.ordering.comparators.BiggestDomainVariable
-import com.tsovedenski.csp.heuristics.ordering.comparators.LeastFamousVariable
-import com.tsovedenski.csp.heuristics.ordering.comparators.MostFamousVariable
 import com.tsovedenski.csp.heuristics.ordering.comparators.SmallestDomainVariable
-import com.tsovedenski.csp.heuristics.prouning.schemas.ForwardChecking
 import com.tsovedenski.csp.heuristics.prouning.schemas.FullLookAhead
-import com.tsovedenski.csp.heuristics.prouning.schemas.PartialLookAhead
 import com.tsovedenski.csp.solve
 
 /**
