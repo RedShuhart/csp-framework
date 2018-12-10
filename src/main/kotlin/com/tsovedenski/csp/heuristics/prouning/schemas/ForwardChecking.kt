@@ -16,7 +16,7 @@ class ForwardChecking<V, D>: PruneSchema<V, D>(direction = Direction.SINGLE) {
     override fun invoke(slice: Slice<V>, constraints: List<BinaryConstraint<V, D>>): List<BinaryConstraint<V, D>>  {
         slice.current ?: return emptyList()
         val nextVariable = slice.next.firstOrNull() ?: return emptyList()
-        val constraintsWithNext = constraints.filter { it.variables.contains(nextVariable) }
+        val constraintsWithNext = constraints.filter { it.variables[1] == nextVariable }
         return selectConstraints(setOf(slice.current, nextVariable), constraintsWithNext)
     }
 }
