@@ -1,2 +1,4 @@
-rootProject.name = 'csp-example'
-
+include "csp-framework"
+include "csp-nqueens"
+include "csp-sudoku"
+include "csp-wordsum"
