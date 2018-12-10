@@ -10,18 +10,22 @@ import com.tsovedenski.csp.heuristics.ordering.Order
  *
  */
 
-class MostFamousVariable<V, D> : VariableComparator<V, D> {
+class MostFrequentVariable<V, D> : VariableComparator<V, D> {
     override fun invoke(a: Pair<V, Choice<D>>, b: Pair<V, Choice<D>>, c: List<Constraint<V, D>>) =
-            compareByFame(a, b, c, Order.DESC)
+            compareByFrequency(a, b, c, Order.DESC)
 }
 
-class LeastFamousVariable<V, D> : VariableComparator<V, D> {
+class LeastFrequentVariable<V, D> : VariableComparator<V, D> {
     override fun invoke(a: Pair<V, Choice<D>>, b: Pair<V, Choice<D>>, c: List<Constraint<V, D>>) =
-            compareByFame(a, b, c, Order.ASC)
+            compareByFrequency(a, b, c, Order.ASC)
 }
 
-internal fun <V, D> compareByFame (a: Pair<V, Choice<D>>, b: Pair<V, Choice<D>>, c: List<Constraint<V, D>>, order: Order): Comparison {
+internal fun <V, D> compareByFrequency(a: Pair<V, Choice<D>>, b: Pair<V, Choice<D>>, c: List<Constraint<V, D>>, order: Order): Comparison {
     val aOccurrences = c.map { it.variables }.filter { a.first in it }.size
     val bOccurrences = c.map { it.variables }.filter { b.first in it }.size
-    return Comparison.compare(aOccurrences, bOccurrences, order)
+    val cmp = Comparison.compare(aOccurrences, bOccurrences, order)
+    return when (cmp) {
+        Comparison.EQ -> Comparison.GT
+        else          -> cmp
+    }
 }

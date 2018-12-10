@@ -4,7 +4,7 @@ import com.tsovedenski.csp.BinaryConstraint
 import com.tsovedenski.csp.Domain
 import com.tsovedenski.csp.GeneralConstraint
 import com.tsovedenski.csp.UnaryConstraint
-import com.tsovedenski.csp.heuristics.ordering.comparators.MostFamousVariable
+import com.tsovedenski.csp.heuristics.ordering.comparators.MostFrequentVariable
 import com.tsovedenski.csp.heuristics.prouning.Slice
 import const
 import const2
@@ -15,7 +15,7 @@ import sliceTest
  * Created by Tsvetan Ovedenski on 09/12/18.
  */
 class MostFrequentTest {
-    private val comparator = MostFamousVariable<Char, Int>()
+    private val comparator = MostFrequentVariable<Char, Int>()
 
     @Test
     fun `variable used in most constraints is chosen`() = sliceTest(comparator,
