@@ -1,7 +1,5 @@
 package com.tsovedenski.csp.sudoku
 
-import java.io.File
-
 /**
  * Created by Tsvetan Ovedenski on 13/12/18.
  *

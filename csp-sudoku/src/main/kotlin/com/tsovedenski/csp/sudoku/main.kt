@@ -1,15 +1,13 @@
 package com.tsovedenski.csp.sudoku
 
-import com.tsovedenski.csp.Selected
 import com.tsovedenski.csp.Solution
 import com.tsovedenski.csp.Solved
 import com.tsovedenski.csp.benchmark.Benchmark
-import com.tsovedenski.csp.strategies.Backtracking
-import com.tsovedenski.csp.heuristics.ordering.comparators.SmallestDomainVariable
 import com.tsovedenski.csp.heuristics.prouning.schemas.ForwardChecking
 import com.tsovedenski.csp.heuristics.prouning.schemas.FullLookAhead
 import com.tsovedenski.csp.heuristics.prouning.schemas.PartialLookAhead
 import com.tsovedenski.csp.solve
+import com.tsovedenski.csp.strategies.Backtracking
 
 /**
  * Created by Tsvetan Ovedenski on 15/10/2018.

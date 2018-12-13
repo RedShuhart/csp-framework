@@ -1,6 +1,8 @@
 package com.tsovedenski.csp.nqueens
 
-import com.tsovedenski.csp.*
+import com.tsovedenski.csp.Assignment
+import com.tsovedenski.csp.Solved
+import com.tsovedenski.csp.variablesOf
 
 /**
  * Created by Tsvetan Ovedenski on 19/10/18.

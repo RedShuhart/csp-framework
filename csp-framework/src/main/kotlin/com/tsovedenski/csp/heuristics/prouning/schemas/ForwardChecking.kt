@@ -5,7 +5,6 @@ import com.tsovedenski.csp.heuristics.prouning.Direction
 import com.tsovedenski.csp.heuristics.prouning.PruneSchema
 import com.tsovedenski.csp.heuristics.prouning.Slice
 import com.tsovedenski.csp.heuristics.prouning.selectConstraints
-import com.tsovedenski.csp.toSet
 
 /**
  * Created by Ivan Yushchuk on 28/11/2018.

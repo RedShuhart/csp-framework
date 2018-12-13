@@ -1,7 +1,7 @@
 import com.tsovedenski.csp.*
-import com.tsovedenski.csp.sudoku.Sudoku
 import com.tsovedenski.csp.heuristics.prouning.schemas.PartialLookAhead
 import com.tsovedenski.csp.strategies.Backtracking
+import com.tsovedenski.csp.sudoku.Sudoku
 import org.junit.Assert
 import org.junit.Test
 

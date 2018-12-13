@@ -1,7 +1,6 @@
 package com.tsovedenski.csp.benchmark
 
 import com.tsovedenski.csp.Statistics
-import java.lang.StringBuilder
 
 /**
  * Created by Tsvetan Ovedenski on 10/12/18.

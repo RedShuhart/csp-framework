@@ -1,6 +1,6 @@
 import com.tsovedenski.csp.*
-import com.tsovedenski.csp.nqueens.Queens
 import com.tsovedenski.csp.heuristics.prouning.schemas.PartialLookAhead
+import com.tsovedenski.csp.nqueens.Queens
 import com.tsovedenski.csp.strategies.Backtracking
 import org.junit.Assert
 import org.junit.Test

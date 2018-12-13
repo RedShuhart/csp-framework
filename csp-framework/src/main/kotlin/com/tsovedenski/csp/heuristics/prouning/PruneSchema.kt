@@ -1,6 +1,5 @@
 package com.tsovedenski.csp.heuristics.prouning
 
-import com.tsovedenski.csp.AllDiffConstraint
 import com.tsovedenski.csp.BinaryConstraint
 
 /**

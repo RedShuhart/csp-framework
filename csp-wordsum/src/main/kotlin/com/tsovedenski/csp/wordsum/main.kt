@@ -1,7 +1,7 @@
 package com.tsovedenski.csp.wordsum
 
-import com.tsovedenski.csp.*
 import com.tsovedenski.csp.heuristics.prouning.schemas.FullLookAhead
+import com.tsovedenski.csp.solve
 import com.tsovedenski.csp.strategies.Backtracking
 
 /**

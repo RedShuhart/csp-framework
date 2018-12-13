@@ -1,6 +1,8 @@
 package com.tsovedenski.csp.strategies
 
-import com.tsovedenski.csp.*
+import com.tsovedenski.csp.Job
+import com.tsovedenski.csp.Selected
+import com.tsovedenski.csp.Strategy
 
 /**
  * Created by Tsvetan Ovedenski on 15/10/2018.

@@ -1,8 +1,8 @@
 package com.tsovedenski.csp.strategies
 
 import com.tsovedenski.csp.*
-import com.tsovedenski.csp.heuristics.ordering.comparators.VariableComparator
 import com.tsovedenski.csp.heuristics.ordering.comparators.DefaultComparator
+import com.tsovedenski.csp.heuristics.ordering.comparators.VariableComparator
 import com.tsovedenski.csp.heuristics.prouning.DefaultPruneSchema
 import com.tsovedenski.csp.heuristics.prouning.PruneSchema
 
