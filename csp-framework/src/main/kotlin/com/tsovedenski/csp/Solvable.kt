@@ -21,8 +21,9 @@ fun <V, D> Solvable<V, D>.solve(strategy: Strategy<V, D> = Backtracking<V, D>())
         solved = strategy.run(job)
     }
 
-    return when (solved) {
+    val solution = solved?.assignment?.toCompleteAssignment()
+    return when (solution) {
         null -> NoSolution
-        else -> Solved(solved!!.assignment, Statistics(solved!!.counter, time))
+        else -> Solved(solution, Statistics(solved!!.counter, time))
     }
 }

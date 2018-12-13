@@ -6,11 +6,16 @@ import com.tsovedenski.csp.heuristics.prouning.Direction
  * Created by Tsvetan Ovedenski on 14/10/2018.
  */
 typealias Assignment <V, D> = MutableMap<V, Domain<D>>
+typealias CompleteAssignment <V, D> = Map<V, D>
+
+fun <V, D> Assignment<V, D>.toCompleteAssignment(): CompleteAssignment<V, D>?
+    = if (isComplete()) mapValues { (it.value as Selected).value }.toMap()
+      else null
 
 fun <V, D> Assignment<V, D>.isComplete(): Boolean
         = all { it.value is Selected }
 
-fun <V, D> Assignment<V, D>.print()
+fun <V, D> CompleteAssignment<V, D>.print()
         = forEach { c, variable -> println("$c -> $variable") }
             .also { println("----------------------------") }
 

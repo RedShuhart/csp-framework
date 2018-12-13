@@ -13,7 +13,7 @@ class QueensTest {
     fun `1 queens`() {
         val expected = emptyAssignment<Int, Int>().apply {
             this[0] = Selected(value=0)
-        }
+        }.toCompleteAssignment()!!
 
         executeTest(1, expected)
     }
@@ -35,7 +35,7 @@ class QueensTest {
             this[1] = Selected(value=3)
             this[2] = Selected(value=0)
             this[3] = Selected(value=2)
-        }
+        }.toCompleteAssignment()!!
 
         executeTest(4, expected)
     }
@@ -48,7 +48,7 @@ class QueensTest {
             this[2] = Selected(value=4)
             this[3] = Selected(value=1)
             this[4] = Selected(value=3)
-        }
+        }.toCompleteAssignment()!!
 
         executeTest(5, expected)
     }
@@ -64,12 +64,12 @@ class QueensTest {
             this[5] = Selected(value=6)
             this[6] = Selected(value=1)
             this[7] = Selected(value=3)
-        }
+        }.toCompleteAssignment()!!
 
         executeTest(8, expected)
     }
 
-    private fun executeTest(n: Int, expected: Assignment<Int, Int>) {
+    private fun executeTest(n: Int, expected: CompleteAssignment<Int, Int>) {
         val task = Queens(n)
         val solution = task.solve(strategy = Backtracking(
             pruneSchema = PartialLookAhead()

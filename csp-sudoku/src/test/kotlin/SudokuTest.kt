@@ -36,7 +36,7 @@ class SudokuTest {
             this["31"] = Selected(value=3)
             this["32"] = Selected(value=2)
             this["33"] = Selected(value=1)
-        }
+        }.toCompleteAssignment()!!
 
         execute(grid, expected)
     }
@@ -137,7 +137,7 @@ class SudokuTest {
             this["86"] = Selected(value=6)
             this["87"] = Selected(value=3)
             this["88"] = Selected(value=9)
-        }
+        }.toCompleteAssignment()!!
 
         execute(grid, expected)
     }
@@ -238,7 +238,7 @@ class SudokuTest {
             this["86"] = Selected(value=2)
             this["87"] = Selected(value=5)
             this["88"] = Selected(value=9)
-        }
+        }.toCompleteAssignment()!!
 
         execute(grid, expected)
     }
@@ -340,12 +340,12 @@ class SudokuTest {
 //            this["86"] = Selected(value=2)
 //            this["87"] = Selected(value=3)
 //            this["88"] = Selected(value=9)
-//        }
+//        }.toCompleteAssignment()!!
 //
 //        execute(grid, expected)
 //    }
 
-    private fun execute(grid: List<String>, expected: Assignment<String, Int>) {
+    private fun execute(grid: List<String>, expected: CompleteAssignment<String, Int>) {
         val task = Sudoku(grid)
         val solution = task.solve(strategy = Backtracking(
             pruneSchema = PartialLookAhead()

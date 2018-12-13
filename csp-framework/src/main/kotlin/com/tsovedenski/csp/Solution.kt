@@ -7,10 +7,7 @@ sealed class Solution <out V, out D> {
     abstract fun print()
 }
 
-data class Solved <V, D> (val assignment: Assignment<V, D>, val statistics: Statistics) : Solution<V, D>() {
-    init {
-        assert(assignment.all { it.value is Selected<D> })
-    }
+data class Solved <V, D> (val assignment: CompleteAssignment<V, D>, val statistics: Statistics) : Solution<V, D>() {
     override fun print() {
         assignment.print()
         statistics.print()

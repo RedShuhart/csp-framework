@@ -7,17 +7,18 @@ import com.tsovedenski.csp.*
  */
 private val EMPTY = "◦ "
 private val QUEEN = "♛ "
+private val ids = (0..9).map(Int::toString) + ('A'..'Z')
 fun printQueens(solution: Solved<Int, Int>) {
     val size = solution.assignment.size
 
     repeat(size) { i ->
         val string = MutableList(size) { EMPTY }
-        val value = solution.assignment.valueOf(size - 1 - i)
+        val value = solution.assignment.getValue(size - 1 - i)
         string[value] = QUEEN
         println(prefix(i) + string.joinToString(""))
     }
     println("  ╚${"═".repeat(size * 2)}")
-    println("    ${(0 until size).joinToString(" ")}")
+    println("    ${ids.take(size).joinToString(" ")}")
 }
 
 fun printQueensPartial(assignment: Assignment<Int, Int>) {
@@ -35,4 +36,4 @@ fun printQueensPartial(assignment: Assignment<Int, Int>) {
     println("    ${(0 until size).joinToString(" ")}")
 }
 
-private fun prefix(i: Int) = "$i ╟ "
+private fun prefix(i: Int) = "${ids[i]} ╟ "
