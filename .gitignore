@@ -43,3 +43,4 @@ atlassian-ide-plugin.xml
 logs/
 functor.kt
 .attach_*
+!gradle-wrapper.jar
