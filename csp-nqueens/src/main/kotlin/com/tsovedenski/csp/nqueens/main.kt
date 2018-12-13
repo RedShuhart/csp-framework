@@ -14,26 +14,30 @@ import java.util.concurrent.TimeUnit
  * Created by Tsvetan Ovedenski on 19/10/18.
  */
 fun main(args: Array<String>) {
-    val problem = Queens(8)
-//    val solution = problem.solve(
-//        strategy = Backtracking(
-////            variableOrdering = SmallestDomainVariable(),
-//            pruneSchema = ForwardChecking()
-//        )
-//    )
-//    solution.print()
-//    (solution as? Solved)?.let(::printQueens)
+//    runSolution()
+    runBenchmarks()
+}
 
-    val benchmark = Benchmark(problem, 3, TimeUnit.MINUTES, mapOf(
-        "no prune" to Backtracking(),
-        "FC      " to Backtracking(pruneSchema = ForwardChecking()),
-        "PLA     " to Backtracking(pruneSchema = PartialLookAhead()),
-        "FLA     " to Backtracking(pruneSchema = FullLookAhead())
+fun runBenchmarks() {
+    val problem = Queens(7)
+    val benchmark = Benchmark(problem, 1, 3, mapOf(
+            "no prune" to Backtracking(),
+            "FC"       to Backtracking(pruneSchema = ForwardChecking()),
+            "PLA"      to Backtracking(pruneSchema = PartialLookAhead()),
+            "FLA"      to Backtracking(pruneSchema = FullLookAhead())
     ))
 
-    val results = benchmark.execute()
+    benchmark.execute().prettyPrint()
+}
 
-    results.entries.forEach { s, entry ->
-        println("$s\t${entry.pretty(true)}")
-    }
+fun runSolution() {
+    val problem = Queens(7)
+    val solution = problem.solve(
+        strategy = Backtracking(
+//            variableOrdering = SmallestDomainVariable(),
+            pruneSchema = ForwardChecking()
+        )
+    )
+    solution.print()
+    (solution as? Solved)?.let(::printQueens)
 }
