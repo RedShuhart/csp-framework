@@ -90,7 +90,7 @@ fun printSudoku(grid: List<String>, solution: Solution<String, Int>) {
         val solvedGrid = grid.toMutableList().map { it.toMutableList() }
         solved.assignment.forEach { p, n ->
             val (r, c) = p.toList().map { it.toInt() - 48 }
-            solvedGrid[r][c] = ((n as Selected).value + 48).toChar()
+            solvedGrid[r][c] = (n + 48).toChar()
         }
         solvedGrid.forEach {
             it.joinToString("").let(::println)
