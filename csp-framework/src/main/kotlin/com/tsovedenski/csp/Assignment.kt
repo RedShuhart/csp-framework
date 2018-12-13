@@ -20,6 +20,9 @@ fun <V, D> emptyAssignment(): Assignment<V, D>
 fun <V, D> Assignment<V, D>.valueOf(key: V): D
         = (get(key) as Selected<D>).value
 
+fun <V, D> Assignment<V, D>.variablesOf(key: V): List<D>
+    = get(key)?.toList() ?: emptyList()
+
 fun <V, D> Assignment<V, D>.consistentWith(constraints: List<Constraint<V, D>>, direction: Direction = Direction.SINGLE): Assignment<V, D> = fix(this) { a ->
     var next = a
     next = constraints.filterIsInstance<UnaryConstraint<V, D>>().fold(next) { m, c -> m.nodeConsistent(c) }

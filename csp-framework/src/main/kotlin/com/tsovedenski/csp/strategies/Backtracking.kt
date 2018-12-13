@@ -11,10 +11,11 @@ import com.tsovedenski.csp.heuristics.prouning.PruneSchema
  *
  * (Slow) Generate-and-Test algorithm
  */
-
+// TODO come up with better name for 'callback'
 class Backtracking <V, D> (
     private val variableOrdering: VariableComparator<V, D> = DefaultComparator(),
-    private val pruneSchema: PruneSchema<V, D> = DefaultPruneSchema()
+    private val pruneSchema: PruneSchema<V, D> = DefaultPruneSchema(),
+    private val callback: (Assignment<V, D>) -> Unit = {}
 ) : Strategy<V, D> {
 
     override fun run(job: Job<V, D>): Job<V, D>? {
@@ -32,6 +33,7 @@ class Backtracking <V, D> (
             job.assignVariable(current, attempt)
             val pruned = job.prune(slice, pruneSchema)
             job.mergeAssignments(pruned)
+            callback(job.assignment)
             if (job.isPartiallyValid()) {
                 val result = run(job)
                 if (result != null) {

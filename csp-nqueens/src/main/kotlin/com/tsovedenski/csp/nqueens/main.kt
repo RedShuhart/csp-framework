@@ -12,10 +12,7 @@ import com.tsovedenski.csp.strategies.Backtracking
 fun main(args: Array<String>) {
     val problem = Queens(10)
     val solution = problem.solve(
-        strategy = Backtracking(
-//            variableOrdering = SmallestDomainVariable(),
-            pruneSchema = ForwardChecking()
-        )
+        strategy = Backtracking()
     )
     solution.print()
     (solution as? Solved)?.let(::printQueens)

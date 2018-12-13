@@ -1,8 +1,6 @@
 package com.tsovedenski.csp.nqueens
 
-import com.tsovedenski.csp.Selected
-import com.tsovedenski.csp.Solved
-import com.tsovedenski.csp.valueOf
+import com.tsovedenski.csp.*
 
 /**
  * Created by Tsvetan Ovedenski on 19/10/18.
@@ -16,6 +14,21 @@ fun printQueens(solution: Solved<Int, Int>) {
         val string = MutableList(size) { EMPTY }
         val value = solution.assignment.valueOf(size - 1 - i)
         string[value] = QUEEN
+        println(prefix(i) + string.joinToString(""))
+    }
+    println("  ╚${"═".repeat(size * 2)}")
+    println("    ${(0 until size).joinToString(" ")}")
+}
+
+fun printQueensPartial(assignment: Assignment<Int, Int>) {
+    val size = assignment.size
+
+    repeat(size) { i ->
+        val string = MutableList(size) { EMPTY }
+        val variables = assignment.variablesOf(size - 1 - i)
+        if (variables.size == 1) {
+            string[variables.first()] = QUEEN
+        }
         println(prefix(i) + string.joinToString(""))
     }
     println("  ╚${"═".repeat(size * 2)}")
