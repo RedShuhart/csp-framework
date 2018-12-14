@@ -31,7 +31,7 @@ fun runSolution(problem: Sudoku) {
 }
 
 fun runBenchmarks(problem: Sudoku, runs: Int) {
-    val benchmark = Benchmark(problem, runs, 1, mapOf(
+    val benchmark = Benchmark(problem, runs, 2, mapOf(
             "no prune" to Backtracking(),
             "FC"       to Backtracking(pruneSchema = ForwardChecking()),
             "PLA"      to Backtracking(pruneSchema = PartialLookAhead()),

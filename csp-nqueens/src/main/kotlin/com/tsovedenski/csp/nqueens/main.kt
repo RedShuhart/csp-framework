@@ -14,12 +14,12 @@ import com.tsovedenski.csp.strategies.Backtracking
 fun main(args: Array<String>) {
     // fun fact: if N is prime, there are less checks than if N is not prime
     val problem = Queens(7)
-//    runSolution()
-    runBenchmarks()
+//    runSolution(problem)
+//    runBenchmarks(problem)
+    runComparisons()
 }
 
-fun runBenchmarks() {
-    val problem = Queens(7)
+fun runBenchmarks(problem: Queens) {
     val benchmark = Benchmark(problem, 1, 3, mapOf(
             "no prune" to Backtracking(),
             "FC"       to Backtracking(pruneSchema = ForwardChecking()),
@@ -30,8 +30,20 @@ fun runBenchmarks() {
     benchmark.execute().prettyPrint()
 }
 
-fun runSolution() {
-    val problem = Queens(7)
+fun runComparisons() {
+    repeat(18) {
+        val p = Queens(it)
+        val s = p.solve(Backtracking(pruneSchema = FullLookAhead()))
+        print("n = $it  ")
+        if (s is Solved) {
+            println(s.statistics.pretty(true))
+        } else {
+            println("No solution")
+        }
+    }
+}
+
+fun runSolution(problem: Queens) {
     val solution = problem.solve(
         strategy = Backtracking(
             pruneSchema = FullLookAhead()
