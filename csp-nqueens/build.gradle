@@ -1,3 +1,4 @@
 dependencies {
-    compile project(":csp-framework-reactor")    
+    compile project(":csp-framework-reactor")
+    compile group: 'org.processing', name: 'core', version: '3.3.7'
 }
