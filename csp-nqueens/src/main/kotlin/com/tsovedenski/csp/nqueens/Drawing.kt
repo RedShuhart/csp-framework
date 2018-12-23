@@ -2,9 +2,7 @@ package com.tsovedenski.csp.nqueens
 
 import com.tsovedenski.csp.*
 import com.tsovedenski.csp.heuristics.ordering.comparators.BiggestDomainVariable
-import com.tsovedenski.csp.heuristics.prouning.schemas.ForwardChecking
-import com.tsovedenski.csp.heuristics.prouning.schemas.FullLookAhead
-import com.tsovedenski.csp.heuristics.prouning.schemas.PartialLookAhead
+import com.tsovedenski.csp.heuristics.pruning.schemas.FullLookAhead
 import com.tsovedenski.csp.reactor.Backtracking
 import processing.core.PApplet
 import processing.core.PImage

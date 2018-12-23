@@ -3,8 +3,8 @@ package com.tsovedenski.csp.reactor
 import com.tsovedenski.csp.*
 import com.tsovedenski.csp.heuristics.ordering.comparators.DefaultComparator
 import com.tsovedenski.csp.heuristics.ordering.comparators.VariableComparator
-import com.tsovedenski.csp.heuristics.prouning.DefaultPruneSchema
-import com.tsovedenski.csp.heuristics.prouning.PruneSchema
+import com.tsovedenski.csp.heuristics.pruning.DefaultPruneSchema
+import com.tsovedenski.csp.heuristics.pruning.PruneSchema
 import reactor.core.publisher.FluxSink
 
 /**
@@ -14,9 +14,9 @@ import reactor.core.publisher.FluxSink
  */
 // TODO come up with better name for 'callback'
 class Backtracking <V, D> (
-    private val variableOrdering: VariableComparator<V, D> = DefaultComparator(),
-    private val pruneSchema: PruneSchema<V, D> = DefaultPruneSchema(),
-    private val sink: FluxSink<Assignment<V, D>>
+        private val variableOrdering: VariableComparator<V, D> = DefaultComparator(),
+        private val pruneSchema: PruneSchema<V, D> = DefaultPruneSchema(),
+        private val sink: FluxSink<Assignment<V, D>>
 ) : Strategy<V, D> {
 
     override fun run(job: Job<V, D>): Job<V, D>? {
