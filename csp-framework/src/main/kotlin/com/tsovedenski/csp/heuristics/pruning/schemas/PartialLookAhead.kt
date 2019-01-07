@@ -14,7 +14,10 @@ import com.tsovedenski.csp.toSet
 /**
  * Partial Look-Ahead pruning schema.
  *
- * Some description TODO
+ * It selects constraints whose variables are current and all following
+ * chosen according to the ordering by [com.tsovedenski.csp.heuristics.ordering.comparators.VariableComparator] .
+ *
+ * Pruning direction is set to [Direction.SINGLE]
  */
 class PartialLookAhead<V, D>: PruneSchema<V, D>(direction = Direction.SINGLE) {
     override fun invoke(slice: Slice<V>, constraints: List<BinaryConstraint<V, D>>)

@@ -14,6 +14,7 @@ import com.tsovedenski.csp.heuristics.pruning.selectConstraints
  * Forward checking pruning schema.
  *
  * It selects constraints whose variables are current and the very next one.
+ * Pruning direction is set to [Direction.SINGLE]
  */
 class ForwardChecking<V, D>: PruneSchema<V, D>(direction = Direction.SINGLE) {
     override fun invoke(slice: Slice<V>, constraints: List<BinaryConstraint<V, D>>): List<BinaryConstraint<V, D>>  {
