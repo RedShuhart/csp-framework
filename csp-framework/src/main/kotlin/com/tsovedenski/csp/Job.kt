@@ -43,7 +43,7 @@ data class Job <V, D> (val assignment: Assignment<V, D>, val constraints: List<C
     fun assignVariable(key: V, value: Domain<D>)
             = apply { assignment[key] = value }
 
-    // TODO: REMOVE THAT
+    // TODO: REMOVE THAT OR NOT THIS IS THE QUESTION
     fun selectUnassignedVariable(): Map.Entry<V, Choice<D>>?
             = assignment.filterIsInstance<V, Choice<D>>().entries.firstOrNull()
 

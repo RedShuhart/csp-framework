@@ -16,7 +16,7 @@ enum class Direction {
 //typealias PruneSchema <V, D> = (Slice<V>, List<BinaryConstraint<V, D>>) -> List<BinaryConstraint<V, D>>
 
 /**
- * Schema that prunes.
+ * Schema that decides domains [com.tsovedenski.csp.Domain] of which variables to prune and selects constraints [com.tsovedenski.csp.Constraint] they are involved in.
  *
  * @param direction see [Direction].
  */
@@ -28,7 +28,7 @@ abstract class PruneSchema <V, D> (val direction: Direction) {
 }
 
 /**
- * This schema returns empty list of constraints, i.e. it never prunes.
+ * This schema returns empty list of constraints [com.tsovedenski.csp.Constraint], i.e. it never prunes.
  */
 class DefaultPruneSchema <V, D> : PruneSchema<V, D> (direction = Direction.SINGLE) {
     override fun invoke(slice: Slice<V>,  constraints: List<BinaryConstraint<V, D>>) = emptyList<BinaryConstraint<V, D>>()
