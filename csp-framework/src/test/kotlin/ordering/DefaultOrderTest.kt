@@ -2,7 +2,7 @@ package ordering
 
 import com.tsovedenski.csp.Domain
 import com.tsovedenski.csp.heuristics.ordering.comparators.DefaultComparator
-import com.tsovedenski.csp.heuristics.prouning.Slice
+import com.tsovedenski.csp.heuristics.pruning.Slice
 import org.junit.Test
 import sliceTest
 

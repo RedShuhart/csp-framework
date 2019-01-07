@@ -6,8 +6,17 @@ import com.tsovedenski.csp.Strategy
 
 /**
  * Created by Tsvetan Ovedenski on 15/10/2018.
+ */
+
+/**
+ * (Slow) Generate-and-Test algorithm.
  *
- * (Slow) Generate-and-Test algorithm
+ * Goes through each possible assignment until it finds one that
+ * satisfies all constraints.
+ * Guaranteed to find a solution if it exists.
+ *
+ * @param V the type of variable identifier.
+ * @param D the type of domain value.
  */
 class GenerateAndTest <V, D> : Strategy<V, D> {
     override fun run(job: Job<V, D>): Job<V, D>? {

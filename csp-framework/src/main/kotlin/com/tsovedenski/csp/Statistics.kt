@@ -6,6 +6,13 @@ import java.util.*
 /**
  * Created by Tsvetan Ovedenski on 14/10/2018.
  */
+
+/**
+ * Statistics after a solution has been found.
+ *
+ * @property counter how many nodes were visited.
+ * @property time how many milliseconds it's taken.
+ */
 data class Statistics (val counter: Long, val time: Long) {
     private val formatter = NumberFormat.getInstance(Locale("pl", "PL"))
     fun print(oneline: Boolean = false) {

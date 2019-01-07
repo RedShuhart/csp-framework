@@ -1,11 +1,19 @@
 package com.tsovedenski.csp
 
-import com.tsovedenski.csp.heuristics.prouning.Direction
+import com.tsovedenski.csp.heuristics.pruning.Direction
 
 /**
  * Created by Tsvetan Ovedenski on 14/10/2018.
  */
+
+/**
+ * A map of variables to their domains (see [Domain]).
+ */
 typealias Assignment <V, D> = MutableMap<V, Domain<D>>
+
+/**
+ * A map of variables to their values.
+ */
 typealias CompleteAssignment <V, D> = Map<V, D>
 
 fun <V, D> Assignment<V, D>.toCompleteAssignment(): CompleteAssignment<V, D>?

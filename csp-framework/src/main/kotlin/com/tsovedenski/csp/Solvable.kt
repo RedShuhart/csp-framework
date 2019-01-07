@@ -6,7 +6,16 @@ import kotlin.system.measureTimeMillis
 /**
  * Created by Tsvetan Ovedenski on 14/11/2018.
  */
+
+/**
+ * This interface allows it's implementor to be solved.
+ */
 interface Solvable <V, D> {
+
+    /**
+     * Define a CSP problem.
+     * @see [Problem].
+     */
     fun toProblem(): Problem<V, D>
 }
 

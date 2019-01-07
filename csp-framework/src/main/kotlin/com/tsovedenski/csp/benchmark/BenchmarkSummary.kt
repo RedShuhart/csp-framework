@@ -5,6 +5,10 @@ import com.tsovedenski.csp.Statistics
 /**
  * Created by Tsvetan Ovedenski on 10/12/18.
  */
+
+/**
+ * Represents statistics for each benchmarked strategy.
+ */
 data class BenchmarkSummary (val entries: Map<String, Statistics>) {
     fun prettyPrint() {
         val longestKey = getLongestKey() ?: return

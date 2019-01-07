@@ -1,9 +1,9 @@
 package com.tsovedenski.csp.wordsum
 
 import com.tsovedenski.csp.benchmark.Benchmark
-import com.tsovedenski.csp.heuristics.prouning.schemas.ForwardChecking
-import com.tsovedenski.csp.heuristics.prouning.schemas.FullLookAhead
-import com.tsovedenski.csp.heuristics.prouning.schemas.PartialLookAhead
+import com.tsovedenski.csp.heuristics.pruning.schemas.ForwardChecking
+import com.tsovedenski.csp.heuristics.pruning.schemas.FullLookAhead
+import com.tsovedenski.csp.heuristics.pruning.schemas.PartialLookAhead
 import com.tsovedenski.csp.solve
 import com.tsovedenski.csp.strategies.Backtracking
 

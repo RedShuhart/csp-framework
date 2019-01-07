@@ -3,7 +3,7 @@ import com.tsovedenski.csp.Constraint
 import com.tsovedenski.csp.Domain
 import com.tsovedenski.csp.Job
 import com.tsovedenski.csp.heuristics.ordering.comparators.VariableComparator
-import com.tsovedenski.csp.heuristics.prouning.Slice
+import com.tsovedenski.csp.heuristics.pruning.Slice
 import org.junit.Assert.assertEquals
 
 /**
