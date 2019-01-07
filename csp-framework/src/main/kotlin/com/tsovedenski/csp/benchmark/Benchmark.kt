@@ -5,6 +5,15 @@ import com.tsovedenski.csp.*
 /**
  * Created by Tsvetan Ovedenski on 10/12/18.
  */
+
+/**
+ * Benchmark different [strategies] for a given [solvable].
+ *
+ * @param solvable the problem to be solved.
+ * @param runs how many times to solve the problem with one strategy.
+ * @param warmupRuns how many times to solve the problem without recording statistics.
+ * @param strategies a map of strategy identifier and the strategy itself.
+ */
 class Benchmark <V, D> (
     private val solvable: Solvable<V, D>,
     private val runs: Int,

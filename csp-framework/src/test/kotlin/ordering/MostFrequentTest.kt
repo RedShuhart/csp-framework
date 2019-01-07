@@ -5,7 +5,7 @@ import com.tsovedenski.csp.Domain
 import com.tsovedenski.csp.GeneralConstraint
 import com.tsovedenski.csp.UnaryConstraint
 import com.tsovedenski.csp.heuristics.ordering.comparators.MostFrequentVariable
-import com.tsovedenski.csp.heuristics.prouning.Slice
+import com.tsovedenski.csp.heuristics.pruning.Slice
 import const
 import const2
 import org.junit.Test

@@ -7,14 +7,19 @@ import com.tsovedenski.csp.heuristics.ordering.Order
 
 /**
  * Created by Ivan Yushchuk on 01/10/2018.
- *
  */
 
+/**
+ * Choose the variable with smaller domain.
+ */
 class SmallestDomainVariable<V, D> : VariableComparator<V, D> {
     override fun invoke(a: Pair<V, Choice<D>>, b: Pair<V, Choice<D>>, c: List<Constraint<V, D>>) =
             compareByDomainSize(a, b, Order.ASC)
 }
 
+/**
+ * Choose the variable with bigger domain.
+ */
 class BiggestDomainVariable<V, D> : VariableComparator<V, D> {
     override fun invoke(a: Pair<V, Choice<D>>, b: Pair<V, Choice<D>>, c: List<Constraint<V, D>>) =
             compareByDomainSize(a, b, Order.DESC)

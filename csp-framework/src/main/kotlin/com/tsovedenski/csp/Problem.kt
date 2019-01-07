@@ -3,6 +3,15 @@ package com.tsovedenski.csp
 /**
  * Created by Tsvetan Ovedenski on 14/10/2018.
  */
+
+/**
+ * A CSP problem definition.
+ *
+ * @param V the type of variable identifier.
+ * @param D the type of domain value.
+ * @param domains a map of variables and their domains.
+ * @param constraints constraints that must be satisfied.
+ */
 data class Problem <V, D> (
     val domains: Map<V, List<D>>,
     val constraints: List<Constraint<V, D>>

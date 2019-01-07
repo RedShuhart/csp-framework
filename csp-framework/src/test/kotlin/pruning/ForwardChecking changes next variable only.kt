@@ -4,8 +4,8 @@ import com.tsovedenski.csp.BinaryConstraint
 import com.tsovedenski.csp.Domain
 import com.tsovedenski.csp.Job
 import com.tsovedenski.csp.Selected
-import com.tsovedenski.csp.heuristics.prouning.Slice
-import com.tsovedenski.csp.heuristics.prouning.schemas.ForwardChecking
+import com.tsovedenski.csp.heuristics.pruning.Slice
+import com.tsovedenski.csp.heuristics.pruning.schemas.ForwardChecking
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test

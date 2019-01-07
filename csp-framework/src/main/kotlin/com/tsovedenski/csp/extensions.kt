@@ -31,7 +31,11 @@ internal inline fun <A, B, T> Pair<A, B>.mapRight(crossinline f: (B) -> T): Pair
 internal inline fun <A, B, X, Y> Pair<A, B>.map(crossinline left: (A) -> X, crossinline right: (B) -> Y): Pair<X, Y>
         = Pair(left(first), right(second))
 
-// Variables to domain map
+/**
+ * Assigns [domain] to each variable [V].
+ * @param V the type of variable identifier.
+ * @param T the type of domain value.
+ */
 fun <V, D> List<V>.withDomain(domain: List<D>): Map<V, List<D>> = associate { it to domain }
 
 fun <V> V?.toSet(): Set<V> = if(this == null) emptySet() else setOf(this)
