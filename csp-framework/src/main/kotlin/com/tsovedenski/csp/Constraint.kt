@@ -78,15 +78,18 @@ data class BinaryConstraint <V, D> (
 }
 
 /**
- * Alldiff constraint in which all [variables] should be different.
+ * AllConstraint constraint between all [variables].
+ *
+ *  * @param predicate [BiPredicate] checks consistency ob constraint variables.
  */
-class AllDiffConstraint <V, D> (
-    override val variables: List<V>
+class AllConstraint <V, D> (
+        override val variables: List<V>,
+        private val predicate: BiPredicate<D>
 ) : Constraint<V, D>, AsBinaryConstraints<V, D> {
-    constructor(vararg variables: V): this(variables.toList())
+    constructor(vararg variables: V, predicate: BiPredicate<D>): this(variables.toList(), predicate)
 
     private val list = variables.pairs().map { (a, b) ->
-        BinaryConstraint<V, D>(a, b, ::neq)
+        BinaryConstraint(a, b, predicate)
     }
 
     override fun invoke(map: Assignment<V, D>): Boolean {
@@ -94,11 +97,14 @@ class AllDiffConstraint <V, D> (
     }
 
     override fun asBinaryConstraints() = list.toList()
-
-    companion object {
-        private fun <T> neq(x: T, y: T) = x != y
-    }
 }
+
+/**
+ * AllDiff constraint in which all [variables] should be different.
+ *
+ *  * @param validator [BiPredicate] checks consistency ob constraint variables.
+ */
+fun <V, D> AllDiffConstraint(variables: List<V>) =  AllConstraint(variables) { x: D, y: D -> x != y}
 
 /**
  * Alldiff constraint in which all [variables] should be different.

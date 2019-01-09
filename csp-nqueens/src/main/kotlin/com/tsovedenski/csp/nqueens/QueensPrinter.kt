@@ -38,4 +38,5 @@ fun printQueensPartial(assignment: Assignment<Int, Int>) {
     println("    ${(0 until size).joinToString(" ")}")
 }
 
+
 private fun prefix(i: Int) = "${ids[i]} ╟ "

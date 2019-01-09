@@ -1,4 +1,4 @@
-package com.tsovedenski.csp.scheduling.utils
+package com.tsovedenski.csp.scheduling
 
 /**
  * Created by Ivan Yushchuk on 03/01/2019.
@@ -19,5 +19,5 @@ enum class DayOfWeek(val asInt: Int, val asString: String) {
         fun fromInt(key: Int) = values.getValue(key)
     }
 
-    fun toMillis() = this.asInt * 86400000L
+    fun toMinutes() = this.asInt * 24L * 60L
 }
