@@ -1,19 +1,23 @@
 package com.tsovedenski.csp.scheduling
 
 import com.tsovedenski.csp.*
+import com.tsovedenski.csp.scheduling.TimeRange.Companion.fromString
+import java.io.File
 import kotlin.random.Random
 
 class Scheduling : Solvable<String, TimeRange> {
 
-    private val classesSchedules = mapOf(
-            "Algebra" to generateListOfClasses(),
-            "Calculus" to generateListOfClasses(),
-            "Physics" to generateListOfClasses(),
-            "German" to generateListOfClasses(),
-            "Geography" to generateListOfClasses(),
-            "History" to generateListOfClasses(),
-            "Literature" to generateListOfClasses()
-    )
+//    val classesSchedules = mapOf(
+//            "Algebra" to generateListOfClasses(),
+//            "Calculus" to generateListOfClasses(),
+//            "Physics" to generateListOfClasses(),
+//            "German" to generateListOfClasses(),
+//            "Geography" to generateListOfClasses(),
+//            "History" to generateListOfClasses(),
+//            "Literature" to generateListOfClasses()
+//    )
+
+    val classesSchedules = readFileToSchedules("schedules.txt")
 
     private val classes = classesSchedules.keys.toList()
 
@@ -45,7 +49,36 @@ fun List<TimeRange>.reduceList(): List<TimeRange> {
     return subList(first, second)
 }
 
+fun List<TimeRange>.toText(): String =
+    joinToString(";") { it.print() }
+
 fun printSchedule(solution: Solved<String, TimeRange>) {
     val classes = solution.assignment.toList()
     classes.forEach { println("${it.first} ${it.second.print()}") }
 }
+
+fun writeClassesToFile(classesSchedules: Map<String, List<TimeRange>>, filePath: String) {
+    File(filePath).printWriter().use { out ->
+        classesSchedules
+                .toList()
+                .map { "${it.first}_${it.second.toText()}" }
+                .forEach {out.println(it)}
+    }
+}
+//Algebra_Tuesday 8:30-Tuesday 9:30;Tuesday 8:30-Tuesday 9:45;
+fun textToSchedule(text: String): List<TimeRange>
+        = text.split(";").map { TimeRange.fromString(it) }
+
+fun toClassSchedulePair(text: String): Pair<String, List<TimeRange>> {
+    val split = text.split("_")
+    return Pair(split[0], textToSchedule(split[1]))
+}
+
+fun readFileToSchedules(filePath: String)
+        = File(filePath)
+        .bufferedReader()
+        .readLines()
+        .map { toClassSchedulePair(it) }
+        .associateBy({it.first}, {it.second})
+
+

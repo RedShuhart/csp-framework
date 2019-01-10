@@ -7,6 +7,11 @@ import com.tsovedenski.csp.strategies.Backtracking
 
 fun main(args: Array<String>) {
     val problem = Scheduling()
+
+    writeClassesToFile(problem.classesSchedules, "schedules.txt")
+
+
+
     val s = problem.solve(Backtracking(variableOrdering = BiggestDomainVariable()))
 
     if (s is Solved) {

@@ -16,6 +16,14 @@ data class Boundary(val minutes: Long) {
         val minutes = (minutes - days * 1440L - hours * 60L)
         return "${DayOfWeek.fromInt(days.toInt()).asString} $hours:$minutes"
     }
+
+    companion object {
+        //Algebra_Tuesday 8:30-Tuesday 9:30;Tuesday 8:30-Tuesday 9:45;
+        fun fromString(text: String): Boundary {
+            val split = text.split(" ")
+            return Boundary(DayOfWeek.fromString(split[0]), timeStringToMillis(split[1]))
+        }
+    }
 }
 
 fun timeStringToMillis(time: String): Long {

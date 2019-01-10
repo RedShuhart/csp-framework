@@ -8,8 +8,15 @@ data class TimeRange(val start: Boundary, val end: Boundary) {
 
     fun overlaps(range: TimeRange) = end.minutes >= range.start.minutes && range.end.minutes >= start.minutes
 
-    fun print() = "${start.print()} - ${end.print()}"
+    fun print() = "${start.print()}-${end.print()}"
 
+    companion object {
+        //Algebra_Tuesday 8:30-Tuesday 9:30;Tuesday 8:30-Tuesday 9:45;
+        fun fromString(text: String): TimeRange {
+            val split = text.split("-")
+            return TimeRange(Boundary.fromString(split[0]), Boundary.fromString(split[1]))
+        }
+    }
 }
 
 fun areOverlapping(r1: TimeRange, r2: TimeRange) = r1.overlaps(r2)

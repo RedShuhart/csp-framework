@@ -16,7 +16,10 @@ enum class DayOfWeek(val asInt: Int, val asString: String) {
 
     companion object {
         val values = DayOfWeek.values().associateBy(DayOfWeek::asInt)
+        val names = DayOfWeek.values().associateBy(DayOfWeek::asString)
         fun fromInt(key: Int) = values.getValue(key)
+        fun fromString(name: String) = names.getValue(name)
+
     }
 
     fun toMinutes() = this.asInt * 24L * 60L
