@@ -14,11 +14,18 @@ interface Solvable <V, D> {
 
     /**
      * Define a CSP problem.
+     *
      * @see [Problem].
      */
     fun toProblem(): Problem<V, D>
 }
 
+/**
+ * Try to solve a [Solvable].
+ *
+ * @param strategy see [Strategy]
+ * @return see [Solution]
+ */
 fun <V, D> Solvable<V, D>.solve(strategy: Strategy<V, D> = Backtracking<V, D>()): Solution<V, D>  {
     val problem = toProblem()
 //    val assignment = problem.toAssignment().consistentWith(problem.constraints)
