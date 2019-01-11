@@ -68,7 +68,16 @@ fun main(args: Array<String>) {
 }
 ```
 
-### Use heuristics
+### Constraints
+A constraint is a predicate of `Assignment`.
+There are several constraints:
+* `UnaryConstraint` - constraint on a single variable.
+* `BinaryConstraint` - constraint between two variables.
+* `AllConstraint` - constraint between all variables.
+    * `AllDiffConstraint` - all variables' values should be different.
+* `GeneralConstraint` - constraint that allows arbitrary logic with arbitrary number of variables.
+
+### Heuristics
 `Solvable::solve` accepts a `Strategy` as a parameter.
 `Strategy` is responsible for solving the problem.
 With this framework there are two strategies included: backtracking and generate-and-test.
@@ -95,7 +104,7 @@ you can select a pruning scheme by passing one of the 3 options to `pruneScheme`
 If you want to create your own class that can be solved, you have to implement `Solvable`.
 In other words - define a CSP problem: variables, domains and constraints.
 `Problem` can be defined in 3 ways (constructors):
-* `(domains, constraints)` - the canonical representation, where domains is a `Map<V, List<D>>`.
+* `(domains, constraints)` - the canonical representation, where `domains` is a map from variable to a list of values.
 * `(variables, domain, constraints)` - here `domain` gets copied to each variable.
 * `(variables, constraints, domainMapper)` - here the function `domainMapper` allows arbitrary logic that maps each variable to a domain.
 
