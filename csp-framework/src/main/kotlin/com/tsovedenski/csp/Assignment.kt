@@ -39,8 +39,7 @@ fun <V, D> Assignment<V, D>.variablesOf(key: V): List<D>
 fun <V, D> Assignment<V, D>.consistentWith(constraints: List<Constraint<V, D>>, direction: Direction = Direction.SINGLE): Assignment<V, D> = fix(this) { a ->
     var next = a
     next = constraints.filterIsInstance<UnaryConstraint<V, D>>().fold(next) { m, c -> m.nodeConsistent(c) }
-    next = constraints.filterIsInstance<BinaryConstraint<V, D>>().fold(next) { m, c -> m.arcConsistent(c, direction) }
-    next = constraints.filterIsInstance<AllDiffConstraint<V, D>>().fold(next) { m, c -> m.arcConsistent(c, direction) }
+    next = constraints.filterIsInstance<AsBinaryConstraints<V, D>>().fold(next) { m, c -> m.arcConsistent(c, direction) }
     next
 }
 
@@ -88,5 +87,5 @@ fun <V, D> Assignment<V, D>.arcConsistent(constraint: BinaryConstraint<V, D>, di
     return copy
 }
 
-fun <V, D> Assignment<V, D>.arcConsistent(constraint: AllDiffConstraint<V, D>, direction: Direction): Assignment<V, D>
+fun <V, D> Assignment<V, D>.arcConsistent(constraint: AsBinaryConstraints<V, D>, direction: Direction): Assignment<V, D>
         = constraint.asBinaryConstraints().fold(this) { m, c -> m.arcConsistent(c, direction) }

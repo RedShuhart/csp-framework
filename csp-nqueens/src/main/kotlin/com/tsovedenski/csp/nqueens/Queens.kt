@@ -13,12 +13,12 @@ class Queens(size: Int) : Solvable<Int, Int> {
 
     private val domain = (0 until size).toList()
 
-    private  val constraints: List<Constraint<Int, Int>> = listOf(
-        AllDiffConstraint(variables),
+    private val constraints: List<Constraint<Int, Int>> = listOf(
+            AllDiffConstraint(variables),
 
-        AllIndexedConstraint(variables) { (i, a), (j, b) ->
-            abs(a - b) != abs(i - j)
-        }
+            AllIndexedConstraint(variables) { (i, a), (j, b) ->
+                abs(a - b) != abs(i - j)
+            }
     )
 
     override fun toProblem(): Problem<Int, Int> = Problem(variables, domain, constraints)
