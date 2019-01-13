@@ -5,19 +5,7 @@ import com.tsovedenski.csp.scheduling.TimeRange.Companion.fromString
 import java.io.File
 import kotlin.random.Random
 
-class Scheduling : Solvable<String, TimeRange> {
-
-//    val classesSchedules = mapOf(
-//            "Algebra" to generateListOfClasses(),
-//            "Calculus" to generateListOfClasses(),
-//            "Physics" to generateListOfClasses(),
-//            "German" to generateListOfClasses(),
-//            "Geography" to generateListOfClasses(),
-//            "History" to generateListOfClasses(),
-//            "Literature" to generateListOfClasses()
-//    )
-
-    val classesSchedules = readFileToSchedules("schedules.txt")
+class Scheduling(val classesSchedules: Map<String, List<TimeRange>>) : Solvable<String, TimeRange> {
 
     private val classes = classesSchedules.keys.toList()
 
@@ -74,8 +62,7 @@ fun toClassSchedulePair(text: String): Pair<String, List<TimeRange>> {
     return Pair(split[0], textToSchedule(split[1]))
 }
 
-fun readFileToSchedules(filePath: String)
-        = File(filePath)
+fun readFileToSchedules(filePath: String) = File(filePath)
         .bufferedReader()
         .readLines()
         .map { toClassSchedulePair(it) }
