@@ -39,4 +39,5 @@ fun printQueensPartial(assignment: Assignment<Int, Int>) {
 }
 
 
+
 private fun prefix(i: Int) = "${ids[i]} ╟ "

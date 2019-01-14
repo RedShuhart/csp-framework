@@ -1,5 +1,5 @@
 include "csp-framework"
-include "csp-scheduling"
+include "csp-framework-reactor"
 include "csp-nqueens"
 include "csp-sudoku"
 include "csp-wordsum"
