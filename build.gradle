@@ -1,22 +1,85 @@
-plugins {
-    id 'org.jetbrains.kotlin.jvm' version '1.2.71'
-}
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 group 'com.tsovedenski'
 version '1.0-SNAPSHOT'
 
-repositories {
-    mavenCentral()
+buildscript {
+    ext {
+        kotlinVersion = '1.3.11'
+        dokkaVersion = '0.9.17'
+    }
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:${dokkaVersion}"
+    }
 }
 
-dependencies {
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    testCompile "junit:junit:4.12"
-}
+subprojects {
+    apply plugin: 'kotlin'
+    apply plugin: 'org.jetbrains.dokka'
 
-compileKotlin {
-    kotlinOptions.jvmTarget = "1.8"
-}
-compileTestKotlin {
-    kotlinOptions.jvmTarget = "1.8"
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+        testCompile "junit:junit:4.12"
+    }
+
+    compileKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+
+    compileTestKotlin {
+        kotlinOptions.jvmTarget = "1.8"
+    }
+
+    dokka {
+        outputFormat = 'html'
+        outputDirectory = "$buildDir/javadoc"
+    }
+
+    tasks.withType(Test) {
+        testLogging {
+            // set options for log level LIFECYCLE
+            events TestLogEvent.FAILED,
+                    TestLogEvent.PASSED,
+                    TestLogEvent.SKIPPED,
+                    TestLogEvent.STANDARD_OUT
+            exceptionFormat TestExceptionFormat.FULL
+            showExceptions true
+            showCauses true
+            showStackTraces true
+
+            // set options for log level DEBUG and INFO
+            debug {
+                events TestLogEvent.STARTED,
+                        TestLogEvent.FAILED,
+                        TestLogEvent.PASSED,
+                        TestLogEvent.SKIPPED,
+                        TestLogEvent.STANDARD_ERROR,
+                        TestLogEvent.STANDARD_OUT
+                exceptionFormat TestExceptionFormat.FULL
+            }
+            info.events = debug.events
+            info.exceptionFormat = debug.exceptionFormat
+
+            afterSuite { desc, result ->
+                if (!desc.parent) { // will match the outermost suite
+                    def output = "Results: ${result.resultType} (${result.testCount} tests, ${result.successfulTestCount} successes, ${result.failedTestCount} failures, ${result.skippedTestCount} skipped)"
+                    def startItem = '|  ', endItem = '  |'
+                    def repeatLength = startItem.length() + output.length() + endItem.length()
+                    println('\n' + ('-' * repeatLength) + '\n' + startItem + output + endItem + '\n' + ('-' * repeatLength))
+                }
+            }
+        }
+    }
 }

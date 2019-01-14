@@ -1,0 +1,6 @@
+Algebra_Monday 1:00-Monday 2:00
+Calculus_Tuesday 1:00-Tuesday 2:00
+Physics_Wednesday 1:00-Wednesday 2:00
+German_Thursday 1:00-Thursday 2:00
+Geography_Friday 1:00-Friday 2:00
+History_Sunday 1:00-Sunday 2:00
