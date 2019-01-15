@@ -3,6 +3,7 @@ package com.tsovedenski.csp.nqueens
 import com.tsovedenski.csp.Assignment
 import com.tsovedenski.csp.Solved
 import com.tsovedenski.csp.benchmark.Benchmark
+import com.tsovedenski.csp.benchmark.LazyBenchmark
 import com.tsovedenski.csp.heuristics.pruning.schemas.ForwardChecking
 import com.tsovedenski.csp.heuristics.pruning.schemas.FullLookAhead
 import com.tsovedenski.csp.heuristics.pruning.schemas.PartialLookAhead
@@ -19,21 +20,22 @@ import java.time.Duration
  */
 fun main(args: Array<String>) {
     // fun fact: if N is prime, there are less checks than if N is not prime
-    val problem = Queens(7)
-    runSolution(problem)
-//    runBenchmarks(problem)
+    val problem = Queens(6)
+//    runSolution(problem)
+    runBenchmarks(problem)
 //    runComparisons()
 }
 
 fun runBenchmarks(problem: Queens) {
-    val benchmark = Benchmark(problem, 1, 3, mapOf(
-            "no prune" to Backtracking(),
-            "FC"       to Backtracking(pruneSchema = ForwardChecking()),
-            "PLA"      to Backtracking(pruneSchema = PartialLookAhead()),
-            "FLA"      to Backtracking(pruneSchema = FullLookAhead())
+    val benchmark = LazyBenchmark(problem, 1, 3, mapOf(
+        "no prune" to Backtracking(),
+        "FC"       to Backtracking(pruneSchema = ForwardChecking()),
+        "PLA"      to Backtracking(pruneSchema = PartialLookAhead()),
+        "FLA"      to Backtracking(pruneSchema = FullLookAhead())
     ))
 
-    benchmark.execute().prettyPrint()
+    println("strategy,counter,time[ms]")
+    benchmark.execute().forEach { println("${it.first},${it.second.csv()}") }
 }
 
 fun runComparisons() {

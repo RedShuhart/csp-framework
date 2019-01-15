@@ -32,6 +32,11 @@ data class Statistics (val counter: Long, val time: Long) {
         }
         return builder.toString()
     }
+    fun csv(): String {
+        val counterF = formatter.format(counter)
+        val timeF = formatter.format(time)
+        return "$counterF,$timeF"
+    }
     companion object {
         val ZERO = Statistics(-1, -1)
     }
