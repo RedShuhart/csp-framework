@@ -1,13 +1,14 @@
 package com.tsovedenski.csp.sudoku
 
-import com.tsovedenski.csp.Solution
-import com.tsovedenski.csp.Solved
+import com.tsovedenski.csp.*
 import com.tsovedenski.csp.benchmark.Benchmark
 import com.tsovedenski.csp.heuristics.pruning.schemas.ForwardChecking
 import com.tsovedenski.csp.heuristics.pruning.schemas.FullLookAhead
 import com.tsovedenski.csp.heuristics.pruning.schemas.PartialLookAhead
 import com.tsovedenski.csp.solve
 import com.tsovedenski.csp.strategies.Backtracking
+import java.lang.StringBuilder
+import kotlin.math.sqrt
 
 /**
  * Created by Tsvetan Ovedenski on 15/10/2018.
@@ -15,8 +16,8 @@ import com.tsovedenski.csp.strategies.Backtracking
 fun main(args: Array<String>) {
     val problem = Sudoku(sudoku1)
 
-//    runSolution(problem)
-    runBenchmarks(problem, 1)
+    runSolution(problem)
+    //runBenchmarks(problem, 1)
 }
 
 fun runSolution(problem: Sudoku) {
@@ -94,4 +95,29 @@ fun printSudoku(grid: List<String>, solution: Solution<String, Int>) {
             it.joinToString("").let(::println)
         }
     }
+}
+
+fun printSudokuPartial(assignment: Assignment<String, Int>) {
+    val size = sqrt(assignment.size.toFloat()).toInt()
+
+    repeat(size) { i ->
+        val rowFirstIndex = (size) * i
+        val rowLastIndex = (size) * i + size
+
+        val rowVariables = assignment
+                .toList()
+                .subList(rowFirstIndex, rowLastIndex)
+                .map { it.second }
+
+        val rowString = rowVariables
+                .joinTo(StringBuilder(), separator = "") {printCell(it)}
+
+        println(rowString)
+    }
+    println("============================")
+}
+
+fun printCell(domain: Domain<Int>): String {
+    val list = domain.toList()
+    return  if (list.toList().size == 1) list.first().toString() else "x"
 }

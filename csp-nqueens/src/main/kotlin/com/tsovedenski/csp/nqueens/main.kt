@@ -1,5 +1,6 @@
 package com.tsovedenski.csp.nqueens
 
+import com.tsovedenski.csp.Assignment
 import com.tsovedenski.csp.Solved
 import com.tsovedenski.csp.benchmark.Benchmark
 import com.tsovedenski.csp.heuristics.pruning.schemas.ForwardChecking
@@ -7,6 +8,11 @@ import com.tsovedenski.csp.heuristics.pruning.schemas.FullLookAhead
 import com.tsovedenski.csp.heuristics.pruning.schemas.PartialLookAhead
 import com.tsovedenski.csp.solve
 import com.tsovedenski.csp.strategies.Backtracking
+import com.tsovedenski.csp.reactor.ReactorBacktracking
+
+import reactor.core.publisher.Mono
+import reactor.core.publisher.TopicProcessor
+import java.time.Duration
 
 /**
  * Created by Tsvetan Ovedenski on 19/10/18.
@@ -14,9 +20,9 @@ import com.tsovedenski.csp.strategies.Backtracking
 fun main(args: Array<String>) {
     // fun fact: if N is prime, there are less checks than if N is not prime
     val problem = Queens(7)
-//    runSolution(problem)
+    runSolution(problem)
 //    runBenchmarks(problem)
-    runComparisons()
+//    runComparisons()
 }
 
 fun runBenchmarks(problem: Queens) {
@@ -44,9 +50,21 @@ fun runComparisons() {
 }
 
 fun runSolution(problem: Queens) {
+
+    val processor = TopicProcessor.create<Assignment<Int, Int>>()
+    val sink = processor.sink()
+
+    processor.concatMap { it -> Mono.just(it).delayElement(Duration.ofMillis(100)) }
+            .doOnNext{ printQueensPartial(it)}
+            .doOnComplete{
+                print("Finished")
+                processor.shutdown()
+            }.subscribe()
+
     val solution = problem.solve(
-        strategy = Backtracking(
-            pruneSchema = FullLookAhead()
+        strategy = ReactorBacktracking(
+            pruneSchema = ForwardChecking(),
+                sink = sink
         )
     )
     solution.print()
