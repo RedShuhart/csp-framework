@@ -8,13 +8,11 @@ import com.tsovedenski.csp.heuristics.pruning.schemas.FullLookAhead
 import com.tsovedenski.csp.heuristics.pruning.schemas.PartialLookAhead
 import com.tsovedenski.csp.solve
 import com.tsovedenski.csp.strategies.Backtracking
-import com.tsovedenski.csp.reactor.Backtracking as ReactorBacktrack
+import com.tsovedenski.csp.reactor.ReactorBacktracking
 
 import reactor.core.publisher.Mono
 import reactor.core.publisher.TopicProcessor
-import java.lang.AssertionError
 import java.time.Duration
-import javax.annotation.processing.Processor
 
 /**
  * Created by Tsvetan Ovedenski on 19/10/18.
@@ -64,7 +62,7 @@ fun runSolution(problem: Queens) {
             }.subscribe()
 
     val solution = problem.solve(
-        strategy = ReactorBacktrack(
+        strategy = ReactorBacktracking(
             pruneSchema = ForwardChecking(),
                 sink = sink
         )

@@ -9,14 +9,15 @@ import reactor.core.publisher.FluxSink
 
 /**
  * Created by Tsvetan Ovedenski on 15/10/2018.
- *
- * (Slow) Generate-and-Test algorithm
  */
-// TODO come up with better name for 'callback'
-class Backtracking <V, D> (
-        private val variableOrdering: VariableComparator<V, D> = DefaultComparator(),
-        private val pruneSchema: PruneSchema<V, D> = DefaultPruneSchema(),
-        private val sink: FluxSink<Assignment<V, D>>
+
+/**
+ * Backtracking with Reactor support.
+ */
+class ReactorBacktracking <V, D> (
+    private val variableOrdering: VariableComparator<V, D> = DefaultComparator(),
+    private val pruneSchema: PruneSchema<V, D> = DefaultPruneSchema(),
+    private val sink: FluxSink<Assignment<V, D>>
 ) : Strategy<V, D> {
 
     override fun run(job: Job<V, D>): Job<V, D>? {

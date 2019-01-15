@@ -2,12 +2,11 @@ package com.tsovedenski.csp.sudoku
 
 import com.tsovedenski.csp.*
 import com.tsovedenski.csp.heuristics.pruning.schemas.FullLookAhead
-import com.tsovedenski.csp.reactor.Backtracking as ReactorBacktracking
+import com.tsovedenski.csp.reactor.ReactorBacktracking
 import processing.core.PApplet
 import reactor.core.publisher.Mono
 import reactor.core.publisher.TopicProcessor
 import reactor.core.scheduler.Schedulers
-import java.lang.StringBuilder
 import java.time.Duration
 import kotlin.concurrent.thread
 
@@ -26,7 +25,6 @@ class ProcessingSudoku: PApplet() {
     }
 
     override fun setup() {
-
         val problem = Sudoku(sudoku1)
         val processor = TopicProcessor.create<Assignment<String, Int>>()
         val sink = processor.sink()
@@ -36,7 +34,6 @@ class ProcessingSudoku: PApplet() {
                 .publishOn(Schedulers.parallel())
                 .doOnNext {
                     assignment = it
-                    printSudokuPartial(it)
                 }
                 .doOnComplete {
                     processor.shutdown()
@@ -44,10 +41,10 @@ class ProcessingSudoku: PApplet() {
 
         thread {
             val solution = problem.solve(
-                    strategy = ReactorBacktracking(
-                            pruneSchema = FullLookAhead(),
-                            sink = sink
-                    )
+                strategy = ReactorBacktracking(
+                    pruneSchema = FullLookAhead(),
+                    sink = sink
+                )
             )
             solution.print()
             printSudoku(problem.grid, solution)

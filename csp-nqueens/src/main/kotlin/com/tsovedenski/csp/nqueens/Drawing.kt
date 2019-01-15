@@ -1,9 +1,8 @@
 package com.tsovedenski.csp.nqueens
 
 import com.tsovedenski.csp.*
-import com.tsovedenski.csp.heuristics.ordering.comparators.BiggestDomainVariable
 import com.tsovedenski.csp.heuristics.pruning.schemas.FullLookAhead
-import com.tsovedenski.csp.reactor.Backtracking
+import com.tsovedenski.csp.reactor.ReactorBacktracking
 import processing.core.PApplet
 import processing.core.PImage
 import reactor.core.publisher.Mono
@@ -34,22 +33,22 @@ class ProcessingQueens: PApplet() {
         val processor = TopicProcessor.create<Assignment<Int, Int>>()
         val sink = processor.sink()
 
-        processor.concatMap { it -> Mono.just(it).delayElement(Duration.ofMillis(500)) }
+        processor.concatMap { it -> Mono.just(it).delayElement(Duration.ofMillis(100)) }
                 .subscribeOn(Schedulers.parallel())
                 .publishOn(Schedulers.parallel())
                 .doOnNext{
                     assignment = it
-                    printQueensPartial(it) }
+                }
                 .doOnComplete{
                     processor.shutdown()
-                }.subscribe{}
+                }.subscribe()
 
         thread {
             val solution = problem.solve(
-                    strategy = Backtracking(
-                            pruneSchema = FullLookAhead(),
-                            sink = sink
-                    )
+                strategy = ReactorBacktracking(
+                    pruneSchema = FullLookAhead(),
+                    sink = sink
+                )
             )
             solution.print()
             (solution as? Solved)?.let(::printQueens)
@@ -85,12 +84,7 @@ class ProcessingQueens: PApplet() {
         fill(if (isBlack) 20 else 210)
         rect(position.x, position.y, size, size)
         if (hasQueen) {
-//            val img = loadImage("data/queen.png")
-//            fill(if (isBlack) 255 else 0)
-//            textSize(size / 1.5f)
-//            textAlign(CENTER, CENTER)
-//            text("Q", position.x + size / 2f, position.y + size / 2f)
-           tint(if (isBlack) 255 else 40)
+            tint(if (isBlack) 255 else 40)
             image(queen, position.x, position.y, size, size)
         }
     }
