@@ -32,4 +32,7 @@ data class Statistics (val counter: Long, val time: Long) {
         }
         return builder.toString()
     }
+    companion object {
+        val ZERO = Statistics(-1, -1)
+    }
 }

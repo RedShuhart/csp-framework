@@ -33,6 +33,9 @@ class Benchmark <V, D> (
     )
 
     private fun List<Statistics>.summarize(): Statistics {
+        if (isEmpty()) {
+            return Statistics.ZERO
+        }
         val checks = foldRight(Pair(0L, 0)) { s, (c, i) -> Pair(c + s.counter, i + 1) }
         val time   = foldRight(Pair(0L, 0)) { s, (c, i) -> Pair(c + s.time, i + 1) }
         return Statistics(checks.first / checks.second, time.first / time.second)
