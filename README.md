@@ -61,10 +61,9 @@ fun main(args: Array<String>) {
         is Solved     -> solution.assignment.print()
     }
     
-    // prints:
-    //   a -> 3
-    //   b -> 1
-    //   c -> 4
+    // a -> 3
+    // b -> 1
+    // c -> 4
 }
 ```
 
@@ -93,7 +92,7 @@ You can alter the way variables are selected by passing one of the 4 options to 
 
 #### Pruning Scheme
 By default no pruning is done.
-you can select a pruning scheme by passing one of the 3 options to `pruneScheme` parameter:
+You can select a pruning scheme by passing one of the 3 options to `pruneScheme` parameter:
 * `ForwardChecking`
 * `PartialLookAhead`
 * `FullLookAhead`
@@ -114,5 +113,25 @@ For examples, see `csp-sudoku`, `csp-nqueens`, `csp-wordsum` and `csp-scheduling
 ## API Documentation
 In order to generate the API documentation, run `./gradlew dokka`.
 The result will be in `$project/build/javadoc`.
-Alternatively, run `./gradlew $project:dokka` to generate the docs for `$project` only.
+Alternatively, run `./gradlew $project:dokka` to generate the docs for `$project`.
 _(There is documentation for `csp-framework` only.)_
+
+
+## Benchmarking
+If you want to see which strategy (together with its parameters) is better for a given problem, you can use `Benchmark`.
+It runs the problem several times and takes the average amount of checks and time it's taken to solve.
+
+For example, to see the difference between pruning schemes, we'd write the following:
+
+```kotlin
+val runs = 5
+val warmup = 2 // run 2 times beforehand for each strategy
+val benchmark = Benchmark(problem, runs, warmup, mapOf(
+    "no prune" to Backtracking(),
+    "FC"       to Backtracking(pruneSchema = ForwardChecking()),
+    "PLA"      to Backtracking(pruneSchema = PartialLookAhead()),
+    "FLA"      to Backtracking(pruneSchema = FullLookAhead())
+))
+
+benchmark.execute().prettyPrint()
+```
