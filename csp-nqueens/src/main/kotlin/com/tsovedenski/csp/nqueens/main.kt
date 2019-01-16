@@ -4,6 +4,8 @@ import com.tsovedenski.csp.Assignment
 import com.tsovedenski.csp.Solved
 import com.tsovedenski.csp.benchmark.Benchmark
 import com.tsovedenski.csp.benchmark.LazyBenchmark
+import com.tsovedenski.csp.heuristics.ordering.comparators.MostFrequentVariable
+import com.tsovedenski.csp.heuristics.ordering.comparators.SmallestDomainVariable
 import com.tsovedenski.csp.heuristics.pruning.schemas.ForwardChecking
 import com.tsovedenski.csp.heuristics.pruning.schemas.FullLookAhead
 import com.tsovedenski.csp.heuristics.pruning.schemas.PartialLookAhead
@@ -20,10 +22,19 @@ import java.time.Duration
  */
 fun main(args: Array<String>) {
     // fun fact: if N is prime, there are less checks than if N is not prime
-    val problem = Queens(6)
+    val problem = Queens(15)
 //    runSolution(problem)
-    runBenchmarks(problem)
+//    runBenchmarks(problem)
 //    runComparisons()
+
+    repeat(15) {
+        val n = it + 4
+        val p = Queens(n)
+        val b = Benchmark(p, 1, 1, mapOf(
+            "n = $n" to Backtracking(pruneSchema = FullLookAhead(), variableOrdering = SmallestDomainVariable())
+        ))
+        b.execute().prettyPrint()
+    }
 }
 
 fun runBenchmarks(problem: Queens) {
@@ -57,16 +68,16 @@ fun runSolution(problem: Queens) {
     val sink = processor.sink()
 
     processor.concatMap { it -> Mono.just(it).delayElement(Duration.ofMillis(100)) }
-            .doOnNext{ printQueensPartial(it)}
+//            .doOnNext{ printQueensPartial(it)}
             .doOnComplete{
                 print("Finished")
                 processor.shutdown()
             }.subscribe()
 
     val solution = problem.solve(
-        strategy = ReactorBacktracking(
-            pruneSchema = ForwardChecking(),
-                sink = sink
+        strategy = Backtracking(
+            pruneSchema = FullLookAhead(),
+            variableOrdering = SmallestDomainVariable()
         )
     )
     solution.print()

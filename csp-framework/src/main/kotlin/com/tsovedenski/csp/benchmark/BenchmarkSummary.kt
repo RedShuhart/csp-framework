@@ -30,7 +30,7 @@ data class BenchmarkSummary (val entries: Map<String, Statistics>) {
             builder.append(entry.time)
             builder.append(" ms")
 
-            builder.appendln()
+//            builder.appendln()
         }
         println(builder.toString())
     }

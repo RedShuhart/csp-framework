@@ -1,6 +1,7 @@
 package com.tsovedenski.csp.nqueens
 
 import com.tsovedenski.csp.*
+import com.tsovedenski.csp.heuristics.pruning.schemas.ForwardChecking
 import com.tsovedenski.csp.heuristics.pruning.schemas.FullLookAhead
 import com.tsovedenski.csp.reactor.ReactorBacktracking
 import processing.core.PApplet
@@ -29,7 +30,7 @@ class ProcessingQueens: PApplet() {
     }
 
     override fun setup() {
-        val problem = Queens(12)
+        val problem = Queens(16)
         val processor = TopicProcessor.create<Assignment<Int, Int>>()
         val sink = processor.sink()
 
@@ -46,7 +47,7 @@ class ProcessingQueens: PApplet() {
         thread {
             val solution = problem.solve(
                 strategy = ReactorBacktracking(
-                    pruneSchema = FullLookAhead(),
+                    pruneSchema = ForwardChecking(),
                     sink = sink
                 )
             )
