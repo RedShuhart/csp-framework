@@ -21,5 +21,5 @@ import com.tsovedenski.csp.toSet
  */
 class PartialLookAhead<V, D>: PruneSchema<V, D>(direction = Direction.SINGLE) {
     override fun invoke(slice: Slice<V>, constraints: List<BinaryConstraint<V, D>>)
-            = selectConstraints(slice.current.toSet() + slice.next, constraints)
+            = selectConstraints(slice.previous + slice.current.toSet() + slice.next, constraints)
 }
