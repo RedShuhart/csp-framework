@@ -23,7 +23,7 @@ class DefaultOrderTest {
 
     @Test
     fun `when first is selected, second is taken`() = sliceTest(comparator,
-        Slice('B', setOf('C')),
+        Slice('B', setOf('C'), setOf('A')),
 
         'A' to Domain.of(1),
         'B' to Domain.of(1, 2, 3),
@@ -32,7 +32,7 @@ class DefaultOrderTest {
 
     @Test
     fun `when choice is between two selected, it is taken`() = sliceTest(comparator,
-        Slice('B', setOf('D')),
+        Slice('B', setOf('D'), setOf('A', 'C')),
 
         'A' to Domain.of(1),
         'B' to Domain.of(1, 2, 3),
@@ -42,7 +42,7 @@ class DefaultOrderTest {
 
     @Test
     fun `when all are selected, current is null and next is empty`() = sliceTest(comparator,
-        Slice(null, setOf<Char>()),
+        Slice(null, setOf<Char>(), setOf('A', 'B', 'C')),
 
         'A' to Domain.of(1),
         'B' to Domain.of(2),

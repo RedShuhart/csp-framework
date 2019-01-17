@@ -35,6 +35,6 @@ class DefaultPruneSchema <V, D> : PruneSchema<V, D> (direction = Direction.SINGL
 }
 
 internal fun <V, D> selectConstraints(variablesToPrune: Set<V>, constraints: List<BinaryConstraint<V, D>>): List<BinaryConstraint<V, D>> {
-    val prunedConstraints = constraints.filter { it.variables[0] in variablesToPrune }.groupBy { it.variables[0] }
+    val prunedConstraints = constraints.filter { it.variables[1] in variablesToPrune }.groupBy { it.variables[1] }
     return variablesToPrune.flatMap { prunedConstraints[it] ?: emptyList() }
 }
