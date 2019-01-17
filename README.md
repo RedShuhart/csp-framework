@@ -18,7 +18,7 @@ allprojects {
 ```
 ```groovy
 dependencies {
-    implementation 'TODO'
+    implementation 'com.github.RedShuhart:csp-framework:470991d413'
 }
 ```
 
@@ -33,9 +33,9 @@ dependencies {
 ```
 ```xml
 <dependency>
-    <groupId>TODO</groupId>
-    <artifactId>TODO</artifactId>
-    <version>TODO</version>
+    <groupId>com.github.RedShuhart</groupId>
+    <artifactId>csp-framework</artifactId>
+    <version>470991d413</version>
 </dependency>
 ```
 
