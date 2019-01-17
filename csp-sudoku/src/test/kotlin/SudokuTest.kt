@@ -19,24 +19,12 @@ class SudokuTest {
                 "xxxx"
         )
 
-        val expected = emptyAssignment<String, Int>().apply {
-            this["00"] = Selected(value=1)
-            this["01"] = Selected(value=2)
-            this["02"] = Selected(value=3)
-            this["03"] = Selected(value=4)
-            this["10"] = Selected(value=3)
-            this["11"] = Selected(value=4)
-            this["12"] = Selected(value=1)
-            this["13"] = Selected(value=2)
-            this["20"] = Selected(value=2)
-            this["21"] = Selected(value=1)
-            this["22"] = Selected(value=4)
-            this["23"] = Selected(value=3)
-            this["30"] = Selected(value=4)
-            this["31"] = Selected(value=3)
-            this["32"] = Selected(value=2)
-            this["33"] = Selected(value=1)
-        }.toCompleteAssignment()!!
+        val expected = listOf(
+                "1234",
+                "3412",
+                "2143",
+                "4321"
+        )
 
         execute(grid, expected)
     }
@@ -55,89 +43,17 @@ class SudokuTest {
                 "2x8174xxx"
         )
 
-        val expected = emptyAssignment<String, Int>().apply {
-            this["00"] = Selected(value=1)
-            this["01"] = Selected(value=8)
-            this["05"] = Selected(value=5)
-            this["06"] = Selected(value=7)
-            this["08"] = Selected(value=6)
-            this["11"] = Selected(value=2)
-            this["13"] = Selected(value=7)
-            this["16"] = Selected(value=3)
-            this["17"] = Selected(value=4)
-            this["18"] = Selected(value=8)
-            this["21"] = Selected(value=6)
-            this["22"] = Selected(value=3)
-            this["23"] = Selected(value=4)
-            this["24"] = Selected(value=2)
-            this["25"] = Selected(value=8)
-            this["32"] = Selected(value=5)
-            this["33"] = Selected(value=2)
-            this["34"] = Selected(value=4)
-            this["35"] = Selected(value=7)
-            this["36"] = Selected(value=9)
-            this["41"] = Selected(value=9)
-            this["42"] = Selected(value=2)
-            this["44"] = Selected(value=8)
-            this["46"] = Selected(value=4)
-            this["47"] = Selected(value=1)
-            this["50"] = Selected(value=3)
-            this["52"] = Selected(value=7)
-            this["53"] = Selected(value=9)
-            this["54"] = Selected(value=1)
-            this["58"] = Selected(value=5)
-            this["60"] = Selected(value=9)
-            this["65"] = Selected(value=2)
-            this["66"] = Selected(value=1)
-            this["67"] = Selected(value=7)
-            this["68"] = Selected(value=4)
-            this["70"] = Selected(value=4)
-            this["71"] = Selected(value=7)
-            this["75"] = Selected(value=9)
-            this["77"] = Selected(value=5)
-            this["78"] = Selected(value=2)
-            this["80"] = Selected(value=2)
-            this["82"] = Selected(value=8)
-            this["83"] = Selected(value=1)
-            this["84"] = Selected(value=7)
-            this["85"] = Selected(value=4)
-            this["02"] = Selected(value=4)
-            this["03"] = Selected(value=3)
-            this["04"] = Selected(value=9)
-            this["07"] = Selected(value=2)
-            this["10"] = Selected(value=5)
-            this["12"] = Selected(value=9)
-            this["14"] = Selected(value=6)
-            this["15"] = Selected(value=1)
-            this["20"] = Selected(value=7)
-            this["26"] = Selected(value=5)
-            this["27"] = Selected(value=9)
-            this["28"] = Selected(value=1)
-            this["30"] = Selected(value=8)
-            this["31"] = Selected(value=1)
-            this["37"] = Selected(value=6)
-            this["38"] = Selected(value=3)
-            this["40"] = Selected(value=6)
-            this["43"] = Selected(value=5)
-            this["45"] = Selected(value=3)
-            this["48"] = Selected(value=7)
-            this["51"] = Selected(value=4)
-            this["55"] = Selected(value=6)
-            this["56"] = Selected(value=2)
-            this["57"] = Selected(value=8)
-            this["61"] = Selected(value=3)
-            this["62"] = Selected(value=6)
-            this["63"] = Selected(value=8)
-            this["64"] = Selected(value=5)
-            this["72"] = Selected(value=1)
-            this["73"] = Selected(value=6)
-            this["74"] = Selected(value=3)
-            this["76"] = Selected(value=8)
-            this["81"] = Selected(value=5)
-            this["86"] = Selected(value=6)
-            this["87"] = Selected(value=3)
-            this["88"] = Selected(value=9)
-        }.toCompleteAssignment()!!
+        val expected = listOf(
+                "184395726",
+                "529761348",
+                "763428591",
+                "815247963",
+                "692583417",
+                "347916285",
+                "936852174",
+                "471639852",
+                "258174639"
+        )
 
         execute(grid, expected)
     }
@@ -156,194 +72,48 @@ class SudokuTest {
                 "7x3x18xxx"
         )
 
-        val expected = emptyAssignment<String, Int>().apply {
-            this["03"] = Selected(value=2)
-            this["04"] = Selected(value=6)
-            this["06"] = Selected(value=7)
-            this["08"] = Selected(value=1)
-            this["10"] = Selected(value=6)
-            this["11"] = Selected(value=8)
-            this["14"] = Selected(value=7)
-            this["17"] = Selected(value=9)
-            this["20"] = Selected(value=1)
-            this["21"] = Selected(value=9)
-            this["25"] = Selected(value=4)
-            this["26"] = Selected(value=5)
-            this["30"] = Selected(value=8)
-            this["31"] = Selected(value=2)
-            this["33"] = Selected(value=1)
-            this["37"] = Selected(value=4)
-            this["42"] = Selected(value=4)
-            this["43"] = Selected(value=6)
-            this["45"] = Selected(value=2)
-            this["46"] = Selected(value=9)
-            this["51"] = Selected(value=5)
-            this["55"] = Selected(value=3)
-            this["57"] = Selected(value=2)
-            this["58"] = Selected(value=8)
-            this["62"] = Selected(value=9)
-            this["63"] = Selected(value=3)
-            this["67"] = Selected(value=7)
-            this["68"] = Selected(value=4)
-            this["71"] = Selected(value=4)
-            this["74"] = Selected(value=5)
-            this["77"] = Selected(value=3)
-            this["78"] = Selected(value=6)
-            this["80"] = Selected(value=7)
-            this["82"] = Selected(value=3)
-            this["84"] = Selected(value=1)
-            this["85"] = Selected(value=8)
-            this["00"] = Selected(value=4)
-            this["01"] = Selected(value=3)
-            this["02"] = Selected(value=5)
-            this["05"] = Selected(value=9)
-            this["07"] = Selected(value=8)
-            this["12"] = Selected(value=2)
-            this["13"] = Selected(value=5)
-            this["15"] = Selected(value=1)
-            this["16"] = Selected(value=4)
-            this["18"] = Selected(value=3)
-            this["22"] = Selected(value=7)
-            this["23"] = Selected(value=8)
-            this["24"] = Selected(value=3)
-            this["27"] = Selected(value=6)
-            this["28"] = Selected(value=2)
-            this["32"] = Selected(value=6)
-            this["34"] = Selected(value=9)
-            this["35"] = Selected(value=5)
-            this["36"] = Selected(value=3)
-            this["38"] = Selected(value=7)
-            this["40"] = Selected(value=3)
-            this["41"] = Selected(value=7)
-            this["44"] = Selected(value=8)
-            this["47"] = Selected(value=1)
-            this["48"] = Selected(value=5)
-            this["50"] = Selected(value=9)
-            this["52"] = Selected(value=1)
-            this["53"] = Selected(value=7)
-            this["54"] = Selected(value=4)
-            this["56"] = Selected(value=6)
-            this["60"] = Selected(value=5)
-            this["61"] = Selected(value=1)
-            this["64"] = Selected(value=2)
-            this["65"] = Selected(value=6)
-            this["66"] = Selected(value=8)
-            this["70"] = Selected(value=2)
-            this["72"] = Selected(value=8)
-            this["73"] = Selected(value=9)
-            this["75"] = Selected(value=7)
-            this["76"] = Selected(value=1)
-            this["81"] = Selected(value=6)
-            this["83"] = Selected(value=4)
-            this["86"] = Selected(value=2)
-            this["87"] = Selected(value=5)
-            this["88"] = Selected(value=9)
-        }.toCompleteAssignment()!!
+        val expected = listOf(
+                "435269781",
+                "682571493",
+                "197834562",
+                "826195347",
+                "374682915",
+                "951743628",
+                "519326874",
+                "248957136",
+                "763418259"
+        )
 
         execute(grid, expected)
     }
 
-    // is too slow for now
-//    @Test
-//    fun `9x9 hard 1`() {
-//        val grid = listOf(
-//                "xxx2xxx63",
-//                "3xxxx54x1",
-//                "xx1xx398x",
-//                "xxxxxxx9x",
-//                "xxx538xxx",
-//                "x3xxxxxxx",
-//                "x263xx5xx",
-//                "5x37xxxx8",
-//                "47xxx1xxx"
-//        )
-//
-//        val expected = emptyAssignment<String, Int>().apply {
-//            this["00"] = Selected(value=8)
-//            this["01"] = Selected(value=5)
-//            this["02"] = Selected(value=4)
-//            this["03"] = Selected(value=2)
-//            this["04"] = Selected(value=1)
-//            this["05"] = Selected(value=9)
-//            this["06"] = Selected(value=7)
-//            this["07"] = Selected(value=6)
-//            this["08"] = Selected(value=3)
-//            this["10"] = Selected(value=3)
-//            this["11"] = Selected(value=9)
-//            this["12"] = Selected(value=7)
-//            this["13"] = Selected(value=8)
-//            this["14"] = Selected(value=6)
-//            this["15"] = Selected(value=5)
-//            this["16"] = Selected(value=4)
-//            this["17"] = Selected(value=2)
-//            this["18"] = Selected(value=1)
-//            this["20"] = Selected(value=2)
-//            this["21"] = Selected(value=6)
-//            this["22"] = Selected(value=1)
-//            this["23"] = Selected(value=4)
-//            this["24"] = Selected(value=7)
-//            this["25"] = Selected(value=3)
-//            this["26"] = Selected(value=9)
-//            this["27"] = Selected(value=8)
-//            this["28"] = Selected(value=5)
-//            this["30"] = Selected(value=7)
-//            this["31"] = Selected(value=8)
-//            this["32"] = Selected(value=5)
-//            this["33"] = Selected(value=1)
-//            this["34"] = Selected(value=2)
-//            this["35"] = Selected(value=6)
-//            this["36"] = Selected(value=3)
-//            this["37"] = Selected(value=9)
-//            this["38"] = Selected(value=4)
-//            this["40"] = Selected(value=6)
-//            this["41"] = Selected(value=4)
-//            this["42"] = Selected(value=9)
-//            this["43"] = Selected(value=5)
-//            this["44"] = Selected(value=3)
-//            this["45"] = Selected(value=8)
-//            this["46"] = Selected(value=1)
-//            this["47"] = Selected(value=7)
-//            this["48"] = Selected(value=2)
-//            this["50"] = Selected(value=1)
-//            this["51"] = Selected(value=3)
-//            this["52"] = Selected(value=2)
-//            this["53"] = Selected(value=9)
-//            this["54"] = Selected(value=4)
-//            this["55"] = Selected(value=7)
-//            this["56"] = Selected(value=8)
-//            this["57"] = Selected(value=5)
-//            this["58"] = Selected(value=6)
-//            this["60"] = Selected(value=9)
-//            this["61"] = Selected(value=2)
-//            this["62"] = Selected(value=6)
-//            this["63"] = Selected(value=3)
-//            this["64"] = Selected(value=8)
-//            this["65"] = Selected(value=4)
-//            this["66"] = Selected(value=5)
-//            this["67"] = Selected(value=1)
-//            this["68"] = Selected(value=7)
-//            this["70"] = Selected(value=5)
-//            this["71"] = Selected(value=1)
-//            this["72"] = Selected(value=3)
-//            this["73"] = Selected(value=7)
-//            this["74"] = Selected(value=9)
-//            this["75"] = Selected(value=2)
-//            this["76"] = Selected(value=6)
-//            this["77"] = Selected(value=4)
-//            this["78"] = Selected(value=8)
-//            this["80"] = Selected(value=4)
-//            this["81"] = Selected(value=7)
-//            this["82"] = Selected(value=8)
-//            this["83"] = Selected(value=6)
-//            this["84"] = Selected(value=5)
-//            this["85"] = Selected(value=1)
-//            this["86"] = Selected(value=2)
-//            this["87"] = Selected(value=3)
-//            this["88"] = Selected(value=9)
-//        }.toCompleteAssignment()!!
-//
-//        execute(grid, expected)
-//    }
+    @Test
+    fun `9x9 hard 1`() {
+        val grid = listOf(
+                "xxx2xxx63",
+                "3xxxx54x1",
+                "xx1xx398x",
+                "xxxxxxx9x",
+                "xxx538xxx",
+                "x3xxxxxxx",
+                "x263xx5xx",
+                "5x37xxxx8",
+                "47xxx1xxx"
+        )
+
+        val expected = listOf(
+                "854219763",
+                "397865421",
+                "261473985",
+                "785126394",
+                "649538172",
+                "132947856",
+                "926384517",
+                "513792648",
+                "478651239")
+
+        execute(grid, expected)
+    }
 
     private fun execute(grid: List<String>, expected: CompleteAssignment<String, Int>) {
         val task = Sudoku(grid)
@@ -355,5 +125,13 @@ class SudokuTest {
         solution as Solved
 
         Assert.assertEquals(expected, solution.assignment)
+    }
+
+    private fun execute(grid: List<String>, expected: List<String>) {
+        val expectedAssignment = expected
+                .mapIndexed { r, row ->
+                    row.mapIndexed { c, cell -> "$r$c" to "$cell".toInt() }
+                }.flatten().toMap()
+        execute(grid, expectedAssignment)
     }
 }

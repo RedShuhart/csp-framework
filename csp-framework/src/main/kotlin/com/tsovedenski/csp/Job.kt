@@ -54,7 +54,8 @@ data class Job <V, D> (val assignment: Assignment<V, D>, val constraints: List<C
         val nextVariables = selectUnassignedVariables(ordering)
         return Slice (
                 current = nextVariables.firstOrNull(),
-                next = nextVariables.drop(1).toMutableSet()
+                next = nextVariables.drop(1).toMutableSet(),
+                previous = selectAssignedVariables().toMutableSet()
         )
     }
 
@@ -78,6 +79,9 @@ data class Job <V, D> (val assignment: Assignment<V, D>, val constraints: List<C
     fun mergeAssignments(prunedAssignment: Assignment<V, D>) = assignment.putAll(prunedAssignment)
 
     fun step() = counter ++
+
+    private fun selectAssignedVariables() =
+            assignment.filterIsInstance<V, Selected<D>>().entries.map { it.key }
 
     private fun selectUnassignedVariables(ordering: VariableComparator<V, D>) =
             assignment.filterIsInstance<V, Choice<D>>().entries.asSequence().toSortedSet(Comparator { o1, o2 ->

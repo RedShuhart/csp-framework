@@ -38,8 +38,8 @@ class ReactorBacktracking <V, D> (
             job.assignVariable(current, attempt)
             val pruned = job.prune(slice, pruneSchema)
             job.mergeAssignments(pruned)
-            sink.next(job.assignment.toMutableMap())
             if (job.isPartiallyValid()) {
+                sink.next(job.assignment.toMutableMap())
                 val result = run(job)
                 if (result != null) {
                     return result
