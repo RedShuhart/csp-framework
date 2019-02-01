@@ -6,11 +6,6 @@ import java.time.LocalTime
 /**
  * Created by Tsvetan Ovedenski on 2019-02-01.
  */
-enum class Week {
-    Both,
-    Odd,
-    Even
-}
 data class Group (
         val code: String,
         val day: DayOfWeek,
@@ -39,6 +34,16 @@ data class Group (
                     Week.valueOf(parts[4])
             )
         }
+    }
+
+    fun overlaps(other: Group)
+            = endAt.isAfter(other.startAt) && other.endAt.isAfter(startAt)
+
+    fun difference(other: Group): Int {
+        val list = listOf(this, other)
+        val fst = list.minBy { it.startAt }!!
+        val snd = list.maxBy { it.startAt }!!
+        return (snd.startAt.toSecondOfDay() - fst.endAt.toSecondOfDay()) / 60
     }
 
     fun serialize() = listOf(

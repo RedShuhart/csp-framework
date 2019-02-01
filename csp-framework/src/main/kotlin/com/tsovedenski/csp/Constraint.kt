@@ -144,7 +144,7 @@ class GeneralConstraint <V, D> (
     override val variables: List<V>,
     val body: GeneralConstraint<V, D>.ConstraintContext.() -> Boolean
 ) : Constraint<V, D> {
-    inner class ConstraintContext (private val assignment: Assignment<V, D>) {
+    inner class ConstraintContext (val assignment: Assignment<V, D>) {
         fun getValue(key: V): D = assignment.valueOf(key)
     }
 
