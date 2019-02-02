@@ -14,8 +14,6 @@ import java.time.DayOfWeek.*
  * Created by Tsvetan Ovedenski on 2019-02-01.
  */
 fun main() {
-    courses.map(Course::serialize).forEach(::println)
-
     val problem = Schedule(
         courses
         , DailyClasses.atMost(3)
@@ -29,7 +27,7 @@ fun main() {
     )
 
     if (solution is Solved) {
-        solution.assignment.asString().also(::println)
+        solution.assignment.asTable().also(::println)
         solution.statistics.print()
     } else {
         println("No solution :(")
