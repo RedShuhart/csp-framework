@@ -37,7 +37,8 @@ data class Group (
     }
 
     fun overlaps(other: Group)
-            = endAt.isAfter(other.startAt) && other.endAt.isAfter(startAt)
+            = if (day == other.day) endAt.isAfter(other.startAt) && other.endAt.isAfter(startAt)
+                else false
 
     fun difference(other: Group): Int {
         val list = listOf(this, other)
