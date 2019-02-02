@@ -2,9 +2,10 @@ package com.tsovedenski.csp.scheduling.pwr.preferences
 
 import com.tsovedenski.csp.Constraint
 import com.tsovedenski.csp.GeneralConstraint
-import com.tsovedenski.csp.print
 import com.tsovedenski.csp.scheduling.pwr.domain.Group
-import com.tsovedenski.csp.scheduling.pwr.domain.SingleSubject
+import com.tsovedenski.csp.scheduling.pwr.domain.Subject
+import com.tsovedenski.csp.scheduling.pwr.domain.Week
+import java.time.DayOfWeek
 
 /**
  * Created by Tsvetan Ovedenski on 2019-02-02.
@@ -19,21 +20,17 @@ object MinutesBetweenClasses {
 
     private fun generateConstraint(predicate: (Int) -> Boolean): Preference {
         return object : Preference() {
-            override fun toConstraint(variables: List<SingleSubject>): Constraint<SingleSubject, Group> {
+            override fun toConstraint(variables: List<Subject>): Constraint<Subject, Group> {
                 return GeneralConstraint(variables) c@{
-                    assignment.print()
-                    println()
-                    assignment.perDay { it.key }.also { it.forEach(::println) }
+                    val byDay: Map<Pair<DayOfWeek, Week>, List<Group>> = assignment.perDay { it.value }
+
+                    for (row in byDay.values) {
+                        val zipped = row.zipWithNext { a, b -> a.difference(b) }
+                        if (!zipped.all(predicate)) {
+                            return@c false
+                        }
+                    }
                     true
-//                    val byDay = assignment.perDay { it.value.zipWithNext { a, b -> a.difference(b)} }
-//                        .mapValues { it.value.flatten() }.also { it.forEach(::println) }
-//
-//                    for (row in byDay.values) {
-//                        if (!row.all(predicate)) {
-//                            return@c false
-//                        }
-//                    }
-//                    true
                 }
             }
         }

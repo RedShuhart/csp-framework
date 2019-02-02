@@ -1,13 +1,8 @@
 package com.tsovedenski.csp.scheduling.pwr
 
 import com.tsovedenski.csp.Solved
-import com.tsovedenski.csp.heuristics.pruning.schemas.ForwardChecking
 import com.tsovedenski.csp.heuristics.pruning.schemas.FullLookAhead
 import com.tsovedenski.csp.scheduling.pwr.domain.Course
-import com.tsovedenski.csp.scheduling.pwr.domain.Group
-import com.tsovedenski.csp.scheduling.pwr.domain.Subject
-import com.tsovedenski.csp.scheduling.pwr.domain.Type.*
-import com.tsovedenski.csp.scheduling.pwr.domain.Week.*
 import com.tsovedenski.csp.scheduling.pwr.preferences.ClassesFor
 import com.tsovedenski.csp.scheduling.pwr.preferences.DailyClasses
 import com.tsovedenski.csp.scheduling.pwr.preferences.MinutesBetweenClasses
@@ -18,11 +13,14 @@ import java.time.DayOfWeek.*
 /**
  * Created by Tsvetan Ovedenski on 2019-02-01.
  */
-fun main(args: Array<String>) {
+fun main() {
+    courses.map(Course::serialize).forEach(::println)
+
     val problem = Schedule(
-        courses,
-        DailyClasses.atMost(4),
-        ClassesFor(FRIDAY).atMost(2)
+        courses
+        , DailyClasses.atMost(3)
+        , ClassesFor(FRIDAY).atMost(2)
+        , MinutesBetweenClasses.atLeast(10)
     )
     val solution = problem.solve(
         Backtracking(
@@ -31,18 +29,9 @@ fun main(args: Array<String>) {
     )
 
     if (solution is Solved) {
-        solution.assignment
-            .toList()
-            .groupBy { it.second.day }
-            .toSortedMap()
-            .forEach { day, groups ->
-                println(day)
-                groups.sortedBy { it.second.startAt }.forEach { (subject, group) ->
-                    println("-- $group (${subject.type} - ${subject.name})")
-                }
-                println()
-            }
-
+        solution.assignment.asString().also(::println)
         solution.statistics.print()
+    } else {
+        println("No solution :(")
     }
 }

@@ -1,0 +1,5 @@
+Foundation of Knowledge Engineering|Lecture%Z04-62a;TUESDAY;9:15;11:0;Both$Class%Z04-61a;THURSDAY;11:15;13:0;Both@Z04-61b;THURSDAY;13:15;15:0;Both
+Modelling and Analysis of Web-based Systems|Lecture%Z04-53a;WEDNESDAY;13:15;15:0;Both$Lab%Z04-52a;FRIDAY;9:15;11:0;Both@Z04-52b;FRIDAY;11:15;13:0;Both@Z04-52c;FRIDAY;13:15;15:0;Both@Z04-52d;WEDNESDAY;9:15;11:0;Both
+Parallel and Distributed Computing|Lecture%Z04-56a;THURSDAY;15:15;16:55;Both$Class%Z04-54a;THURSDAY;17:5;18:45;Odd@Z04-54b;THURSDAY;17:5;18:45;Even$Lab%Z04-55a;WEDNESDAY;17:5;18:45;Odd@Z04-55b;WEDNESDAY;17:5;18:45;Even@Z04-55c;WEDNESDAY;18:55;20:35;Even@Z04-55d;WEDNESDAY;15:15;16:55;Even
+Mobile and Multimedia Systems|Lecture%Z04-58a;THURSDAY;9:15;11:0;Odd$Lab%Z04-57b;FRIDAY;7:30;10:0;Both@Z04-57c;WEDNESDAY;15:15;17:50;Both@Z04-57d;WEDNESDAY;18:0;20:35;Both
+Software System Development|Lecture%Z04-60a;TUESDAY;17:5;18:45;Both$Project%Z04-59a;FRIDAY;11:15;13:0;Both@Z04-59b;TUESDAY;7:30;9:0;Both@Z04-59c;FRIDAY;7:30;9:0;Both@Z04-59d;FRIDAY;9:15;11:0;Both

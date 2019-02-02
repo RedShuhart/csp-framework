@@ -3,7 +3,7 @@ package com.tsovedenski.csp.scheduling.pwr.preferences
 import com.tsovedenski.csp.Constraint
 import com.tsovedenski.csp.GeneralConstraint
 import com.tsovedenski.csp.scheduling.pwr.domain.Group
-import com.tsovedenski.csp.scheduling.pwr.domain.SingleSubject
+import com.tsovedenski.csp.scheduling.pwr.domain.Subject
 import java.time.DayOfWeek
 
 /**
@@ -19,7 +19,7 @@ class ClassesFor(val dayOfWeek: DayOfWeek) {
 
     private fun generateConstraint(predicate: (Int) -> Boolean): Preference {
         return object : Preference() {
-            override fun toConstraint(variables: List<SingleSubject>): Constraint<SingleSubject, Group> {
+            override fun toConstraint(variables: List<Subject>): Constraint<Subject, Group> {
                 return GeneralConstraint(variables) {
                     val classes = assignment
                         .values

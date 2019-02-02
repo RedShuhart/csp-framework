@@ -1,0 +1,19 @@
+TUESDAY
+-- Group(code=Z04-62a, day=TUESDAY, startAt=09:15, endAt=11:00, week=Both) (Lecture - Foundation of Knowledge Engineering)
+-- Group(code=Z04-60a, day=TUESDAY, startAt=17:05, endAt=18:45, week=Both) (Lecture - Software System Development)
+
+WEDNESDAY
+-- Group(code=Z04-53a, day=WEDNESDAY, startAt=13:15, endAt=15:00, week=Both) (Lecture - Modelling and Analysis of Web-based Systems)
+-- Group(code=Z04-57c, day=WEDNESDAY, startAt=15:15, endAt=17:50, week=Both) (Lab - Mobile and Multimedia Systems)
+-- Group(code=Z04-55c, day=WEDNESDAY, startAt=18:55, endAt=20:35, week=Even) (Lab - Parallel and Distributed Computing)
+
+THURSDAY
+-- Group(code=Z04-58a, day=THURSDAY, startAt=09:15, endAt=11:00, week=Odd) (Lecture - Mobile and Multimedia Systems)
+-- Group(code=Z04-61a, day=THURSDAY, startAt=11:15, endAt=13:00, week=Both) (Class - Foundation of Knowledge Engineering)
+-- Group(code=Z04-56a, day=THURSDAY, startAt=15:15, endAt=16:55, week=Both) (Lecture - Parallel and Distributed Computing)
+-- Group(code=Z04-54b, day=THURSDAY, startAt=17:05, endAt=18:45, week=Even) (Class - Parallel and Distributed Computing)
+
+FRIDAY
+-- Group(code=Z04-52a, day=FRIDAY, startAt=09:15, endAt=11:00, week=Both) (Lab - Modelling and Analysis of Web-based Systems)
+-- Group(code=Z04-59a, day=FRIDAY, startAt=11:15, endAt=13:00, week=Both) (Project - Software System Development)
+
